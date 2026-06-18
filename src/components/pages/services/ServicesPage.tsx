@@ -607,8 +607,7 @@ function MiniDistributionA1() {
         <line x1="0" y1={H} x2={W} y2={H} stroke="#D5D9E8" strokeWidth="0.75" />
       </svg>
       <div className="flex justify-between mt-[5px]">
-        {(['P10', '#3EA6A3'], ['P50', '#2C5251'], ['P80', '#9B2D30']).length > 0 &&
-          [['P10', '#3EA6A3'], ['P50', '#2C5251'], ['P80', '#9B2D30']].map(([label, color]) => (
+        {[['P10', '#3EA6A3'], ['P50', '#2C5251'], ['P80', '#9B2D30']].map(([label, color]) => (
             <span key={label} className="font-mono" style={{ fontSize: '7px', letterSpacing: '0.1em', color }}>
               {label}
             </span>
