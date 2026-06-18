@@ -8,8 +8,6 @@ import { ServicesOverview } from '@/components/pages/home/ServicesOverview';
 import { WhyTravo }        from '@/components/pages/home/WhyTravo';
 import { IndexTeaser }     from '@/components/pages/home/IndexTeaser';
 import { VisionStatement } from '@/components/pages/home/VisionStatement';
-import { ClosingCTA }      from '@/components/pages/home/ClosingCTA';
-
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-navy text-snow">
@@ -23,7 +21,6 @@ export default function HomePage() {
         <WhyTravo />
         <IndexTeaser />
         <VisionStatement />
-        <ClosingCTA />
       </main>
       <Footer />
     </div>

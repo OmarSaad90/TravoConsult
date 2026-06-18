@@ -108,6 +108,17 @@
     50%      { opacity: 0.6; }
   }
 
+  /* Methodology hero — post-settle looping animations */
+  @keyframes distBreath {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.55; }
+  }
+
+  @keyframes p50Live {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
+  }
+
   @keyframes headerIn {
     from { opacity: 0; transform: translateY(-10px); }
     to   { opacity: 1; transform: translateY(0); }

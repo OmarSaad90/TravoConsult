@@ -31,8 +31,38 @@ export function Footer() {
 
       <div className="relative max-w-site mx-auto px-6 md:px-12 lg:px-16">
 
+        {/* CTA zone */}
+        <div className="pb-16 border-b border-rule-d">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+            <h2
+              className="font-display font-extrabold leading-[0.97] tracking-display balance"
+              style={{
+                fontSize: 'clamp(1.8rem, 3.2vw, 2.8rem)',
+                opacity:    inView ? 1 : 0,
+                transform:  inView ? 'none' : 'translateY(26px)',
+                transition: 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)',
+              }}
+            >
+              <span className="text-snow">Have a decision too consequential</span>
+              <br />
+              <span className="text-coral">to leave to intuition?</span>
+            </h2>
+            <a
+              href="/contact"
+              className="font-mono text-[11px] tracking-label uppercase bg-coral text-snow px-8 py-[15px] hover:bg-coral/90 transition-colors duration-200 shrink-0"
+              style={{
+                opacity:    inView ? 1 : 0,
+                transform:  inView ? 'none' : 'translateY(26px)',
+                transition: 'opacity 0.8s cubic-bezier(0.16,1,0.3,1) 120ms, transform 0.8s cubic-bezier(0.16,1,0.3,1) 120ms',
+              }}
+            >
+              Schedule a Conversation
+            </a>
+          </div>
+        </div>
+
         {/* Top grid */}
-        <div className="grid grid-cols-2 md:grid-cols-[1.6fr_1fr_1fr_1.2fr] gap-10 pb-12 border-b border-rule-d">
+        <div className="grid grid-cols-2 md:grid-cols-[1.6fr_1fr_1fr_1.2fr] gap-10 pt-12 pb-12 border-b border-rule-d">
 
           {/* Brand column */}
           <div
@@ -54,11 +84,6 @@ export function Footer() {
               Quantitative construction risk advisory for the capital projects
               that cannot afford to be wrong.
             </p>
-            <div className="mt-5 pt-5 border-t border-rule-d">
-              <p className="font-mono text-[9px] uppercase tracking-label text-haze">
-                New Jersey · New York Metropolitan Region
-              </p>
-            </div>
           </div>
 
           {/* Nav columns */}
@@ -123,6 +148,7 @@ export function Footer() {
           }}
         >
           <span>Travo · Total Risk Analysis and Value Optimization</span>
+          <span className="hidden md:inline">New Jersey · New York Metropolitan Region</span>
           <span>© {year} · Independent by design</span>
         </div>
       </div>
