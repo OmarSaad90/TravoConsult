@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef } from 'react';
 
 function gaussRand(mu: number, sigma: number): number {

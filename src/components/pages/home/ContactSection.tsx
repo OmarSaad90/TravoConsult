@@ -1,5 +1,7 @@
+'use client';
+
 import { useState, type FormEvent } from 'react';
-import { useInView } from '../../hooks/useInView';
+import { useInView } from '../../../hooks/useInView';
 
 const PROJECT_TYPES = [
   'Pre-project risk & contingency analysis',
@@ -172,7 +174,7 @@ function Field({
 function fade(inView: boolean, delay: number): React.CSSProperties {
   return {
     opacity:    inView ? 1 : 0,
-    transform:  inView ? 'none' : 'translateY(20px)',
-    transition: `opacity 0.75s cubic-bezier(0.2,0.7,0.2,1) ${delay}ms, transform 0.75s cubic-bezier(0.2,0.7,0.2,1) ${delay}ms`,
+    transform:  inView ? 'none' : 'translateY(26px)',
+    transition: `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
   };
 }

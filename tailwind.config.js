@@ -1,16 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./app/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        // ── Dark surfaces ──────────────────────────────
-        navy:      '#09111F',   // dark section background
-        'navy-1':  '#0E1A2E',   // card on dark
-        'navy-2':  '#152035',   // hover on dark
+        // ── Dark surfaces (Midnight Ink family) ────────
+        navy:      '#1E1E2E',   // Midnight Ink 100 — dark section background
+        'navy-1':  '#252538',   // Midnight Ink derived surface — card on dark
+        'navy-2':  '#2C2D52',   // Indigo Current 100 — hover / elevated on dark
 
         // ── Light surfaces ─────────────────────────────
-        canvas:    '#F5F7FB',   // light section background (cool near-white, NOT cream)
+        canvas:    '#F5F7FB',   // light section background (cool near-white)
         'canvas-1':'#EBEFF8',   // elevated on light
 
         // ── Text on dark ───────────────────────────────
@@ -19,32 +19,32 @@ export default {
         haze:      '#828DA6',   // muted / metadata on dark (≥4.5:1 on navy)
 
         // ── Text on light ──────────────────────────────
-        ink:       '#0C1222',   // primary text on light
+        ink:       '#1E1E2E',   // Midnight Ink 100 — primary text on light
         'ink-2':   '#323B5B',   // secondary text on light
         'ink-3':   '#5F6884',   // muted / metadata on light
 
         // ── Accents ────────────────────────────────────
-        teal:        '#71D2CF', // brand accent — dark sections + data elements
-        'teal-deep': '#3EA6A3', // hover / active teal
-        'teal-dim':  '#0B2726', // teal tint on dark
+        teal:        '#71D2CF', // Tidal Aqua 100 — brand accent
+        'teal-deep': '#3EA6A3', // Tidal Aqua 80 — hover / active teal
+        'teal-dim':  '#111B1B', // Harbor Teal very dark tint
 
-        forest:      '#1C4A42', // primary accent on light sections
-        'forest-2':  '#143630', // deeper forest hover
+        forest:      '#2C5251', // Harbor Teal 100 — structural accent on light
+        'forest-2':  '#1C3A39', // Harbor Teal dark — deeper hover
 
-        coral:       '#FF5B5E', // risk indicator / primary CTA
-        'coral-dim': '#29090B', // coral tint
-        elevated:    '#E88060', // mid-spectrum / elevated risk state (between teal and coral)
-        'air-blue':  '#C5ECFE', // lightest spectrum stop — confidence bands on light bg
+        coral:       '#FF5B5E', // Coral Ember 100 — risk indicator / primary CTA
+        'coral-dim': '#2A1010', // Coral Ember very dark tint
+        elevated:    '#FFB9BB', // Blush Rose 100 — official warm mid-spectrum
+        'air-blue':  '#C5ECFE', // Glacier Sky 100 — confidence bands on light bg
 
         // ── Rules ──────────────────────────────────────
-        'rule-d':  '#162030',   // divider on dark
+        'rule-d':  '#28283E',   // divider on dark (just lighter than Midnight Ink)
         'rule-l':  '#D5D9E8',   // divider on light
       },
 
       fontFamily: {
-        display: ['"Barlow Condensed"', 'system-ui', 'sans-serif'],
-        sans:    ['Barlow', 'system-ui', 'sans-serif'],
-        mono:    ['"JetBrains Mono"', 'Menlo', 'monospace'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        sans:    ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        mono:    ['var(--font-mono)', 'Menlo', 'monospace'],
       },
 
       letterSpacing: {

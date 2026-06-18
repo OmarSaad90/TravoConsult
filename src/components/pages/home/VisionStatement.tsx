@@ -1,10 +1,12 @@
-import { useInView } from '../../hooks/useInView';
+'use client';
+
+import { useInView } from '../../../hooks/useInView';
 
 const SPECTRUM = [
-  { label: 'Managed',  color: '#1C4A42' },
+  { label: 'Managed',  color: '#2C5251' },
   { label: 'Baseline', color: '#3EA6A3' },
   { label: 'Monitor',  color: '#8A95B2' },
-  { label: 'Elevated', color: '#E88060' },
+  { label: 'Elevated', color: '#FFB9BB' },
   { label: 'Critical', color: '#FF5B5E' },
 ] as const;
 
@@ -15,23 +17,23 @@ export function VisionStatement() {
     <section
       id="vision"
       ref={ref}
-      className="relative bg-canvas text-ink overflow-hidden py-[96px] md:py-[120px]"
+      className="relative bg-canvas text-ink overflow-hidden py-[120px] md:py-[152px]"
       aria-labelledby="vision-stmt"
     >
       <div className="absolute inset-0 bg-grid-light pointer-events-none" aria-hidden />
 
       <div className="relative max-w-site mx-auto px-6 md:px-12 lg:px-16">
-        <div className="grid md:grid-cols-[1fr_200px] gap-12 md:gap-16 items-center">
+        <div className="grid md:grid-cols-[1fr_260px] gap-12 md:gap-16 items-center">
 
           {/* Vision statement — left */}
           <div
             style={{
               opacity:    inView ? 1 : 0,
               transform:  inView ? 'none' : 'translateY(24px)',
-              transition: 'opacity 0.85s cubic-bezier(0.2,0.7,0.2,1), transform 0.85s cubic-bezier(0.2,0.7,0.2,1)',
+              transition: 'opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1)',
             }}
           >
-            <div className="border-t-2 pt-10" style={{ borderColor: '#1C4A42' }}>
+            <div className="border-t-2 pt-10" style={{ borderColor: '#2C5251' }}>
               <p
                 id="vision-stmt"
                 className="font-display font-extrabold leading-[1.0] tracking-display balance"

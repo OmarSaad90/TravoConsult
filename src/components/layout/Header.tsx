@@ -1,11 +1,15 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
 const NAV_LINKS = [
-  { label: 'About',    href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Research', href: '#research' },
-  { label: 'Values',   href: '#values' },
+  { label: 'Services',     href: '/services' },
+  { label: 'Methodology',  href: '/methodology' },
+  { label: 'Insights',     href: '/insights' },
+  { label: 'Risk Index',   href: '/risk-index' },
+  { label: 'Engagements',  href: '/engagements' },
+  { label: 'About',        href: '/about' },
 ];
 
 export function Header() {
@@ -20,7 +24,7 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-20 transition-all duration-300 ${
+      className={`sticky top-0 z-20 transition-all duration-300 header-enter ${
         scrolled
           ? 'bg-navy/95 backdrop-blur-md border-b border-rule-d'
           : 'bg-transparent border-b border-rule-d/60'
@@ -31,7 +35,7 @@ export function Header() {
 
           {/* Wordmark */}
           <a
-            href="#"
+            href="/"
             aria-label="Travo — home"
             className="font-display text-[22px] font-bold tracking-[0.06em] text-snow hover:text-teal transition-colors duration-200"
           >

@@ -1,5 +1,7 @@
+'use client';
+
 import { useState } from 'react';
-import { useInView } from '../../hooks/useInView';
+import { useInView } from '../../../hooks/useInView';
 
 /* ── Minimal 20×20 stroke icons per service code ── */
 function IconCurve() {
@@ -95,12 +97,24 @@ function IconBook() {
     </svg>
   );
 }
+function IconBranch() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
+      <line x1="3" y1="10" x2="9" y2="10" />
+      <path d="M9 10 L13 6 L17 6" />
+      <path d="M9 10 L13 14 L17 14" />
+      <circle cx="17" cy="6" r="1.5" strokeWidth="1" />
+      <circle cx="17" cy="14" r="1.5" strokeWidth="1" />
+    </svg>
+  );
+}
 
 const SERVICE_ICONS: Record<string, React.ReactElement> = {
   A1: <IconCurve />,
   A2: <IconList />,
   A3: <IconBid />,
   A4: <IconReview />,
+  A5: <IconBranch />,
   B1: <IconCalendar />,
   B2: <IconTrend />,
   B3: <IconShield />,
@@ -129,8 +143,8 @@ const CATALOG: Category[] = [
   {
     id: 'A',
     name: 'Pre-Project Risk & Contingency',
-    intro: 'Risk and contingency analysis during planning and procurement, where the work has the highest leverage on financial outcomes.',
-    accentColor: '#1C4A42',
+    intro: 'Risk and contingency analysis during planning and procurement, before construction begins; the front-end discipline where the work has the highest leverage on financial outcomes. This is Travo\'s primary entry point with new clients.',
+    accentColor: '#71D2CF',
     services: [
       {
         code: 'A1',
@@ -156,17 +170,24 @@ const CATALOG: Category[] = [
       {
         code: 'A4',
         name: 'Independent Risk Peer Review',
-        desc: "Owner-side review of a contractor's risk register and contingency. Short engagement, high value when the stakes demand independent verification.",
+        desc: "Owner-side review of a contractor's risk register and contingency. Short engagement, disproportionate value to the owner.",
         timeline: '2–3 weeks',
         fee: '$20K–$50K',
+      },
+      {
+        code: 'A5',
+        name: 'Strategic Alternatives & Scenario Analysis',
+        desc: 'Structured analysis of capital decisions that involve a choice among substantively different paths: build versus retrofit, alternative technologies, delivery models, or phasing strategies. Where A1 quantifies variation within a chosen plan, A5 quantifies the relative attractiveness of the alternatives themselves.',
+        timeline: '4–8 weeks',
+        fee: '$50K–$130K',
       },
     ],
   },
   {
     id: 'B',
     name: 'During-Project Risk Management',
-    intro: 'Live risk discipline through construction execution: retainers, trend forecasting, and dispute-readiness review.',
-    accentColor: '#0D6363',
+    intro: 'Risk discipline through construction execution; retainers, trend forecasting, and dispute-readiness review that carry procurement-stage analysis through to project completion. The firm\'s primary source of recurring engagement.',
+    accentColor: '#FFB9BB',
     services: [
       {
         code: 'B1',
@@ -195,7 +216,7 @@ const CATALOG: Category[] = [
     id: 'C',
     name: 'Post-Project & Portfolio Services',
     intro: "Structured learning and regional benchmarking that compound into institutional value across an owner's capital program.",
-    accentColor: '#922527',
+    accentColor: '#FF5B5E',
     services: [
       {
         code: 'C1',
@@ -231,7 +252,7 @@ export function ServicesOverview() {
     <section
       id="services"
       ref={ref}
-      className="bg-canvas-1 text-ink py-[96px] md:py-[120px]"
+      className="bg-navy text-snow py-[72px] md:py-[96px]"
       aria-labelledby="svc-heading"
     >
       <div className="max-w-site mx-auto px-6 md:px-12 lg:px-16">
@@ -243,11 +264,11 @@ export function ServicesOverview() {
             className="font-display font-extrabold leading-[0.97] tracking-display"
             style={{ fontSize: 'clamp(2rem, 3.8vw, 3.4rem)' }}
           >
-            <span className="text-ink">Nine services. Three categories.</span>
+            <span className="text-snow">Nine services. Three categories.</span>
             <br />
-            <span className="text-forest">One discipline.</span>
+            <span className="text-teal">One discipline.</span>
           </h2>
-          <p className="mt-4 font-sans text-ink-2 leading-[1.72] pretty" style={{ fontSize: '16px', maxWidth: '66ch' }}>
+          <p className="mt-4 font-sans text-slate leading-[1.72] pretty" style={{ fontSize: '16px', maxWidth: '66ch' }}>
             Every offering carries a defined deliverable, methodology, scope, and
             fee structure. The catalog is intentionally bounded.
           </p>
@@ -256,7 +277,7 @@ export function ServicesOverview() {
         {/* Tab selectors */}
         <div
           style={fade(inView, 60)}
-          className="flex border-b border-rule-l mb-0"
+          className="flex border-b border-rule-d mb-0"
           role="tablist"
           aria-label="Service categories"
         >
@@ -268,7 +289,7 @@ export function ServicesOverview() {
               onClick={() => setActiveId(cat.id)}
               className="relative flex items-center gap-3 px-6 py-4 font-mono text-[10px] uppercase tracking-label transition-colors duration-200 cursor-pointer border-0 bg-transparent"
               style={{
-                color: activeId === cat.id ? cat.accentColor : '#5F6884',
+                color: activeId === cat.id ? cat.accentColor : '#8A95B2',
               }}
             >
               <span
@@ -291,51 +312,48 @@ export function ServicesOverview() {
         {/* Active category content */}
         <div key={activeId} style={fade(inView, 100)}>
           <p
-            className="font-sans text-ink-2 leading-[1.68] py-6 border-b border-rule-l"
+            className="font-sans text-slate leading-[1.68] py-6 border-b border-rule-d"
             style={{ fontSize: '15px', maxWidth: '72ch' }}
           >
             {active.intro}
           </p>
 
-          {/* Service rows */}
-          <div>
+          {/* Service grid — 2 per row */}
+          <div className="grid sm:grid-cols-2 gap-[1px] bg-rule-d">
             {active.services.map((svc, si) => (
               <div
                 key={svc.code}
-                style={fade(inView, 120 + si * 50)}
-                className="grid grid-cols-[88px_1fr] md:grid-cols-[104px_1fr] gap-4 md:gap-8 py-7 border-b border-rule-l hover:bg-canvas transition-colors duration-200 cursor-default"
+                style={fade(inView, 120 + si * 40)}
+                className="bg-navy p-6 flex flex-col gap-0 hover:bg-navy-1 transition-colors duration-200 cursor-default"
               >
-                {/* Code + icon column */}
-                <div className="pt-1 flex flex-col items-start gap-3">
-                  <div
+                {/* Header row: code + icon */}
+                <div className="flex items-start justify-between mb-3">
+                  <span
                     className="font-display font-extrabold leading-none tracking-display"
-                    style={{ fontSize: 'clamp(1.4rem, 2vw, 1.8rem)', color: active.accentColor }}
+                    style={{ fontSize: 'clamp(1.3rem, 1.8vw, 1.6rem)', color: active.accentColor }}
                   >
                     {svc.code}
-                  </div>
-                  <div style={{ color: active.accentColor, width: '20px', opacity: 0.7 }}>
+                  </span>
+                  <span style={{ color: active.accentColor, width: '18px', opacity: 0.55 }}>
                     {SERVICE_ICONS[svc.code]}
-                  </div>
+                  </span>
                 </div>
 
-                {/* Content */}
-                <div>
-                  <h4
-                    className="font-display font-bold text-ink leading-snug tracking-tight"
-                    style={{ fontSize: 'clamp(1rem, 1.5vw, 1.2rem)' }}
-                  >
-                    {svc.name}
-                  </h4>
-                  <p
-                    className="mt-2 font-sans text-ink-2 leading-[1.65] pretty"
-                    style={{ fontSize: '14.5px', maxWidth: '72ch' }}
-                  >
-                    {svc.desc}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-x-10 gap-y-1 pt-4 border-t border-rule-l">
-                    <Datum label="Timeline" value={svc.timeline} />
-                    <Datum label="Fee Range" value={svc.fee} />
-                  </div>
+                <h4
+                  className="font-display font-bold text-snow leading-snug tracking-tight"
+                  style={{ fontSize: 'clamp(0.9rem, 1.3vw, 1.05rem)' }}
+                >
+                  {svc.name}
+                </h4>
+                <p
+                  className="mt-2 font-sans text-slate leading-[1.6] pretty flex-1"
+                  style={{ fontSize: '13.5px' }}
+                >
+                  {svc.desc}
+                </p>
+                <div className="mt-4 pt-3 border-t border-rule-d flex flex-wrap gap-x-8 gap-y-1">
+                  <Datum label="Timeline" value={svc.timeline} />
+                  <Datum label="Fee" value={svc.fee} />
                 </div>
               </div>
             ))}
@@ -350,8 +368,8 @@ export function ServicesOverview() {
 function Datum({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <span className="font-mono text-[9px] uppercase tracking-label text-ink-3 block">{label}</span>
-      <span className="font-mono text-[11.5px] text-ink-2 mt-[2px] block">{value}</span>
+      <span className="font-mono text-[9px] uppercase tracking-label text-haze block">{label}</span>
+      <span className="font-mono text-[11.5px] text-slate mt-[2px] block">{value}</span>
     </div>
   );
 }
@@ -359,7 +377,7 @@ function Datum({ label, value }: { label: string; value: string }) {
 function fade(inView: boolean, delay: number): React.CSSProperties {
   return {
     opacity:    inView ? 1 : 0,
-    transform:  inView ? 'none' : 'translateY(18px)',
-    transition: `opacity 0.7s cubic-bezier(0.2,0.7,0.2,1) ${delay}ms, transform 0.7s cubic-bezier(0.2,0.7,0.2,1) ${delay}ms`,
+    transform:  inView ? 'none' : 'translateY(26px)',
+    transition: `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
   };
 }

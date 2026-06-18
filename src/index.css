@@ -17,9 +17,9 @@
   }
 
   body {
-    background-color: #09111F;
+    background-color: #1E1E2E;
     color: #E6EAF4;
-    font-family: 'Barlow', system-ui, sans-serif;
+    font-family: var(--font-sans), system-ui, sans-serif;
     font-weight: 400;
     line-height: 1.62;
     -webkit-font-smoothing: antialiased;
@@ -40,7 +40,7 @@
 
   ::selection {
     background-color: #71D2CF;
-    color: #09111F;
+    color: #1E1E2E;
   }
 }
 
@@ -63,18 +63,23 @@
 }
 
 @layer utilities {
-  /* Reveal animation */
+  /* Reveal animation — expo-out, matches all section fade() helpers */
   .rv {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(26px);
     transition:
-      opacity 0.72s cubic-bezier(0.2, 0.7, 0.2, 1),
-      transform 0.72s cubic-bezier(0.2, 0.7, 0.2, 1);
+      opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+      transform 0.8s cubic-bezier(0.16,1,0.3,1);
   }
 
   .rv.in-view {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* WhatWeDo bento grid — fixed row height only on desktop */
+  @media (min-width: 1024px) {
+    .bento-grid { grid-auto-rows: 280px; }
   }
 
   /* Reduced motion */
@@ -92,4 +97,33 @@
 
   .balance { text-wrap: balance; }
   .pretty  { text-wrap: pretty;  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  @keyframes sq-pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.6; }
+  }
+
+  @keyframes headerIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .header-enter {
+    animation: headerIn 0.65s cubic-bezier(0.16,1,0.3,1) 80ms both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none !important; }
+    .header-enter  { animation: none !important; }
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }

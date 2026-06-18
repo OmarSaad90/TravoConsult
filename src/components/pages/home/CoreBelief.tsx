@@ -1,12 +1,22 @@
-import { useInView } from '../../hooks/useInView';
+'use client';
+
+import { useInView } from '../../../hooks/useInView';
 
 // Real breakdown from N≈10,000 capital projects (industry benchmark, PPTX source)
 const BUCKETS = [
-  { pct: 8,  label: 'Under budget',  color: '#71D2CF' }, // teal
-  { pct: 22, label: 'On budget',     color: '#3EA6A3' }, // teal-deep
-  { pct: 28, label: 'Over < 30%',    color: '#E88060' }, // elevated
-  { pct: 42, label: 'Over ≥ 30%',    color: '#FF5B5E' }, // coral
+  { pct: 8,  label: 'Under budget',  color: '#71D2CF' },
+  { pct: 22, label: 'On budget',     color: '#3EA6A3' },
+  { pct: 28, label: 'Over < 30%',    color: '#FFB9BB' },
+  { pct: 42, label: 'Over ≥ 30%',    color: '#FF5B5E' },
 ] as const;
+
+// Individual squares proportional to the breakdown (total = 40 squares)
+const OUTCOME_SQUARES: string[] = [
+  ...Array(3).fill('#71D2CF'),   // 8%
+  ...Array(9).fill('#3EA6A3'),   // 22%
+  ...Array(11).fill('#FFB9BB'),  // 28%
+  ...Array(17).fill('#FF5B5E'),  // 42%
+];
 
 export function CoreBelief() {
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.08 });
@@ -56,19 +66,19 @@ export function CoreBelief() {
           {/* Outcome distribution visualization */}
           <div style={fade(inView, 160)}>
 
-            {/* Percentage labels + bucket names above the bar */}
-            <div className="flex overflow-visible mb-4">
+            {/* Bucket summary labels */}
+            <div className="flex overflow-visible mb-6">
               {BUCKETS.map((b) => (
                 <div key={b.label} style={{ flex: b.pct }} className="overflow-visible pr-1">
                   <div
                     className="font-display font-extrabold leading-none"
-                    style={{ fontSize: 'clamp(1.6rem, 2.8vw, 2.4rem)', color: b.color }}
+                    style={{ fontSize: 'clamp(1.4rem, 2.4vw, 2rem)', color: b.color }}
                   >
                     {b.pct}%
                   </div>
                   <div
-                    className="font-mono uppercase mt-[6px] whitespace-nowrap"
-                    style={{ fontSize: '8px', letterSpacing: '0.10em', color: b.color, opacity: 0.7 }}
+                    className="font-mono uppercase mt-[5px] whitespace-nowrap"
+                    style={{ fontSize: '7.5px', letterSpacing: '0.10em', color: b.color, opacity: 0.65 }}
                   >
                     {b.label}
                   </div>
@@ -76,24 +86,25 @@ export function CoreBelief() {
               ))}
             </div>
 
-            {/* Stacked bar — animates left to right on scroll */}
-            <div className="flex gap-[2px]" style={{ height: '52px' }} aria-hidden>
-              {BUCKETS.map((b, i) => (
+            {/* Individual squares lighting up one by one */}
+            <div className="flex flex-wrap gap-[3px]" aria-hidden role="presentation">
+              {OUTCOME_SQUARES.map((color, i) => (
                 <div
-                  key={b.label}
-                  className="origin-left"
+                  key={i}
                   style={{
-                    flex: b.pct,
-                    backgroundColor: b.color,
-                    transform: inView ? 'scaleX(1)' : 'scaleX(0)',
-                    transition: `transform 1.3s cubic-bezier(0.16,1,0.3,1) ${i * 90}ms`,
+                    width: '22px',
+                    height: '22px',
+                    backgroundColor: color,
+                    opacity: inView ? 1 : 0,
+                    transform: inView ? 'scale(1)' : 'scale(0.4)',
+                    transition: `opacity 0.35s cubic-bezier(0.16,1,0.3,1) ${i * 45}ms, transform 0.35s cubic-bezier(0.16,1,0.3,1) ${i * 45}ms`,
                   }}
                 />
               ))}
             </div>
 
             {/* Source + insight line */}
-            <div className="mt-5 pt-5 border-t border-rule-d space-y-2">
+            <div className="mt-6 pt-5 border-t border-rule-d space-y-2">
               <p className="font-mono uppercase text-haze" style={{ fontSize: '8.5px', letterSpacing: '0.10em' }}>
                 Distribution of capital project cost outcomes · N≈10,000 projects · Industry benchmark
               </p>
@@ -115,7 +126,7 @@ export function CoreBelief() {
 function fade(inView: boolean, delay: number): React.CSSProperties {
   return {
     opacity:    inView ? 1 : 0,
-    transform:  inView ? 'none' : 'translateY(22px)',
-    transition: `opacity 0.75s cubic-bezier(0.2,0.7,0.2,1) ${delay}ms, transform 0.75s cubic-bezier(0.2,0.7,0.2,1) ${delay}ms`,
+    transform:  inView ? 'none' : 'translateY(26px)',
+    transition: `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
   };
 }
