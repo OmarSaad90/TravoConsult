@@ -29,6 +29,7 @@ out/
 
 # Client reference assets (confidential)
 ref/
+Visual Identity/
 
 # AI tool session data
 .claude/

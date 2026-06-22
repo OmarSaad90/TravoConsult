@@ -43,7 +43,7 @@ function Sparkline({ active }: { active: boolean }) {
         const gy = PAD_T + (1 - (v - minV) / (maxV - minV)) * (H - PAD_T - PAD_B);
         return (
           <line key={v} x1={PAD_L} y1={gy} x2={W - PAD_R} y2={gy}
-            stroke="#162030" strokeWidth="0.75" />
+            stroke="#28283E" strokeWidth="0.75" />
         );
       })}
 

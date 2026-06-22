@@ -3,125 +3,6 @@
 import { useState } from 'react';
 import { useInView } from '../../../hooks/useInView';
 
-/* ── Minimal 20×20 stroke icons per service code ── */
-function IconCurve() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
-      <path d="M2 16 C3.5 16 5 10 7 7 C8.5 4.5 9.5 3.5 10 3.5 C10.5 3.5 11.5 4.5 13 7 C15 10 16.5 16 18 16" />
-      <line x1="2" y1="16" x2="18" y2="16" strokeOpacity="0.3" />
-    </svg>
-  );
-}
-function IconList() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
-      <rect x="3" y="3" width="14" height="14" />
-      <line x1="6" y1="7" x2="14" y2="7" />
-      <line x1="6" y1="10" x2="14" y2="10" />
-      <line x1="6" y1="13" x2="10" y2="13" />
-    </svg>
-  );
-}
-function IconBid() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
-      <rect x="3" y="6" width="14" height="11" />
-      <path d="M7 6V4h6v2" />
-      <line x1="7" y1="10" x2="13" y2="10" />
-      <line x1="7" y1="13" x2="10" y2="13" />
-    </svg>
-  );
-}
-function IconReview() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
-      <circle cx="9" cy="9" r="5" />
-      <line x1="13" y1="13" x2="17" y2="17" />
-      <polyline points="7 9 9 11 12 7" />
-    </svg>
-  );
-}
-function IconCalendar() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
-      <rect x="2" y="4" width="16" height="14" />
-      <line x1="2" y1="9" x2="18" y2="9" />
-      <line x1="6" y1="2" x2="6" y2="6" />
-      <line x1="14" y1="2" x2="14" y2="6" />
-    </svg>
-  );
-}
-function IconTrend() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
-      <line x1="2" y1="18" x2="2" y2="2" strokeOpacity="0.3" />
-      <line x1="2" y1="18" x2="18" y2="18" strokeOpacity="0.3" />
-      <polyline points="3 14 7 9 11 11 16 4" />
-    </svg>
-  );
-}
-function IconShield() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
-      <path d="M10 2 L17 5 V10 C17 14.5 13.5 17.5 10 18.5 C6.5 17.5 3 14.5 3 10 V5 Z" />
-      <line x1="10" y1="8" x2="10" y2="12" />
-      <circle cx="10" cy="14.5" r="0.75" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-function IconLoop() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
-      <path d="M15 4 C17.5 6.5 18 11 15 14.5 C12 18 7 18 4 15" />
-      <polyline points="4 10 4 15 9 15" />
-    </svg>
-  );
-}
-function IconBars() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
-      <line x1="2" y1="18" x2="18" y2="18" strokeOpacity="0.3" />
-      <rect x="2.5" y="12" width="4" height="6" />
-      <rect x="8" y="8" width="4" height="10" />
-      <rect x="13.5" y="4" width="4" height="14" />
-    </svg>
-  );
-}
-function IconBook() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
-      <path d="M3 4 H12 C13.1 4 14 4.9 14 6 V16 H3 Z" />
-      <path d="M14 6 C14 5 16 5 17 6 V17 C16 17 14 17 14 16" />
-      <line x1="6" y1="8" x2="11" y2="8" />
-      <line x1="6" y1="11" x2="11" y2="11" />
-    </svg>
-  );
-}
-function IconBranch() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
-      <line x1="3" y1="10" x2="9" y2="10" />
-      <path d="M9 10 L13 6 L17 6" />
-      <path d="M9 10 L13 14 L17 14" />
-      <circle cx="17" cy="6" r="1.5" strokeWidth="1" />
-      <circle cx="17" cy="14" r="1.5" strokeWidth="1" />
-    </svg>
-  );
-}
-
-const SERVICE_ICONS: Record<string, React.ReactElement> = {
-  A1: <IconCurve />,
-  A2: <IconList />,
-  A3: <IconBid />,
-  A4: <IconReview />,
-  A5: <IconBranch />,
-  B1: <IconCalendar />,
-  B2: <IconTrend />,
-  B3: <IconShield />,
-  C1: <IconLoop />,
-  C2: <IconBars />,
-  C3: <IconBook />,
-};
 
 type Service = {
   code: string;
@@ -264,7 +145,7 @@ export function ServicesOverview() {
             className="font-display font-extrabold leading-[0.97] tracking-display"
             style={{ fontSize: 'clamp(2rem, 3.8vw, 3.4rem)' }}
           >
-            <span className="text-snow">Nine services. Three categories.</span>
+            <span className="text-snow">Eleven services. Three categories.</span>
             <br />
             <span className="text-teal">One discipline.</span>
           </h2>
@@ -326,18 +207,12 @@ export function ServicesOverview() {
                 style={fade(inView, 120 + si * 40)}
                 className="bg-navy p-6 flex flex-col gap-0 hover:bg-navy-1 transition-colors duration-200 cursor-default"
               >
-                {/* Header row: code + icon */}
-                <div className="flex items-start justify-between mb-3">
-                  <span
-                    className="font-display font-extrabold leading-none tracking-display"
-                    style={{ fontSize: 'clamp(1.3rem, 1.8vw, 1.6rem)', color: active.accentColor }}
-                  >
-                    {svc.code}
-                  </span>
-                  <span style={{ color: active.accentColor, width: '18px', opacity: 0.55 }}>
-                    {SERVICE_ICONS[svc.code]}
-                  </span>
-                </div>
+                <span
+                  className="font-display font-extrabold leading-none tracking-display block mb-3"
+                  style={{ fontSize: 'clamp(1.3rem, 1.8vw, 1.6rem)', color: active.accentColor }}
+                >
+                  {svc.code}
+                </span>
 
                 <h4
                   className="font-display font-bold text-snow leading-snug tracking-tight"

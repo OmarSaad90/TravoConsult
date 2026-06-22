@@ -176,7 +176,7 @@ export function WhyTravo() {
           >
             <span className="text-ink">Three things the broader market</span>
             <br />
-            <span className="text-teal">rarely combines.</span>
+            <span className="text-forest">rarely combines.</span>
           </h2>
         </div>
 
@@ -199,7 +199,7 @@ export function WhyTravo() {
               ].join(' ')}
             >
               {/* Sequence indicator */}
-              <div className="font-mono text-teal uppercase mb-5" style={{ fontSize: '9px', letterSpacing: '0.16em' }}>
+              <div className="font-mono text-forest uppercase mb-5" style={{ fontSize: '9px', letterSpacing: '0.16em' }}>
                 {d.id} / 03
               </div>
 

@@ -777,6 +777,236 @@ function EngagementProcessSection() {
   );
 }
 
+/* ── Quantitative Output Charts ────────────────────────────────────────────── */
+
+function MonteCarloHistogram({ active }: { active: boolean }) {
+  const BINS = [
+    { x: -4, h: 0.04 }, { x: -2, h: 0.09 }, { x: 0,  h: 0.16 },
+    { x: 2,  h: 0.28 }, { x: 4,  h: 0.43 }, { x: 6,  h: 0.63 },
+    { x: 8,  h: 0.80 }, { x: 10, h: 0.92 }, { x: 12, h: 0.98 },
+    { x: 14, h: 0.88 }, { x: 16, h: 0.73 }, { x: 18, h: 0.53 },
+    { x: 20, h: 0.37 }, { x: 22, h: 0.23 }, { x: 24, h: 0.14 },
+    { x: 26, h: 0.08 }, { x: 28, h: 0.04 }, { x: 30, h: 0.02 },
+  ];
+  const W = 440, H = 160, PL = 8, PR = 8, PT = 22, PB = 28;
+  const CW = W - PL - PR, CH = H - PT - PB;
+  const BW = CW / BINS.length;
+  const toX = (v: number) => PL + ((v + 4) / 36) * CW;
+
+  const MARKERS = [
+    { v: 7,  label: 'P10', color: '#3EA6A3' },
+    { v: 12, label: 'P50', color: '#71D2CF' },
+    { v: 17, label: 'P80', color: '#FFB9BB' },
+  ] as const;
+
+  return (
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      fill="none"
+      style={{ width: '100%', height: 'auto', overflow: 'visible' }}
+      aria-hidden
+    >
+      <line x1={PL} y1={PT + CH} x2={W - PR} y2={PT + CH} stroke="#28283E" strokeWidth="1" />
+
+      {BINS.map((bin, i) => {
+        const barH = bin.h * CH;
+        const y = PT + CH - barH;
+        const coral = bin.x >= 18;
+        return (
+          <rect
+            key={i}
+            x={PL + i * BW + 1}
+            y={y}
+            width={BW - 2}
+            height={barH}
+            fill={coral ? '#FF5B5E' : '#71D2CF'}
+            fillOpacity={coral ? 0.68 : 0.78}
+            style={{
+              transformBox: 'fill-box',
+              transformOrigin: 'center bottom',
+              transform: active ? 'scaleY(1)' : 'scaleY(0)',
+              opacity: active ? 1 : 0,
+              transition: `transform 0.65s cubic-bezier(0.16,1,0.3,1) ${80 + i * 35}ms, opacity 0.4s ease-out ${80 + i * 35}ms`,
+            }}
+          />
+        );
+      })}
+
+      {MARKERS.map(({ v, label, color }) => (
+        <g key={label} style={{ opacity: active ? 1 : 0, transition: 'opacity 0.6s ease-out 850ms' }}>
+          <line x1={toX(v)} y1={PT} x2={toX(v)} y2={PT + CH} stroke={color} strokeWidth="1" strokeDasharray="4 3" />
+          <text x={toX(v)} y={PT - 6} textAnchor="middle" fill={color} fontSize="9" fontFamily="JetBrains Mono, monospace" letterSpacing="0.07em">
+            {label}
+          </text>
+        </g>
+      ))}
+
+      <g style={{ opacity: active ? 0.65 : 0, transition: 'opacity 0.6s ease-out 1100ms' }}>
+        <line x1={toX(25)} y1={PT} x2={toX(25)} y2={PT + CH} stroke="#FF5B5E" strokeWidth="1.5" strokeDasharray="3 4" />
+        <text x={toX(25) + 4} y={PT + 14} fill="#FF5B5E" fontSize="7.5" fontFamily="JetBrains Mono, monospace" letterSpacing="0.09em">
+          +25% CAP
+        </text>
+      </g>
+
+      {[0, 8, 16, 24].map(v => (
+        <text key={v} x={toX(v)} y={H - 4} textAnchor="middle" fill="#5F6884" fontSize="8" fontFamily="JetBrains Mono, monospace">
+          {v === 0 ? '±0%' : `+${v}%`}
+        </text>
+      ))}
+    </svg>
+  );
+}
+
+function CDFCurve({ active }: { active: boolean }) {
+  const path =
+    'M 30,132 C 55,132 65,130 79,130 C 95,130 125,123 147,120 ' +
+    'C 160,106 180,75 195,74 C 210,73 232,42 244,39 ' +
+    'C 280,28 340,18 390,17';
+
+  const toX = (v: number) => 30 + ((v + 5) / 37) * 360;
+  const toY = (p: number) => 132 - (p / 100) * 116;
+
+  return (
+    <svg
+      viewBox="0 0 400 160"
+      fill="none"
+      style={{ width: '100%', height: 'auto', overflow: 'visible' }}
+      aria-hidden
+    >
+      <line x1="30" y1="16" x2="30" y2="132" stroke="#28283E" strokeWidth="1" />
+      <line x1="30" y1="132" x2="390" y2="132" stroke="#28283E" strokeWidth="1" />
+
+      {[25, 50, 75].map(p => (
+        <line key={p} x1="30" y1={toY(p)} x2="390" y2={toY(p)} stroke="#28283E" strokeWidth="0.5" opacity="0.35" />
+      ))}
+
+      <path d={`${path} L 390,132 L 30,132 Z`} fill="#71D2CF" fillOpacity="0.05" />
+
+      <path
+        d={path}
+        stroke="#71D2CF"
+        strokeWidth="2"
+        strokeLinecap="round"
+        pathLength="1"
+        style={{
+          strokeDasharray: 1,
+          strokeDashoffset: active ? 0 : 1,
+          transition: 'stroke-dashoffset 1.6s cubic-bezier(0.16,1,0.3,1) 200ms',
+        }}
+      />
+
+      <g style={{ opacity: active ? 0.75 : 0, transition: 'opacity 0.5s ease-out 1400ms' }}>
+        <line x1="30" y1={toY(80)} x2={toX(17)} y2={toY(80)} stroke="#FFB9BB" strokeWidth="1" strokeDasharray="4 3" />
+        <line x1={toX(17)} y1="16" x2={toX(17)} y2={toY(80)} stroke="#FFB9BB" strokeWidth="1" strokeDasharray="4 3" />
+        <text x={toX(17) + 6} y={toY(80) - 5} fill="#FFB9BB" fontSize="8" fontFamily="JetBrains Mono, monospace" letterSpacing="0.07em">
+          80% ≤ +17%
+        </text>
+      </g>
+
+      {[
+        { v: 7,  p: 10, color: '#3EA6A3', label: 'P10' },
+        { v: 12, p: 50, color: '#71D2CF', label: 'P50' },
+      ].map(({ v, p, color, label }) => (
+        <g key={label} style={{ opacity: active ? 0.45 : 0, transition: 'opacity 0.5s ease-out 1600ms' }}>
+          <line x1="30" y1={toY(p)} x2={toX(v)} y2={toY(p)} stroke={color} strokeWidth="0.75" strokeDasharray="3 3" />
+          <line x1={toX(v)} y1="16" x2={toX(v)} y2={toY(p)} stroke={color} strokeWidth="0.75" strokeDasharray="3 3" />
+        </g>
+      ))}
+
+      {[
+        { v: 7,  label: 'P10', color: '#3EA6A3' },
+        { v: 12, label: 'P50', color: '#71D2CF' },
+        { v: 17, label: 'P80', color: '#FFB9BB' },
+      ].map(({ v, label, color }) => (
+        <text
+          key={label}
+          x={toX(v)} y="148"
+          textAnchor="middle"
+          fill={color} fontSize="8.5"
+          fontFamily="JetBrains Mono, monospace"
+          letterSpacing="0.07em"
+          style={{ opacity: active ? (label === 'P80' ? 0.75 : 0.45) : 0, transition: 'opacity 0.5s ease-out 1400ms' }}
+        >
+          {label}
+        </text>
+      ))}
+
+      {[0, 50, 100].map(p => (
+        <text key={p} x="25" y={toY(p) + 3} textAnchor="end" fill="#5F6884" fontSize="7.5" fontFamily="JetBrains Mono, monospace">
+          {p}%
+        </text>
+      ))}
+    </svg>
+  );
+}
+
+function QuantOutputSection() {
+  const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.06 });
+  return (
+    <section
+      ref={ref}
+      className="bg-canvas-1"
+      style={{ paddingTop: '96px', paddingBottom: '96px', borderTop: '1px solid #D5D9E8' }}
+    >
+      <div className="max-w-site mx-auto px-6 md:px-12 lg:px-16">
+
+        <div className="mb-12" style={fade(inView, 0)}>
+          <h2
+            className="font-display font-extrabold text-ink leading-[0.97] tracking-display balance"
+            style={{ fontSize: 'clamp(1.9rem, 3.4vw, 3.1rem)', maxWidth: '28ch' }}
+          >
+            What the analysis produces.
+          </h2>
+          <p
+            className="font-sans text-ink-2 leading-[1.74] pretty mt-4"
+            style={{ fontSize: '16px', maxWidth: '58ch' }}
+          >
+            Every engagement delivers a full probability distribution of outcomes,
+            not a single-point estimate. Results are expressed at three standard
+            confidence levels — P10, P50, and P80 — derived from 10,000-iteration
+            Monte Carlo simulation.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-10 items-start">
+          <div>
+            <div style={fade(inView, 80)}>
+              <MonteCarloHistogram active={inView} />
+            </div>
+            <p
+              className="font-mono text-haze uppercase mt-4"
+              style={{ ...fade(inView, 600), fontSize: '8px', letterSpacing: '0.14em' }}
+            >
+              Fig 01 · Monte Carlo cost simulation · 10,000 iterations · P10 +7% · P50 +12% · P80 +17%
+            </p>
+          </div>
+          <div>
+            <div style={fade(inView, 160)}>
+              <CDFCurve active={inView} />
+            </div>
+            <p
+              className="font-mono text-haze uppercase mt-4"
+              style={{ ...fade(inView, 680), fontSize: '8px', letterSpacing: '0.14em' }}
+            >
+              Fig 02 · Cumulative distribution · 80% confidence: outcome ≤ +17% cost overrun
+            </p>
+          </div>
+        </div>
+
+        <div
+          className="mt-10 pt-6"
+          style={{ borderTop: '1px solid #D5D9E8', ...fade(inView, 280) }}
+        >
+          <p className="font-mono text-haze uppercase" style={{ fontSize: '8px', letterSpacing: '0.14em' }}>
+            10,000-iteration Monte Carlo · Latin Hypercube sampling · AACE 41R-08 / AACE 57R-09 · Level 3 CPM integration
+          </p>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
 /* ── Page root ────────────────────────────────────────────────────────────── */
 
 export function MethodologyPage() {
@@ -785,6 +1015,7 @@ export function MethodologyPage() {
       <MethodologyHero />
       <TwoFormsSection />
       <StandardsSection />
+      <QuantOutputSection />
       <ResearchSection />
       <EngagementProcessSection />
     </>

@@ -315,7 +315,7 @@ export function Hero() {
                 <line x1={p80.x} y1={p80.y} x2={p80.x} y2={PH} stroke="#FFB9BB" strokeWidth="0.75" strokeDasharray="3,4" opacity={mounted ? 0.9 : 0} style={{ transition: 'opacity 0.4s 1300ms' }} />
 
                 {/* Baseline */}
-                <line x1={0} y1={PH} x2={PW} y2={PH} stroke="#162030" strokeWidth="1" />
+                <line x1={0} y1={PH} x2={PW} y2={PH} stroke="#28283E" strokeWidth="1" />
               </svg>
 
               {/* Percentile value strip */}

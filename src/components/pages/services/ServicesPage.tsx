@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useInView } from '@/hooks/useInView';
 
 // ── Data ───────────────────────────────────────────────────────────────────────
@@ -307,73 +307,6 @@ function CatalogIndexPanel({ mounted }: { mounted: boolean }) {
   );
 }
 
-// ── Lifecycle bar ──────────────────────────────────────────────────────────────
-
-function LifecycleBar({ mounted }: { mounted: boolean }) {
-  const phases = [
-    { id: 'A', label: 'Pre-Project', sub: 'Planning & Procurement', count: 5, accent: '#71D2CF', flex: 5 },
-    { id: 'B', label: 'During-Project', sub: 'Construction Execution', count: 3, accent: '#FFB9BB', flex: 3 },
-    { id: 'C', label: 'Post-Project', sub: 'Portfolio & Learning', count: 3, accent: '#FF5B5E', flex: 3 },
-  ];
-
-  return (
-    <div
-      className="px-6 md:px-12 lg:px-16 pt-5 pb-8"
-      style={{
-        opacity: mounted ? 1 : 0,
-        transition: 'opacity 0.7s cubic-bezier(0.16,1,0.3,1) 700ms',
-      }}
-      aria-hidden
-    >
-      {/* Milestone labels */}
-      <div className="hidden sm:flex items-center mb-2">
-        {['Project Start', 'Contract Award', 'Substantial Completion', 'Closeout'].map((m, i) => (
-          <span key={m} className="flex items-center" style={{ flex: i === 0 || i === 3 ? '0 0 auto' : 1 }}>
-            <span
-              className="font-mono text-haze uppercase whitespace-nowrap"
-              style={{ fontSize: '7.5px', letterSpacing: '0.12em' }}
-            >
-              {m}
-            </span>
-            {i < 3 && <div className="flex-1 border-t border-rule-d/40 mx-3" />}
-          </span>
-        ))}
-      </div>
-
-      {/* Phase segments */}
-      <div className="flex gap-[2px]" style={{ height: '30px' }}>
-        {phases.map((p) => (
-          <a
-            key={p.id}
-            href={`#cat-${p.id.toLowerCase()}`}
-            className="flex items-center justify-between px-3 group transition-all duration-300 hover:opacity-90"
-            style={{
-              flex: p.flex,
-              backgroundColor: mounted ? `${p.accent}18` : 'rgba(255,255,255,0.025)',
-              borderTop: `2px solid ${p.accent}`,
-              transition: 'background-color 0.8s cubic-bezier(0.16,1,0.3,1)',
-              textDecoration: 'none',
-            }}
-          >
-            <span
-              className="font-mono uppercase whitespace-nowrap"
-              style={{ fontSize: '8px', letterSpacing: '0.1em', color: p.accent }}
-            >
-              {p.label}
-            </span>
-            <span
-              className="font-mono hidden sm:block"
-              style={{ fontSize: '9px', color: p.accent, opacity: 0.6 }}
-            >
-              {p.count}
-            </span>
-          </a>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 // ── Hero section ───────────────────────────────────────────────────────────────
 
 function ServicesHero() {
@@ -451,87 +384,63 @@ function ServicesHero() {
           </div>
         </div>
 
-        {/* Lifecycle timeline — full width */}
-        <div className="border-t border-rule-d/50">
-          <LifecycleBar mounted={mounted} />
-        </div>
       </div>
     </section>
   );
 }
 
-// ── Sidebar navigator ──────────────────────────────────────────────────────────
+// ── Sticky phase strip ─────────────────────────────────────────────────────────
 
-function SidebarNav({ activeId }: { activeId: 'A' | 'B' | 'C' }) {
+function StickyPhaseStrip() {
+  const phases = [
+    { id: 'A', label: 'Pre-Project', sub: '5 services', accent: '#71D2CF', flex: 5 },
+    { id: 'B', label: 'During-Project', sub: '3 services', accent: '#FFB9BB', flex: 3 },
+    { id: 'C', label: 'Post-Project', sub: '3 services', accent: '#FF5B5E', flex: 3 },
+  ];
+
   return (
-    <nav aria-label="Service categories" className="flex flex-col h-full">
-      <span
-        className="font-mono uppercase text-haze mb-5 mt-10"
-        style={{ fontSize: '8.5px', letterSpacing: '0.18em' }}
-      >
-        Catalog
-      </span>
-
-      <div className="flex flex-col gap-0">
-        {CATALOG.map((cat) => {
-          const active = activeId === cat.id;
-          return (
-            <a
-              key={cat.id}
-              href={`#cat-${cat.id.toLowerCase()}`}
-              className="flex items-center gap-4 py-4 group transition-all duration-200"
-              style={{
-                borderLeft: `2px solid ${active ? cat.accent : '#28283E'}`,
-                paddingLeft: '18px',
-                textDecoration: 'none',
-              }}
-            >
+    <div
+      className="sticky bg-navy border-b border-rule-d"
+      style={{ top: '68px', zIndex: 20 }}
+    >
+      <div className="flex" style={{ height: '44px' }}>
+        {phases.map((p, i) => (
+          <a
+            key={p.id}
+            href={`#cat-${p.id.toLowerCase()}`}
+            className="flex items-center justify-between px-5 sm:px-7 hover:brightness-110 transition-all duration-200"
+            style={{
+              flex: p.flex,
+              backgroundColor: `${p.accent}10`,
+              borderTop: `2px solid ${p.accent}`,
+              borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.05)' : undefined,
+              textDecoration: 'none',
+            }}
+          >
+            <div className="flex items-center gap-2 sm:gap-3">
               <span
-                className="font-display font-extrabold tracking-display leading-none shrink-0 transition-colors duration-200"
-                style={{ fontSize: '1.6rem', color: active ? cat.accent : '#8A95B2' }}
+                className="font-display font-extrabold tracking-display leading-none"
+                style={{ fontSize: '1.05rem', color: p.accent }}
               >
-                {cat.id}
+                {p.id}
               </span>
-              <div>
-                <div
-                  className="font-mono uppercase transition-colors duration-200"
-                  style={{
-                    fontSize: '8.5px',
-                    letterSpacing: '0.12em',
-                    color: active ? '#E6EAF4' : '#8A95B2',
-                  }}
-                >
-                  {cat.phase}
-                </div>
-                <div
-                  className="font-mono mt-[3px] transition-colors duration-200"
-                  style={{ fontSize: '8.5px', color: active ? cat.accent : '#3A3A5C' }}
-                >
-                  {cat.services.length} services
-                </div>
-              </div>
-            </a>
-          );
-        })}
-      </div>
-
-      <div className="mt-auto pb-10">
-        <div className="border-t border-rule-d pt-6">
-          <a
-            href="/contact"
-            className="font-mono text-[9px] tracking-label uppercase text-teal hover:text-snow transition-colors duration-200 block"
-          >
-            Start a Conversation
+              <span
+                className="font-mono uppercase whitespace-nowrap"
+                style={{ fontSize: '8px', letterSpacing: '0.12em', color: p.accent }}
+              >
+                {p.label}
+              </span>
+            </div>
+            <span
+              className="font-mono hidden sm:block"
+              style={{ fontSize: '8.5px', color: `${p.accent}90` }}
+            >
+              {p.sub}
+            </span>
           </a>
-          <a
-            href="/"
-            className="font-mono text-[9px] tracking-label uppercase text-haze hover:text-slate transition-colors duration-200 block mt-3"
-          >
-            Back to Home
-          </a>
-        </div>
+        ))}
       </div>
-    </nav>
+    </div>
   );
 }
 
@@ -550,7 +459,7 @@ function MetaDatum({
     <div>
       <span
         className="font-mono uppercase block"
-        style={{ fontSize: '8px', letterSpacing: '0.16em', color: '#828DA6' }}
+        style={{ fontSize: '10px', letterSpacing: '0.14em', color: '#5F6884' }}
       >
         {label}
       </span>
@@ -567,118 +476,105 @@ function MetaDatum({
 // ── Mini visualizations for featured services ─────────────────────────────────
 
 function MiniDistributionA1() {
-  // Static probability distribution — the literal output of A1
-  const W = 188, H = 76;
+  const W = 340, H = 96;
   const pts: string[] = [];
   for (let i = 0; i <= 70; i++) {
     const t = i / 70;
     const xn = t * 8 - 4;
     const yRaw = Math.exp(-xn * xn / 2);
-    pts.push(`${i === 0 ? 'M' : 'L'}${(t * W).toFixed(1)},${(H - yRaw * H * 0.82).toFixed(1)}`);
+    pts.push(`${i === 0 ? 'M' : 'L'}${(t * W).toFixed(1)},${(H - yRaw * (H - 18) * 0.88).toFixed(1)}`);
   }
   const curve = pts.join(' ');
   const fill = `${curve} L${W},${H} L0,${H} Z`;
-
   const p10x = 0.34 * W, p50x = 0.51 * W, p80x = 0.66 * W;
 
   return (
-    <div className="hidden lg:flex flex-col shrink-0" style={{ width: '188px' }}>
-      <span
-        className="font-mono uppercase block mb-2"
-        style={{ fontSize: '7.5px', letterSpacing: '0.14em', color: '#828DA6' }}
-      >
-        Sample Output
+    <div className="flex flex-col">
+      <span className="font-mono uppercase block mb-2" style={{ fontSize: '8px', letterSpacing: '0.14em', color: '#5F6884' }}>
+        Sample Output — P10 / P50 / P80 Distribution
       </span>
       <svg
         viewBox={`0 0 ${W} ${H}`}
         style={{ width: '100%', display: 'block', overflow: 'visible' }}
         fill="none"
-        aria-label="Probability distribution of project cost outcomes"
+        aria-label="Probability distribution of project cost outcomes showing P10, P50, and P80 percentiles"
       >
-        <path d={fill} fill="#3EA6A3" opacity="0.08" />
+        <path d={fill} fill="#3EA6A3" opacity="0.09" />
         <path d={curve} stroke="#3EA6A3" strokeWidth="1.5" fill="none" />
-        {/* P10 */}
-        <line x1={p10x} y1="0" x2={p10x} y2={H} stroke="#3EA6A3" strokeWidth="0.8" strokeDasharray="2,3" opacity="0.7" />
-        {/* P50 */}
-        <line x1={p50x} y1="0" x2={p50x} y2={H} stroke="#2C5251" strokeWidth="1" strokeDasharray="2,3" opacity="0.85" />
-        {/* P80 */}
-        <line x1={p80x} y1="0" x2={p80x} y2={H} stroke="#9B2D30" strokeWidth="0.8" strokeDasharray="2,3" opacity="0.7" />
-        {/* Baseline */}
+        <line x1={p10x} y1="4" x2={p10x} y2={H} stroke="#3EA6A3" strokeWidth="0.9" strokeDasharray="2,3" opacity="0.75" />
+        <line x1={p50x} y1="4" x2={p50x} y2={H} stroke="#2C5251" strokeWidth="1.1" strokeDasharray="2,3" opacity="0.9" />
+        <line x1={p80x} y1="4" x2={p80x} y2={H} stroke="#9B2D30" strokeWidth="0.9" strokeDasharray="2,3" opacity="0.75" />
         <line x1="0" y1={H} x2={W} y2={H} stroke="#D5D9E8" strokeWidth="0.75" />
+        <text x={p10x} y={H + 9} textAnchor="middle" fill="#3EA6A3" fontSize="7" fontFamily="monospace">P10</text>
+        <text x={p50x} y={H + 9} textAnchor="middle" fill="#2C5251" fontSize="7" fontFamily="monospace">P50</text>
+        <text x={p80x} y={H + 9} textAnchor="middle" fill="#9B2D30" fontSize="7" fontFamily="monospace">P80</text>
       </svg>
-      <div className="flex justify-between mt-[5px]">
-        {[['P10', '#3EA6A3'], ['P50', '#2C5251'], ['P80', '#9B2D30']].map(([label, color]) => (
-            <span key={label} className="font-mono" style={{ fontSize: '7px', letterSpacing: '0.1em', color }}>
-              {label}
-            </span>
-          ))
-        }
-      </div>
     </div>
   );
 }
 
-function MiniCadenceB1() {
-  // Monthly cadence timeline — shows what "recurring retainer" means visually
-  const totalMonths = 14;
-  const reviewAt = [0, 2, 5, 8, 11]; // initial + quarterly reviews
-  const W = 188, H = 44;
-  const step = W / (totalMonths - 1);
+function MiniTrendB1() {
+  // Cost-at-completion trend with confidence band — what a managed retainer produces
+  const W = 340, H = 112;
+  const PL = 6, PR = 8, PT = 10, PB = 22;
+  const xL = PL, xR = W - PR;
+  const yT = PT, yB = H - PB;
+  const toX = (m: number) => xL + (m / 24) * (xR - xL);
+  // Cost range $92M–$122M → y [yT, yB]
+  const toY = (c: number) => yB - ((c - 92) / 30) * (yB - yT);
+
+  // Center (cost-at-completion estimate)
+  const cx0 = toX(0), cy0 = toY(100);
+  const cx12 = toX(12), cy12 = toY(103);
+  const cx24 = toX(24), cy24 = toY(106);
+  // Upper P80 — band narrows as retainer controls risk
+  const uy0 = toY(115), uy12 = toY(113), uy24 = toY(112);
+  // Lower P20
+  const ly0 = toY(96), ly12 = toY(98), ly24 = toY(102);
+  const todayX = toX(12);
+
+  const bandPath = `M${cx0},${uy0} Q${cx12},${uy12} ${cx24},${uy24} L${cx24},${ly24} Q${cx12},${ly12} ${cx0},${ly0} Z`;
+  const centerPath = `M${cx0},${cy0} Q${cx12},${cy12} ${cx24},${cy24}`;
 
   return (
-    <div className="hidden lg:flex flex-col shrink-0" style={{ width: '188px' }}>
-      <span
-        className="font-mono uppercase block mb-2"
-        style={{ fontSize: '7.5px', letterSpacing: '0.14em', color: '#828DA6' }}
-      >
-        Monthly Cadence
+    <div className="flex flex-col">
+      <span className="font-mono uppercase block mb-2" style={{ fontSize: '8px', letterSpacing: '0.14em', color: '#5F6884' }}>
+        Cost-at-Completion Trend · Managed Retainer
       </span>
       <svg
         viewBox={`0 0 ${W} ${H}`}
         style={{ width: '100%', display: 'block' }}
         fill="none"
-        aria-hidden
+        aria-label="Cost-at-completion trend chart showing managed risk band converging over project life"
       >
-        {/* Base timeline */}
-        <line x1="0" y1={H / 2} x2={W - 8} y2={H / 2} stroke="#D5D9E8" strokeWidth="1" />
-        {/* Recurring arrow */}
-        <path
-          d={`M${W - 8} ${H / 2 - 6} C${W} ${H / 2 - 6} ${W} ${H / 2 + 6} ${W - 8} ${H / 2 + 6}`}
-          stroke="#D5D9E8" strokeWidth="0.8" fill="none"
-        />
-
-        {/* Monthly tick marks */}
-        {Array.from({ length: totalMonths }, (_, i) => {
-          const x = i * step;
-          const isReview = reviewAt.includes(i);
-          return (
-            <g key={i}>
-              <line
-                x1={x} y1={isReview ? H / 2 - 9 : H / 2 - 5}
-                x2={x} y2={isReview ? H / 2 + 9 : H / 2 + 5}
-                stroke={isReview ? '#2C5251' : '#D5D9E8'}
-                strokeWidth={isReview ? 1.5 : 0.75}
-              />
-              {isReview && i > 0 && (
-                <text
-                  x={x} y={H - 2}
-                  textAnchor="middle"
-                  fill="#828DA6"
-                  fontSize="6"
-                  fontFamily="monospace"
-                >
-                  M{i + 1}
-                </text>
-              )}
-            </g>
-          );
-        })}
+        {/* Confidence band */}
+        <path d={bandPath} fill="#FFB9BB" opacity="0.20" />
+        <path d={`M${cx0},${uy0} Q${cx12},${uy12} ${cx24},${uy24}`} stroke="#FFB9BB" strokeWidth="0.85" opacity="0.55" />
+        <path d={`M${cx0},${ly0} Q${cx12},${ly12} ${cx24},${ly24}`} stroke="#FFB9BB" strokeWidth="0.85" opacity="0.55" />
+        {/* Center trend */}
+        <path d={centerPath} stroke="#7A3E44" strokeWidth="1.6" />
+        {/* Endpoint dot */}
+        <circle cx={cx24} cy={cy24} r="2.5" fill="#7A3E44" />
+        {/* Today marker */}
+        <line x1={todayX} y1={yT} x2={todayX} y2={yB} stroke="#8A95B2" strokeWidth="0.8" strokeDasharray="2,3" />
+        {/* Baseline */}
+        <line x1={xL} y1={yB} x2={xR} y2={yB} stroke="#D5D9E8" strokeWidth="0.75" />
+        {/* P80 bracket label */}
+        <text x={cx24 - 4} y={uy24 - 3} textAnchor="end" fill="#FFB9BB" fontSize="6.5" fontFamily="monospace" opacity="0.85">P80</text>
+        {/* X-axis labels */}
+        <text x={xL} y={H - 4} textAnchor="start" fill="#828DA6" fontSize="6.5" fontFamily="monospace">Contract</text>
+        <text x={todayX} y={H - 4} textAnchor="middle" fill="#8A95B2" fontSize="6.5" fontFamily="monospace">Today</text>
+        <text x={xR} y={H - 4} textAnchor="end" fill="#828DA6" fontSize="6.5" fontFamily="monospace">Completion</text>
       </svg>
-      <div className="flex items-center gap-[6px] mt-1">
-        <div style={{ width: '10px', height: '1.5px', backgroundColor: '#2C5251' }} />
-        <span className="font-mono" style={{ fontSize: '6.5px', letterSpacing: '0.1em', color: '#828DA6' }}>
-          Scheduled risk review
-        </span>
+      <div className="flex items-center gap-5 mt-2">
+        <div className="flex items-center gap-[6px]">
+          <div style={{ width: '18px', height: '2px', backgroundColor: '#7A3E44' }} />
+          <span className="font-mono" style={{ fontSize: '6.5px', letterSpacing: '0.08em', color: '#828DA6' }}>Cost-at-Completion</span>
+        </div>
+        <div className="flex items-center gap-[6px]">
+          <div style={{ width: '14px', height: '7px', backgroundColor: '#FFB9BB', opacity: 0.38 }} />
+          <span className="font-mono" style={{ fontSize: '6.5px', letterSpacing: '0.08em', color: '#828DA6' }}>P20 – P80 Band</span>
+        </div>
       </div>
     </div>
   );
@@ -686,7 +582,7 @@ function MiniCadenceB1() {
 
 const FEATURED_VIZ: Partial<Record<string, React.ReactElement>> = {
   A1: <MiniDistributionA1 />,
-  B1: <MiniCadenceB1 />,
+  B1: <MiniTrendB1 />,
 };
 
 // ── Featured service entry (first in each category — full width) ───────────────
@@ -734,19 +630,27 @@ function FeaturedServiceEntry({
             {svc.desc}
           </p>
 
-          <div className="mt-5 pt-4 border-t border-rule-l">
-            <span
-              className="font-mono uppercase block mb-[5px]"
-              style={{ fontSize: '8px', letterSpacing: '0.16em', color: '#828DA6' }}
-            >
-              Deliverable
-            </span>
-            <p
-              className="font-sans text-ink-3 leading-[1.68]"
-              style={{ fontSize: '13.5px', maxWidth: '60ch' }}
-            >
-              {svc.deliverable}
-            </p>
+          {/* Deliverable — viz sits immediately beside it (not at far right) */}
+          <div className="mt-5 pt-4 border-t border-rule-l lg:flex lg:items-start lg:gap-8">
+            <div>
+              <span
+                className="font-mono uppercase block mb-[5px]"
+                style={{ fontSize: '10px', letterSpacing: '0.14em', color: '#5F6884' }}
+              >
+                Deliverable
+              </span>
+              <p
+                className="font-sans text-ink-3 leading-[1.68]"
+                style={{ fontSize: '13.5px', maxWidth: '46ch' }}
+              >
+                {svc.deliverable}
+              </p>
+            </div>
+            {viz && (
+              <div className="hidden lg:block shrink-0" style={{ width: '400px' }}>
+                {viz}
+              </div>
+            )}
           </div>
 
           <div className="mt-4 flex flex-wrap gap-8">
@@ -754,13 +658,6 @@ function FeaturedServiceEntry({
             <MetaDatum label="Indicative Range" value={svc.fee} feeColor={feeColor} />
           </div>
         </div>
-
-        {/* Mini visualization — only for services that have one, desktop only */}
-        {viz && (
-          <div className="shrink-0 self-center pt-6 sm:pt-0">
-            {viz}
-          </div>
-        )}
       </div>
     </article>
   );
@@ -814,7 +711,7 @@ function GridServiceEntry({
       <div className="mt-4 pt-4 border-t border-rule-l">
         <span
           className="font-mono uppercase block mb-[4px]"
-          style={{ fontSize: '7.5px', letterSpacing: '0.16em', color: '#828DA6' }}
+          style={{ fontSize: '9.5px', letterSpacing: '0.14em', color: '#5F6884' }}
         >
           Deliverable
         </span>
@@ -844,39 +741,17 @@ const FEE_COLORS: Record<'A' | 'B' | 'C', string> = {
   C: '#9B2D30', // dark coral, readable on light
 };
 
-function CategorySection({
-  cat,
-  onVisible,
-}: {
-  cat: Category;
-  onVisible: (id: 'A' | 'B' | 'C') => void;
-}) {
+function CategorySection({ cat }: { cat: Category }) {
   const { ref: headerRef, inView: headerVisible } = useInView<HTMLDivElement>({ threshold: 0.1 });
   const { ref: servicesRef, inView: servicesVisible } = useInView<HTMLDivElement>({ threshold: 0.04 });
-  const sectionRef = useRef<HTMLElement>(null);
-
-  const stableOnVisible = useCallback(() => onVisible(cat.id), [cat.id, onVisible]);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) stableOnVisible();
-      },
-      { threshold: 0.2, rootMargin: '-10% 0px -55% 0px' }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [stableOnVisible]);
 
   const [featured, ...rest] = cat.services;
   const feeColor = FEE_COLORS[cat.id];
+  // teal-light (#71D2CF) is too faint on canvas; swap to teal-deep (#3EA6A3) for A
+  const lightAccent = cat.id === 'A' ? '#3EA6A3' : cat.accent;
 
   return (
-    <section id={`cat-${cat.id.toLowerCase()}`} ref={sectionRef}>
+    <section id={`cat-${cat.id.toLowerCase()}`}>
 
       {/* Dark category header band — compact */}
       <div ref={headerRef} className="relative bg-navy overflow-hidden border-t border-rule-d">
@@ -902,7 +777,7 @@ function CategorySection({
             {/* Vertical rule */}
             <div
               className="hidden sm:block shrink-0 self-stretch"
-              style={{ width: '1px', backgroundColor: cat.accent, opacity: 0.18 }}
+              style={{ width: '1px', backgroundColor: cat.accent, opacity: 0.32 }}
               aria-hidden
             />
 
@@ -937,7 +812,7 @@ function CategorySection({
         {/* Featured first service — full width */}
         <FeaturedServiceEntry
           svc={featured}
-          accent={cat.accent}
+          accent={lightAccent}
           feeColor={feeColor}
           visible={servicesVisible}
         />
@@ -946,13 +821,13 @@ function CategorySection({
         {rest.length > 0 && (
           <div
             className="grid sm:grid-cols-2 border-t border-rule-l"
-            style={{ gap: '1px', backgroundColor: '#C8CEDF' }}
+            style={{ gap: '1px', backgroundColor: '#D5D9E8' }}
           >
             {rest.map((svc, i) => (
               <GridServiceEntry
                 key={svc.code}
                 svc={svc}
-                accent={cat.accent}
+                accent={lightAccent}
                 feeColor={feeColor}
                 index={i + 1}
                 visible={servicesVisible}
@@ -988,40 +863,19 @@ function FeeDisclaimer() {
 // ── Main export ────────────────────────────────────────────────────────────────
 
 export function ServicesPage() {
-  const [activeId, setActiveId] = useState<'A' | 'B' | 'C'>('A');
-
-  const handleVisible = useCallback((id: 'A' | 'B' | 'C') => {
-    setActiveId(id);
-  }, []);
-
   return (
     <>
       <ServicesHero />
 
-      {/* Catalog: sidebar + scrolling content */}
-      <div className="flex bg-canvas">
+      {/* Sticky phase strip — pure navigation, no active-state tracking */}
+      <StickyPhaseStrip />
 
-        {/* Sticky dark sidebar (desktop only) */}
-        <aside
-          className="hidden lg:flex flex-col shrink-0 bg-navy border-r border-rule-d"
-          style={{ width: '220px' }}
-          aria-label="Catalog navigation"
-        >
-          <div
-            className="sticky flex flex-col h-[calc(100vh-68px)] px-6 overflow-auto"
-            style={{ top: '68px' }}
-          >
-            <SidebarNav activeId={activeId} />
-          </div>
-        </aside>
-
-        {/* Main catalog content */}
-        <div className="flex-1 min-w-0">
-          {CATALOG.map((cat) => (
-            <CategorySection key={cat.id} cat={cat} onVisible={handleVisible} />
-          ))}
-          <FeeDisclaimer />
-        </div>
+      {/* Full-width catalog content */}
+      <div className="bg-canvas">
+        {CATALOG.map((cat) => (
+          <CategorySection key={cat.id} cat={cat} />
+        ))}
+        <FeeDisclaimer />
       </div>
     </>
   );

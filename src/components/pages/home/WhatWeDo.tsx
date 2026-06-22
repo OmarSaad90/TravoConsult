@@ -232,7 +232,7 @@ export function WhatWeDo() {
     <section
       id="what-we-do"
       ref={ref}
-      className="bg-canvas text-ink py-[96px] md:py-[120px]"
+      className="bg-canvas text-ink py-[64px] md:py-[80px]"
       aria-labelledby="wwd-heading"
     >
       <div className="max-w-site mx-auto px-6 md:px-12 lg:px-16">

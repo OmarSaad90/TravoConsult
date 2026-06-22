@@ -124,6 +124,24 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  /* Insights page — stream dot heartbeat */
+  @keyframes insightsDotPulse {
+    0%, 100% { opacity: 1;    transform: scale(1);   }
+    50%       { opacity: 0.2; transform: scale(0.45); }
+  }
+
+  /* Insights page — spectrum bar scan sweep */
+  @keyframes spectrumScan {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(350%); }
+  }
+
+  /* Insights page — VOL. I in-development pulse */
+  @keyframes volPulse {
+    0%, 100% { opacity: 0.30; }
+    50%       { opacity: 0.12; }
+  }
+
   .header-enter {
     animation: headerIn 0.65s cubic-bezier(0.16,1,0.3,1) 80ms both;
   }

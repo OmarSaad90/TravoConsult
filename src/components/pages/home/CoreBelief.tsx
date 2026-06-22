@@ -10,13 +10,6 @@ const BUCKETS = [
   { pct: 42, label: 'Over ≥ 30%',    color: '#FF5B5E' },
 ] as const;
 
-// Individual squares proportional to the breakdown (total = 40 squares)
-const OUTCOME_SQUARES: string[] = [
-  ...Array(3).fill('#71D2CF'),   // 8%
-  ...Array(9).fill('#3EA6A3'),   // 22%
-  ...Array(11).fill('#FFB9BB'),  // 28%
-  ...Array(17).fill('#FF5B5E'),  // 42%
-];
 
 export function CoreBelief() {
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.08 });
@@ -25,7 +18,7 @@ export function CoreBelief() {
     <section
       id="belief"
       ref={ref}
-      className="relative bg-navy text-snow overflow-hidden py-[120px] md:py-[152px]"
+      className="relative bg-navy text-snow overflow-hidden py-[80px] md:py-[96px]"
       aria-labelledby="belief-heading"
     >
       <div className="absolute inset-0 bg-grid-dark pointer-events-none" aria-hidden />
@@ -66,41 +59,73 @@ export function CoreBelief() {
           {/* Outcome distribution visualization */}
           <div style={fade(inView, 160)}>
 
-            {/* Bucket summary labels */}
-            <div className="flex overflow-visible mb-6">
-              {BUCKETS.map((b) => (
-                <div key={b.label} style={{ flex: b.pct }} className="overflow-visible pr-1">
-                  <div
-                    className="font-display font-extrabold leading-none"
-                    style={{ fontSize: 'clamp(1.4rem, 2.4vw, 2rem)', color: b.color }}
-                  >
-                    {b.pct}%
-                  </div>
-                  <div
-                    className="font-mono uppercase mt-[5px] whitespace-nowrap"
-                    style={{ fontSize: '7.5px', letterSpacing: '0.10em', color: b.color, opacity: 0.65 }}
-                  >
-                    {b.label}
-                  </div>
+            {/* Two headline statistics */}
+            <div className="flex gap-12 mb-8">
+              <div>
+                <div
+                  className="font-display font-extrabold leading-none"
+                  style={{ fontSize: 'clamp(3.2rem, 5.2vw, 4.4rem)', color: '#FF5B5E' }}
+                >
+                  70%
                 </div>
-              ))}
+                <div
+                  className="font-mono uppercase mt-[7px] text-haze"
+                  style={{ fontSize: '8px', letterSpacing: '0.16em' }}
+                >
+                  overrun budget
+                </div>
+              </div>
+              <div>
+                <div
+                  className="font-display font-extrabold leading-none"
+                  style={{ fontSize: 'clamp(2rem, 3.6vw, 3.2rem)', color: '#FFB9BB' }}
+                >
+                  ≈30%
+                </div>
+                <div
+                  className="font-mono uppercase mt-[7px] text-haze"
+                  style={{ fontSize: '8px', letterSpacing: '0.16em' }}
+                >
+                  avg. size of overrun
+                </div>
+              </div>
             </div>
 
-            {/* Individual squares lighting up one by one */}
-            <div className="flex flex-wrap gap-[3px]" aria-hidden role="presentation">
-              {OUTCOME_SQUARES.map((color, i) => (
-                <div
-                  key={i}
-                  style={{
-                    width: '22px',
-                    height: '22px',
-                    backgroundColor: color,
-                    opacity: inView ? 1 : 0,
-                    transform: inView ? 'scale(1)' : 'scale(0.4)',
-                    transition: `opacity 0.35s cubic-bezier(0.16,1,0.3,1) ${i * 45}ms, transform 0.35s cubic-bezier(0.16,1,0.3,1) ${i * 45}ms`,
-                  }}
-                />
-              ))}
+            {/* Outcome distribution — horizontal stacked bar */}
+            <div aria-hidden role="presentation">
+              <div className="flex overflow-hidden" style={{ height: '36px' }}>
+                {BUCKETS.map((b, i) => (
+                  <div
+                    key={b.label}
+                    style={{
+                      flex: b.pct,
+                      backgroundColor: b.color,
+                      transformOrigin: 'center bottom',
+                      transform: inView ? 'scaleY(1)' : 'scaleY(0)',
+                      opacity: inView ? 1 : 0,
+                      transition: `transform 0.6s cubic-bezier(0.16,1,0.3,1) ${160 + i * 80}ms, opacity 0.4s ease-out ${160 + i * 80}ms`,
+                    }}
+                  />
+                ))}
+              </div>
+              <div className="flex mt-[7px]">
+                {BUCKETS.map((b) => (
+                  <div key={b.label} style={{ flex: b.pct }} className="overflow-hidden pr-1">
+                    <div
+                      className="font-display font-bold leading-none"
+                      style={{ fontSize: 'clamp(0.9rem, 1.6vw, 1.3rem)', color: b.color }}
+                    >
+                      {b.pct}%
+                    </div>
+                    <div
+                      className="font-mono uppercase mt-[4px] text-haze"
+                      style={{ fontSize: '7px', letterSpacing: '0.08em', opacity: 0.65, whiteSpace: 'nowrap' }}
+                    >
+                      {b.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Source + insight line */}

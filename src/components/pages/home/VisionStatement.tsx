@@ -33,7 +33,16 @@ export function VisionStatement() {
               transition: 'opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1)',
             }}
           >
-            <div className="border-t-2 pt-10" style={{ borderColor: '#2C5251' }}>
+            <div>
+              <div className="flex items-center gap-5 mb-9">
+                <span
+                  className="font-mono uppercase text-forest shrink-0"
+                  style={{ fontSize: '14px', letterSpacing: '0.14em' }}
+                >
+                  Our Vision
+                </span>
+                <div className="flex-1" style={{ height: '2px', backgroundColor: '#2C5251' }} />
+              </div>
               <p
                 id="vision-stmt"
                 className="font-display font-extrabold leading-[1.0] tracking-display balance"
@@ -48,6 +57,7 @@ export function VisionStatement() {
                 <span className="text-ink"> across the New Jersey and New York metropolitan market.</span>
               </p>
             </div>
+
           </div>
 
           {/* Risk spectrum bars — right (desktop only) */}
