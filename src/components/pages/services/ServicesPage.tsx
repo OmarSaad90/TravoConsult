@@ -3,6 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useInView } from '@/hooks/useInView';
 
+// ── Custom colors not in the token set but contrast-verified on canvas ─────────
+const DARK_ROSE  = '#7A3E44'; // dark rose — fee/risk accent for Category B, 5.8:1 on canvas
+const DARK_CORAL = '#9B2D30'; // dark coral — fee/risk accent for Category C, 6.9:1 on canvas
+
 // ── Data ───────────────────────────────────────────────────────────────────────
 
 const TICKER = [
@@ -182,7 +186,7 @@ function TickerStrip() {
   return (
     <div className="border-b border-rule-d overflow-hidden" style={{ height: '34px' }} aria-hidden>
       <div
-        className="flex items-center h-full whitespace-nowrap"
+        className="marquee-track flex items-center h-full whitespace-nowrap"
         style={{ animation: 'marquee 40s linear infinite', width: 'max-content' }}
       >
         {[...TICKER, ...TICKER].map((item, i) => (
@@ -262,8 +266,10 @@ function CatalogIndexPanel({ mounted }: { mounted: boolean }) {
                     height: '100%',
                     backgroundColor: cat.accent,
                     opacity: 0.65,
-                    width: mounted ? `${(cat.services.length / 11) * 100}%` : '0%',
-                    transition: `width 1.2s cubic-bezier(0.16,1,0.3,1) ${500 + ci * 80}ms`,
+                    width: `${(cat.services.length / 11) * 100}%`,
+                    transformOrigin: 'left center',
+                    transform: mounted ? 'scaleX(1)' : 'scaleX(0)',
+                    transition: `transform 1.2s cubic-bezier(0.16,1,0.3,1) ${500 + ci * 80}ms`,
                   }}
                 />
               </div>
@@ -401,7 +407,7 @@ function StickyPhaseStrip() {
   return (
     <div
       className="sticky bg-navy border-b border-rule-d"
-      style={{ top: '68px', zIndex: 20 }}
+      style={{ top: 'var(--header-h)', zIndex: 20 }}
     >
       <div className="flex" style={{ height: '44px' }}>
         {phases.map((p, i) => (
@@ -568,7 +574,7 @@ function MiniTrendB1() {
       </svg>
       <div className="flex items-center gap-5 mt-2">
         <div className="flex items-center gap-[6px]">
-          <div style={{ width: '18px', height: '2px', backgroundColor: '#7A3E44' }} />
+          <div style={{ width: '18px', height: '2px', backgroundColor: DARK_ROSE }} />
           <span className="font-mono" style={{ fontSize: '6.5px', letterSpacing: '0.08em', color: '#828DA6' }}>Cost-at-Completion</span>
         </div>
         <div className="flex items-center gap-[6px]">
@@ -736,9 +742,9 @@ function GridServiceEntry({
 
 // Readable accent colors on light canvas background per category
 const FEE_COLORS: Record<'A' | 'B' | 'C', string> = {
-  A: '#2C5251', // forest — harbor teal dark, 7.88:1 on canvas
-  B: '#7A3E44', // dark rose, readable on light
-  C: '#9B2D30', // dark coral, readable on light
+  A: '#2C5251', // forest — 7.88:1 on canvas
+  B: DARK_ROSE,
+  C: DARK_CORAL,
 };
 
 function CategorySection({ cat }: { cat: Category }) {

@@ -278,7 +278,10 @@ function ContactFormSection() {
                 </form>
               </>
             ) : (
-              <div className="border border-rule-l p-10 md:p-12">
+              <div
+                className="border border-rule-l p-10 md:p-12"
+                style={{ animation: 'confirmIn 0.7s cubic-bezier(0.16,1,0.3,1) both' }}
+              >
                 <p
                   className="font-display font-extrabold text-forest leading-[1.0] tracking-display"
                   style={{ fontSize: 'clamp(1.6rem, 2.8vw, 2.4rem)' }}

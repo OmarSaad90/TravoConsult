@@ -12,6 +12,7 @@
   }
 
   html {
+    --header-h: 68px;
     scroll-behavior: smooth;
     font-size: 16px;
   }
@@ -140,6 +141,11 @@
   @keyframes volPulse {
     0%, 100% { opacity: 0.30; }
     50%       { opacity: 0.12; }
+  }
+
+  @keyframes confirmIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   .header-enter {

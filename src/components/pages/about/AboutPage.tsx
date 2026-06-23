@@ -337,10 +337,12 @@ function AnimBars({ active }: { active: boolean }) {
           <div
             style={{
               width: '100%',
-              height: active ? `${b.h}px` : '2px',
+              height: `${b.h}px`,
               backgroundColor: b.color,
-              opacity: active ? 0.78 : 0.18,
-              transition: `height 0.9s cubic-bezier(0.16,1,0.3,1) ${300 + i * 160}ms, opacity 0.5s ${300 + i * 160}ms`,
+              opacity: active ? 0.78 : 0,
+              transformOrigin: 'center bottom',
+              transform: active ? 'scaleY(1)' : 'scaleY(0)',
+              transition: `transform 0.9s cubic-bezier(0.16,1,0.3,1) ${300 + i * 160}ms, opacity 0.5s ${300 + i * 160}ms`,
             }}
           />
           <span

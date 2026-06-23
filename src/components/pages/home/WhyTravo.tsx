@@ -20,7 +20,7 @@ function AnimGaussian({ active }: { active: boolean }) {
   return (
     <svg viewBox={`0 0 ${W} ${H + 10}`} aria-hidden style={{ width: '100%', height: '76px' }} fill="none">
       <path d={fill} fill="#71D2CF" opacity="0.07" />
-      <line x1={4} y1={H} x2={W - 4} y2={H} stroke="#CBD5E8" strokeWidth="0.75" />
+      <line x1={4} y1={H} x2={W - 4} y2={H} stroke="#D5D9E8" strokeWidth="0.75" />
       <path id="why-gaussian-path" d={d} stroke="#71D2CF" strokeWidth="2" pathLength="1"
         style={{ strokeDasharray: 1, strokeDashoffset: active ? 0 : 1, transition: 'stroke-dashoffset 2s cubic-bezier(0.16,1,0.3,1) 500ms' }}
       />
@@ -68,10 +68,12 @@ function AnimBars({ active }: { active: boolean }) {
           <div
             style={{
               width: '100%',
-              height: active ? `${b.h}px` : '2px',
+              height: `${b.h}px`,
               backgroundColor: b.color,
-              opacity: active ? 0.78 : 0.2,
-              transition: `height 0.9s cubic-bezier(0.16,1,0.3,1) ${300 + i * 160}ms, opacity 0.5s ${300 + i * 160}ms`,
+              opacity: active ? 0.78 : 0,
+              transformOrigin: 'center bottom',
+              transform: active ? 'scaleY(1)' : 'scaleY(0)',
+              transition: `transform 0.9s cubic-bezier(0.16,1,0.3,1) ${300 + i * 160}ms, opacity 0.5s ${300 + i * 160}ms`,
             }}
           />
           <span className="font-mono text-haze uppercase text-center" style={{ fontSize: '6.5px', letterSpacing: '0.08em' }}>

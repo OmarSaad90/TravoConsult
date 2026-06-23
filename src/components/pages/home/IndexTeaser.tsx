@@ -99,13 +99,13 @@ function Sparkline({ active }: { active: boolean }) {
       {/* Year labels */}
       {xs.map((x, i) => (
         <text key={i} x={x} y={H - 2} textAnchor="middle"
-          fill="#4D5878" fontSize="6" fontFamily="JetBrains Mono, monospace">
+          fill="#828DA6" fontSize="6" fontFamily="JetBrains Mono, monospace">
           {SPARK_DATA[i].year}
         </text>
       ))}
 
       {/* Baseline */}
-      <line x1={PAD_L} y1={H - PAD_B} x2={W - PAD_R} y2={H - PAD_B} stroke="#162030" strokeWidth="0.75" />
+      <line x1={PAD_L} y1={H - PAD_B} x2={W - PAD_R} y2={H - PAD_B} stroke="#28283E" strokeWidth="0.75" />
     </svg>
   );
 }

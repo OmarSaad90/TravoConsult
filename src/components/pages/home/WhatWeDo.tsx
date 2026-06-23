@@ -38,11 +38,15 @@ function ChartMonteCarlo({ active }: { active: boolean }) {
         <animate attributeName="r" values="4;20;4" dur="3s" repeatCount="indefinite" />
         <animate attributeName="opacity" values="0.45;0;0.45" dur="3s" repeatCount="indefinite" />
       </circle>
-      {dots.map((d, i) => (
-        <circle key={i} cx={d.x} cy={d.y} r="3" fill={d.c}
-          opacity={active ? 0.95 : 0}
-          style={{ transition: `opacity 0.35s ease ${d.delay}ms`, filter: `drop-shadow(0 0 5px ${d.c})` }}
-        />
+      {(['#FF5B5E', '#FFB9BB', '#71D2CF'] as const).map(color => (
+        <g key={color} style={{ filter: `drop-shadow(0 0 4px ${color})` }}>
+          {dots.filter(d => d.c === color).map(d => (
+            <circle key={d.delay} cx={d.x} cy={d.y} r="3" fill={color}
+              opacity={active ? 0.95 : 0}
+              style={{ transition: `opacity 0.35s ease ${d.delay}ms` }}
+            />
+          ))}
+        </g>
       ))}
       <text x="8" y={H - 6} fontSize="7.5" fill="#8A95B2" fontFamily="JetBrains Mono, monospace">N = 10,000 SIMULATIONS</text>
     </svg>
@@ -75,10 +79,12 @@ function ChartPercentiles({ active }: { active: boolean }) {
             key={b.label}
             style={{
               flex: 1,
-              height: active ? `${b.height}%` : '4px',
+              height: `${b.height}%`,
               backgroundColor: b.color,
-              opacity: 0.85,
-              transition: `height 0.95s cubic-bezier(0.16,1,0.3,1) ${300 + i * 160}ms`,
+              opacity: active ? 0.85 : 0,
+              transformOrigin: 'center bottom',
+              transform: active ? 'scaleY(1)' : 'scaleY(0)',
+              transition: `transform 0.95s cubic-bezier(0.16,1,0.3,1) ${300 + i * 160}ms, opacity 0.4s ease-out ${300 + i * 160}ms`,
             }}
           />
         ))}
@@ -108,14 +114,14 @@ function ChartGantt({ active }: { active: boolean }) {
       {bars.map((b, i) => (
         <g key={i}>
           <rect x="46" y={b.y} height="12"
-            width={active ? b.w : 0}
+            width={b.w}
             fill={b.color} opacity="0.85"
-            style={{ transition: `width 0.75s cubic-bezier(0.16,1,0.3,1) ${180 + i * 95}ms` }}
+            style={{ transformBox: 'fill-box', transformOrigin: 'left center', transform: active ? 'scaleX(1)' : 'scaleX(0)', transition: `transform 0.75s cubic-bezier(0.16,1,0.3,1) ${180 + i * 95}ms` }}
           />
           <rect x={46 + b.w} y={b.y + 2} height="8"
-            width={active ? b.float : 0}
+            width={b.float}
             fill={b.color} opacity="0.2"
-            style={{ transition: `width 0.55s cubic-bezier(0.16,1,0.3,1) ${380 + i * 95}ms` }}
+            style={{ transformBox: 'fill-box', transformOrigin: 'left center', transform: active ? 'scaleX(1)' : 'scaleX(0)', transition: `transform 0.55s cubic-bezier(0.16,1,0.3,1) ${380 + i * 95}ms` }}
           />
           <text x="42" y={b.y + 9} textAnchor="end" fill="#8A95B2" fontSize="6.5" fontFamily="JetBrains Mono, monospace">{b.label}</text>
         </g>
@@ -163,7 +169,7 @@ function ChartLiveTrend({ active }: { active: boolean }) {
       {[0.25, 0.5, 0.75].map((p, i) => (
         <line key={i} x1={PAD} x2={W - PAD}
           y1={PAD + (1 - p) * (H - PAD * 2)} y2={PAD + (1 - p) * (H - PAD * 2)}
-          stroke="#DDE2EE" strokeWidth="0.75" />
+          stroke="#D5D9E8" strokeWidth="0.75" />
       ))}
       <path d={fillPath} fill="#71D2CF" opacity="0.05" />
       <path d={plannedPath} stroke="#71D2CF" strokeWidth="1.2" strokeDasharray="4,4" opacity="0.4" />
@@ -268,7 +274,7 @@ export function WhatWeDo() {
           Card 5: col 2, rows 3–4 (tall)
         */}
         <div
-          className="bento-grid grid gap-[1px] lg:grid-cols-2 bg-[#DDE2EE] border border-[#DDE2EE]"
+          className="bento-grid grid gap-[1px] lg:grid-cols-2 bg-[#D5D9E8] border border-[#D5D9E8]"
           role="list"
           aria-label="Decision points"
         >
@@ -351,7 +357,7 @@ export function WhatWeDo() {
             <div className="flex-1 min-h-0 mt-5" style={{ minHeight: '130px' }}>
               <ChartLiveTrend active={inView} />
             </div>
-            <div className="shrink-0 grid grid-cols-3 mt-4 pt-4 border-t border-[#DDE2EE]">
+            <div className="shrink-0 grid grid-cols-3 mt-4 pt-4 border-t border-[#D5D9E8]">
               {[['Drift', '+14d', '#FF5B5E'], ['Burn rate', '68%', '#2C5251'], ['EAC', '$51.2M', '#2C5251']].map(([label, val, color]) => (
                 <div key={label as string}>
                   <p className="font-mono text-haze uppercase" style={{ fontSize: '7.5px', letterSpacing: '0.12em' }}>{label}</p>

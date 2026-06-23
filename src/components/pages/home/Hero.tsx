@@ -36,7 +36,7 @@ function RiskGauge({ mounted }: { mounted: boolean }) {
     <div className="px-6 md:px-12 lg:px-16 pb-0">
       <div className="flex items-center gap-2 mb-2">
         <span
-          className="rounded-full inline-block"
+          className="inline-block"
           style={{
             width: '6px', height: '6px',
             backgroundColor: GAUGE_LEVELS[idx].color,

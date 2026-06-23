@@ -240,6 +240,9 @@ function MethodologyHero() {
   );
 }
 
+// Custom color: readable on canvas, used for "Option B" / P80 alternative overlays
+const DARK_ROSE = '#7A3E44';
+
 /* ── Two Forms mini visualizations ───────────────────────────────────────── */
 
 function OperationalViz() {
@@ -265,7 +268,7 @@ function OperationalViz() {
       {[
         { x: 70,  label: 'P10', color: '#3EA6A3' },
         { x: 100, label: 'P50', color: '#2C5251' },
-        { x: 130, label: 'P80', color: '#7A3E44' },
+        { x: 130, label: 'P80', color: DARK_ROSE },
       ].map(({ x, label, color }) => (
         <g key={label}>
           <line
@@ -329,19 +332,19 @@ function StrategicViz() {
       </text>
       <path
         d={`${pathB} L 195 60 L 22 60 Z`}
-        fill="#7A3E44"
+        fill={DARK_ROSE}
         fillOpacity="0.08"
       />
       <path
         d={pathB}
-        stroke="#7A3E44"
+        stroke={DARK_ROSE}
         strokeWidth="1.5"
         strokeLinecap="round"
       />
       <text
         x="148" y="35"
         textAnchor="middle"
-        fill="#7A3E44"
+        fill={DARK_ROSE}
         fontSize="7.5"
         fontFamily="JetBrains Mono, monospace"
         letterSpacing="0.08em"
