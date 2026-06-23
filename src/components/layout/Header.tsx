@@ -39,7 +39,6 @@ export function Header() {
             aria-label="Travo — home"
             className="flex items-center gap-2.5 group"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/Travo.png"
               alt=""
