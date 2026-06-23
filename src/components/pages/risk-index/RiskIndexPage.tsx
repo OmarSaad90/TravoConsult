@@ -822,10 +822,10 @@ function TemplateIndex() {
 
       <div className="relative max-w-site mx-auto px-6 md:px-12 lg:px-16">
 
-        <div className="grid lg:grid-cols-[340px_1fr] gap-14 lg:gap-20">
+        <div className="grid lg:grid-cols-[1fr_340px] gap-14 lg:gap-20">
 
-          {/* Left: heading */}
-          <div style={fade(inView, 0)}>
+          {/* Right on desktop: heading */}
+          <div className="lg:col-start-2 lg:row-start-1" style={fade(inView, 0)}>
             <h2 className="font-display font-extrabold text-snow leading-[0.95] tracking-display"
               style={{ fontSize: 'clamp(2rem, 3.6vw, 3.2rem)' }}>
               10 templates.<br />
@@ -841,8 +841,8 @@ function TemplateIndex() {
             </p>
           </div>
 
-          {/* Right: 10-item structured list */}
-          <div className="border-t" style={{ borderColor: P.ruleD }}>
+          {/* Left on desktop: 10-item structured list */}
+          <div className="border-t lg:col-start-1 lg:row-start-1" style={{ borderColor: P.ruleD }}>
             <div className="grid md:grid-cols-2">
               {TEMPLATES.map((t, i) => (
                 <div key={t.n}
@@ -893,23 +893,23 @@ function Registration() {
   };
 
   return (
-    <section ref={ref} className="bg-forest text-snow py-[88px] md:py-[108px]">
+    <section ref={ref} className="bg-canvas text-ink py-[88px] md:py-[108px]">
       <div className="max-w-site mx-auto px-6 md:px-12 lg:px-16">
         <div className="grid lg:grid-cols-[1fr_480px] gap-14 lg:gap-20 items-center">
 
           {/* Left */}
           <div style={fade(inView, 0)}>
             <p className="font-mono uppercase mb-5"
-              style={{ fontSize: '8.5px', letterSpacing: '0.18em', color: P.teal }}>
+              style={{ fontSize: '8.5px', letterSpacing: '0.18em', color: P.forest }}>
               Vol. I · Inaugural Edition
             </p>
-            <h2 className="font-display font-extrabold leading-[0.95] tracking-display text-snow"
+            <h2 className="font-display font-extrabold leading-[0.95] tracking-display text-ink"
               style={{ fontSize: 'clamp(2rem, 3.8vw, 3.4rem)' }}>
               Be notified<br />
-              <span style={{ color: P.teal }}>on publication.</span>
+              <span style={{ color: P.forest }}>on publication.</span>
             </h2>
             <p className="mt-6 font-sans leading-[1.76] pretty"
-              style={{ fontSize: '16px', color: 'rgba(230,234,244,0.78)', maxWidth: '48ch' }}>
+              style={{ fontSize: '16px', color: P.ink2, maxWidth: '48ch' }}>
               Register to receive notification when Vol. I publishes, along with
               methodology notes and preview findings from the inaugural edition.
               No marketing. No frequency.
@@ -921,7 +921,7 @@ function Registration() {
             {!submitted ? (
               <form onSubmit={handleSubmit} noValidate>
                 <label className="block font-mono uppercase mb-2"
-                  style={{ fontSize: '9px', letterSpacing: '0.16em', color: P.teal }}>
+                  style={{ fontSize: '9px', letterSpacing: '0.16em', color: P.forest }}>
                   Email address
                 </label>
                 <input
@@ -932,9 +932,9 @@ function Registration() {
                   onChange={e => setEmail(e.target.value)}
                   style={{
                     width: '100%',
-                    background: 'rgba(255,255,255,0.07)',
-                    border: '1px solid rgba(255,255,255,0.18)',
-                    color: P.snow,
+                    background: P.canvas1,
+                    border: `1px solid ${P.ruleL}`,
+                    color: P.navy,
                     fontFamily: 'var(--font-sans)',
                     fontSize: '15px',
                     padding: '13px 14px',
@@ -959,7 +959,7 @@ function Registration() {
                   onMouseLeave={e => (e.currentTarget.style.opacity = '1')}>
                   Register Interest
                 </button>
-                <p className="font-mono mt-5" style={{ fontSize: '9px', letterSpacing: '0.1em', color: 'rgba(230,234,244,0.4)' }}>
+                <p className="font-mono mt-5" style={{ fontSize: '9px', letterSpacing: '0.1em', color: P.ink3 }}>
                   Vol. I is the inaugural edition. Publication date is not yet confirmed.
                 </p>
               </form>
@@ -967,11 +967,11 @@ function Registration() {
               <div className="border p-10"
                 style={{ borderColor: 'rgba(113,210,207,0.3)', animation: 'confirmIn 0.7s cubic-bezier(0.16,1,0.3,1) both' }}>
                 <p className="font-display font-extrabold leading-[1.0] tracking-display"
-                  style={{ fontSize: 'clamp(1.6rem, 2.8vw, 2.2rem)', color: P.teal }}>
+                  style={{ fontSize: 'clamp(1.6rem, 2.8vw, 2.2rem)', color: P.forest }}>
                   Registered.
                 </p>
                 <p className="mt-4 font-sans leading-[1.74] pretty"
-                  style={{ fontSize: '15.5px', color: 'rgba(230,234,244,0.78)', maxWidth: '44ch' }}>
+                  style={{ fontSize: '15.5px', color: P.ink2, maxWidth: '44ch' }}>
                   We will notify you when Vol. I is published. Thank you for your interest.
                 </p>
               </div>

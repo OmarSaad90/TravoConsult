@@ -31,10 +31,11 @@ export default {
         forest:      '#2C5251', // Harbor Teal 100 — structural accent on light
         'forest-2':  '#1C3A39', // Harbor Teal dark — deeper hover
 
-        coral:       '#FF5B5E', // Coral Ember 100 — risk indicator / primary CTA
-        'coral-dim': '#2A1010', // Coral Ember very dark tint
-        elevated:    '#FFB9BB', // Blush Rose 100 — official warm mid-spectrum
-        'air-blue':  '#C5ECFE', // Glacier Sky 100 — confidence bands on light bg
+        coral:        '#FF5B5E', // Coral Ember 100 — risk indicator / primary CTA
+        'coral-dim':  '#2A1010', // Coral Ember very dark tint
+        'coral-warm': '#FF8B8D', // ~85% on the client gradient — Elevated zone, between blush and coral
+        elevated:     '#FFB9BB', // Blush Rose 100 — 75% gradient anchor (Monitor zone)
+        'air-blue':   '#C5ECFE', // Glacier Sky 100 — 50% gradient anchor
 
         // ── Rules ──────────────────────────────────────
         'rule-d':  '#28283E',   // divider on dark (just lighter than Midnight Ink)

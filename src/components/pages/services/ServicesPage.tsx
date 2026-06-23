@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useInView } from '@/hooks/useInView';
 
-// ── Custom colors not in the token set but contrast-verified on canvas ─────────
-const DARK_ROSE  = '#7A3E44'; // dark rose — fee/risk accent for Category B, 5.8:1 on canvas
-const DARK_CORAL = '#9B2D30'; // dark coral — fee/risk accent for Category C, 6.9:1 on canvas
+// Per client spec: dark data viz support uses Harbor Teal (forest) not custom warm darks
+const DARK_ROSE  = '#2C5251'; // forest — Harbor Teal 100, 7.9:1 on canvas
+const DARK_CORAL = '#2C5251'; // forest — Harbor Teal 100, 7.9:1 on canvas
 
 // ── Data ───────────────────────────────────────────────────────────────────────
 

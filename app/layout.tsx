@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   title: 'Travo — Quantitative Construction Risk Advisory | New Jersey & New York',
   description:
     'Independent quantitative construction risk analysis for capital projects across the NJ/NY metropolitan region. Travo quantifies cost, schedule, and disputed risk before it costs.',
-  icons: { icon: '/favicon.svg' },
+  icons: { icon: '/Travo.png' },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

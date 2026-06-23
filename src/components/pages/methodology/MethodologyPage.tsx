@@ -240,8 +240,8 @@ function MethodologyHero() {
   );
 }
 
-// Custom color: readable on canvas, used for "Option B" / P80 alternative overlays
-const DARK_ROSE = '#7A3E44';
+// Harbor Teal (forest) — spec-prescribed dark support for data viz on canvas
+const DARK_ROSE = '#2C5251';
 
 /* ── Two Forms mini visualizations ───────────────────────────────────────── */
 

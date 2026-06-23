@@ -33,13 +33,22 @@ export function Header() {
       <div className="max-w-site mx-auto px-6 md:px-12 lg:px-16">
         <div className="flex items-center justify-between h-[68px]">
 
-          {/* Wordmark */}
+          {/* Logo lockup */}
           <a
             href="/"
             aria-label="Travo — home"
-            className="font-display text-[22px] font-bold tracking-[0.06em] text-snow hover:text-teal transition-colors duration-200"
+            className="flex items-center gap-2.5 group"
           >
-            TRAVO
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/Travo.png"
+              alt=""
+              aria-hidden="true"
+              className="h-8 w-auto"
+            />
+            <span className="font-display text-[20px] font-bold tracking-[0.10em] text-snow group-hover:text-teal transition-colors duration-200">
+              TRAVO
+            </span>
           </a>
 
           {/* Desktop nav */}
