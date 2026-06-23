@@ -966,7 +966,7 @@ function QuantOutputSection() {
           >
             Every engagement delivers a full probability distribution of outcomes,
             not a single-point estimate. Results are expressed at three standard
-            confidence levels — P10, P50, and P80 — derived from 10,000-iteration
+            confidence levels (P10, P50, and P80) derived from 10,000-iteration
             Monte Carlo simulation.
           </p>
         </div>

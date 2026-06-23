@@ -291,7 +291,7 @@ export function WhatWeDo() {
                 Procurement Decisions
               </h3>
               <p className="font-sans text-ink-2 mt-2 leading-[1.65]" style={{ fontSize: '14px', maxWidth: '36ch' }}>
-                Cost and schedule risk in delivery method, contract structure, and bid selection — quantified before commitments lock in.
+                Cost and schedule risk in delivery method, contract structure, and bid selection, quantified before commitments lock in.
               </p>
             </div>
             <div className="flex-1 min-h-0 mt-5" style={{ minHeight: '140px' }}>

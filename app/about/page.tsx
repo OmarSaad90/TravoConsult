@@ -6,7 +6,7 @@ import { AboutPage } from '@/components/pages/about/AboutPage';
 export const metadata: Metadata = {
   title: 'About | Travo Risk Advisory',
   description:
-    'An independent quantitative risk advisory practice built around a single discipline. Founded by Dr. Karim S. Karam — the emerging regional standard for construction risk analysis in the NJ/NY metropolitan market.',
+    'An independent quantitative risk advisory practice built around a single discipline. Founded by Dr. Karim S. Karam, the emerging regional standard for construction risk analysis in the NJ/NY metropolitan market.',
 };
 
 export default function AboutRoute() {

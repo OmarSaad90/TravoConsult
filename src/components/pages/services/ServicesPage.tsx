@@ -59,7 +59,7 @@ const CATALOG: Category[] = [
       {
         code: 'A2',
         name: 'Structured Risk Register Development',
-        desc: 'Workshop-driven identification, characterization, and structuring of project risks across cost, schedule, technical, regulatory, environmental, and external categories — for projects that require a formal, well-governed risk register before a full quantitative simulation is warranted.',
+        desc: 'Workshop-driven identification, characterization, and structuring of project risks across cost, schedule, technical, regulatory, environmental, and external categories, for projects that require a formal, well-governed risk register before a full quantitative simulation is warranted.',
         deliverable:
           "Structured risk register with owners, probability and impact assessments, and mitigation strategies; methodology documentation; facilitated workshop materials; and a register template for the client's continued use.",
         timeline: '3–5 weeks',
@@ -68,7 +68,7 @@ const CATALOG: Category[] = [
       {
         code: 'A3',
         name: 'Risk-Adjusted Bid Leveling & Procurement Support',
-        desc: "Independent analysis of bidder pricing through a quantitative risk lens — which bids are realistic, which are buying the work, and where contractual risk has been shifted in ways the owner may not recognize. A fixed-price bid is the floor of project cost, not the ceiling; this analysis is what lets owners see the difference. Particularly valuable on $30M–$150M contractor selections.",
+        desc: "Independent analysis of bidder pricing through a quantitative risk lens: which bids are realistic, which are buying the work, and where contractual risk has been shifted in ways the owner may not recognize. A fixed-price bid is the floor of project cost, not the ceiling; this analysis is what lets owners see the difference. Particularly valuable on $30M–$150M contractor selections.",
         deliverable:
           'Bid-leveling report with risk-adjusted ranking, identification of latent risk transfer in each bid, and a procurement recommendation supported by quantitative reasoning.',
         timeline: '3–5 weeks',
@@ -77,7 +77,7 @@ const CATALOG: Category[] = [
       {
         code: 'A4',
         name: 'Independent Risk Peer Review',
-        desc: "Owner-side review of a contractor's submitted risk register and contingency analysis — identifying methodological gaps, missing risks, underestimated impacts, and structural weaknesses in the contractor's approach. A short engagement with disproportionate value to the owner.",
+        desc: "Owner-side review of a contractor's submitted risk register and contingency analysis, identifying methodological gaps, missing risks, underestimated impacts, and structural weaknesses in the contractor's approach. A short engagement with disproportionate value to the owner.",
         deliverable:
           'Peer review report with findings, ranked recommendations, and required remediations.',
         timeline: '2–3 weeks',
@@ -99,13 +99,13 @@ const CATALOG: Category[] = [
     phase: 'During-Project',
     name: 'During-Project Risk Management',
     intro:
-      "Risk and contingency work performed during construction execution — the discipline that carries procurement-stage analysis through to project completion, and the firm's primary source of recurring engagement.",
+      "Risk and contingency work performed during construction execution: the discipline that carries procurement-stage analysis through to project completion, and the firm's primary source of recurring engagement.",
     accent: '#FFB9BB',
     services: [
       {
         code: 'B1',
         name: 'Risk Register Management Retainer',
-        desc: "A monthly or quarterly retainer to maintain the project's live risk register, run change-impact assessments, chair scheduled risk reviews, and provide ongoing methodology guidance — for 12–36 month projects where risk discipline is required and internal capacity is not yet in place.",
+        desc: "A monthly or quarterly retainer to maintain the project's live risk register, run change-impact assessments, chair scheduled risk reviews, and provide ongoing methodology guidance, for 12–36 month projects where risk discipline is required and internal capacity is not yet in place.",
         deliverable:
           'Maintained risk register with monthly updates, monthly written status reporting, facilitated risk reviews on a defined cadence, and change-impact memos as triggered.',
         timeline: '12–36 months, recurring',
@@ -114,7 +114,7 @@ const CATALOG: Category[] = [
       {
         code: 'B2',
         name: 'Trend Risk Analysis & Cost-at-Completion Forecasting',
-        desc: "An independent quantitative reassessment of a project's outcome distributions when it begins to trend negatively — typically commissioned by a board, lender, owner, or surety concerned about emerging deterioration. Updates the original analysis with current data to produce revised P50 / P80 forecasts and a clear view of root-cause drivers.",
+        desc: "An independent quantitative reassessment of a project's outcome distributions when it begins to trend negatively, typically commissioned by a board, lender, owner, or surety concerned about emerging deterioration. Updates the original analysis with current data to produce revised P50 / P80 forecasts and a clear view of root-cause drivers.",
         deliverable:
           'Updated risk analysis with revised cost- and schedule-at-completion distributions, root-cause identification, and a recommended management response.',
         timeline: '3–5 weeks',
@@ -123,7 +123,7 @@ const CATALOG: Category[] = [
       {
         code: 'B3',
         name: 'Pre-Claim & Dispute-Readiness Risk Review',
-        desc: "Structured analysis conducted as delays or cost overruns begin to materialize — examining where contractual risk allocation actually sits, what claims may emerge, what the project's defensible position is, and what documentation should be assembled. The bridge between project advisory and forensic claims work.",
+        desc: "Structured analysis conducted as delays or cost overruns begin to materialize, examining where contractual risk allocation actually sits, what claims may emerge, what the project's defensible position is, and what documentation should be assembled. The bridge between project advisory and forensic claims work.",
         deliverable:
           'Pre-claim analysis report, documentation strategy, recommended evidence-preservation actions, and a risk-allocation map.',
         timeline: '4–6 weeks',
@@ -136,13 +136,13 @@ const CATALOG: Category[] = [
     phase: 'Post-Project & Portfolio',
     name: 'Post-Project & Portfolio Services',
     intro:
-      'Risk work performed after project completion or across portfolios of projects — where structured learning and regional benchmarking compound into long-term institutional value.',
+      'Risk work performed after project completion or across portfolios of projects, where structured learning and regional benchmarking compound into long-term institutional value.',
     accent: '#FF5B5E',
     services: [
       {
         code: 'C1',
         name: 'Lessons-Learned Risk Capture',
-        desc: 'A structured post-project review of which risks materialized, which were missed, where mitigation worked, and what should change — converting experience into specific improvements for the next project, for institutional owners running ongoing capital programs.',
+        desc: 'A structured post-project review of which risks materialized, which were missed, where mitigation worked, and what should change, converting experience into specific improvements for the next project, for institutional owners running ongoing capital programs.',
         deliverable:
           "Lessons-learned report with concrete updates to the owner's risk methodology, templates, and procurement language for future projects.",
         timeline: '4–6 weeks',
@@ -160,7 +160,7 @@ const CATALOG: Category[] = [
       {
         code: 'C3',
         name: 'Methodology Implementation & Training',
-        desc: "An engagement to help an institutional owner or large contractor build their own internal risk methodology, train their team on quantitative risk tooling, and stand up a durable risk-management capability. Travo does not shield itself from clients building internal capability — those clients remain clients for higher-order work, and refer the firm broadly.",
+        desc: "An engagement to help an institutional owner or large contractor build their own internal risk methodology, train their team on quantitative risk tooling, and stand up a durable risk-management capability. Travo does not shield itself from clients building internal capability; those clients remain clients for higher-order work, and refer the firm broadly.",
         deliverable:
           'Methodology framework, training program, implementation support, templates, tooling configuration, and organizational change recommendations.',
         timeline: '8–16 weeks',
@@ -364,7 +364,7 @@ function ServicesHero() {
               style={{ fontSize: '17px', maxWidth: '52ch', ...reveal(460) }}
             >
               Every offering carries a defined deliverable, methodology, scope, and fee structure.
-              The catalog is intentionally bounded — Travo accepts only engagements where
+              The catalog is intentionally bounded: Travo accepts only engagements where
               quantitative risk analysis is central to the decision.
             </p>
 
@@ -497,7 +497,7 @@ function MiniDistributionA1() {
   return (
     <div className="flex flex-col">
       <span className="font-mono uppercase block mb-2" style={{ fontSize: '8px', letterSpacing: '0.14em', color: '#5F6884' }}>
-        Sample Output — P10 / P50 / P80 Distribution
+        Sample Output: P10 / P50 / P80 Distribution
       </span>
       <svg
         viewBox={`0 0 ${W} ${H}`}

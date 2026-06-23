@@ -428,7 +428,7 @@ function VelocityStrip({ active }: { active: boolean }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
       {VELOCITY_DATA.map((v, i) => {
-        const arrow = v.delta > 0.05 ? '▲' : v.delta < -0.05 ? '▼' : '—';
+        const arrow = v.delta > 0.05 ? '▲' : v.delta < -0.05 ? '▼' : '·';
         const sign  = v.delta > 0.05 ? '+' : '';
         return (
           <div key={v.id}
@@ -569,7 +569,7 @@ function RiskIndexHero() {
             { label: 'Region',    value: 'NJ / NY Metro'     },
             { label: 'Templates', value: '10 Types'          },
             { label: 'Cadence',   value: 'Annual Edition'    },
-            { label: 'Status',    value: 'Vol. I — Pending'  },
+            { label: 'Status',    value: 'Vol. I: Pending'   },
           ].map(f => (
             <div key={f.label}>
               <p className="font-mono uppercase text-haze" style={{ fontSize: '8px', letterSpacing: '0.16em' }}>
@@ -835,7 +835,7 @@ function TemplateIndex() {
             <p className="mt-6 font-sans text-slate leading-[1.76] pretty"
               style={{ fontSize: '15px' }}>
               Each template is a job. A specific output for a specific decision
-              context — a workshop brief, a monthly executive review, a weekly
+              context: a workshop brief, a monthly executive review, a weekly
               standup, a site-level daily. The system reads from the Risk Spine
               to the Confidence Band, covering every cadence and every audience.
             </p>
