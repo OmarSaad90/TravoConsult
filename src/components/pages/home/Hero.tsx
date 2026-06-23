@@ -193,7 +193,7 @@ export function Hero() {
         style={{ zIndex: 2, minHeight: 'calc(100svh - 34px - 56px)', display: 'flex', flexDirection: 'column' }}
       >
         {/* Two-column content area */}
-        <div className="flex-1 max-w-site mx-auto w-full px-6 md:px-12 lg:px-16 py-8 md:py-10 grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+        <div className="flex-1 max-w-site mx-auto w-full px-6 md:px-12 lg:px-16 py-8 md:py-10 grid md:grid-cols-2 gap-8 lg:gap-14 items-center">
 
           {/* Left — headline + body + CTAs */}
           <div>

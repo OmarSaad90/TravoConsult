@@ -184,7 +184,7 @@ export function WhyTravo() {
 
         {/* Three differentiators — horizontal on desktop, stacked on mobile */}
         <div
-          className="grid md:grid-cols-3 border-t border-rule-l"
+          className="grid lg:grid-cols-3 border-t border-rule-l"
           role="list"
           aria-label="Differentiators"
         >
@@ -195,9 +195,9 @@ export function WhyTravo() {
               style={fade(inView, 80 + i * 100)}
               className={[
                 'pt-10 pb-12',
-                i < 2  ? 'md:pr-12 md:border-r md:border-rule-l' : '',
-                i > 0  ? 'md:pl-12' : '',
-                i > 0  ? 'border-t border-rule-l md:border-t-0' : '',
+                i < 2  ? 'lg:pr-12 lg:border-r lg:border-rule-l' : '',
+                i > 0  ? 'lg:pl-12' : '',
+                i > 0  ? 'border-t border-rule-l lg:border-t-0' : '',
               ].join(' ')}
             >
               {/* Sequence indicator */}

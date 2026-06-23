@@ -40,7 +40,7 @@ export function CoreBelief() {
         </div>
 
         {/* Two-column: body copy left, distribution chart right */}
-        <div className="mt-14 grid md:grid-cols-[1fr_480px] gap-12 md:gap-20 items-start">
+        <div className="mt-14 grid lg:grid-cols-[1fr_480px] gap-12 lg:gap-20 items-start">
 
           {/* Body copy */}
           <div style={fade(inView, 100)} className="space-y-5">

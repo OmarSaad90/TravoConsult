@@ -36,8 +36,8 @@ export function VisionStatement() {
             <div>
               <div className="flex items-center gap-5 mb-9">
                 <span
-                  className="font-mono uppercase text-forest shrink-0"
-                  style={{ fontSize: '14px', letterSpacing: '0.14em' }}
+                  className="font-display font-bold uppercase text-forest shrink-0"
+                  style={{ fontSize: '15px', letterSpacing: '0.06em' }}
                 >
                   Our Vision
                 </span>
@@ -83,6 +83,22 @@ export function VisionStatement() {
                   {seg.label}
                 </span>
               </div>
+            ))}
+          </div>
+
+          {/* Risk spectrum strip — mobile only */}
+          <div className="flex md:hidden gap-[2px] mt-2" aria-hidden>
+            {SPECTRUM.map((seg, i) => (
+              <div
+                key={seg.label}
+                className="flex-1 origin-left"
+                style={{
+                  height: '6px',
+                  backgroundColor: seg.color,
+                  transform: inView ? 'scaleX(1)' : 'scaleX(0)',
+                  transition: `transform 1.0s cubic-bezier(0.16,1,0.3,1) ${i * 60}ms`,
+                }}
+              />
             ))}
           </div>
 

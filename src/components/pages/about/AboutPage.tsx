@@ -493,7 +493,7 @@ export function AboutPage() {
         <TickerStrip />
 
         <div className="relative max-w-site mx-auto px-6 md:px-12 lg:px-16 pt-[72px] pb-[96px] md:pt-[88px] md:pb-[124px]">
-          <div className="grid md:grid-cols-[1fr_380px] lg:grid-cols-[1fr_420px] gap-16 lg:gap-24 items-center">
+          <div className="grid lg:grid-cols-[1fr_420px] gap-16 lg:gap-24 items-center">
 
             {/* Left — headline + lead + links */}
             <div>
@@ -539,7 +539,7 @@ export function AboutPage() {
 
             {/* Right — needle gauge sweeps CRITICAL → MANAGED on load */}
             <div
-              className="hidden md:block"
+              className="hidden lg:block"
               aria-hidden
               style={{
                 transform: heroActive ? 'none' : 'translateY(20px)',

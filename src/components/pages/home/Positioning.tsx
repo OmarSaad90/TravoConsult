@@ -26,7 +26,7 @@ export function Positioning() {
           aria-hidden
         />
 
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
 
           {/* Text column — DOM first for mobile reading order, right column on desktop */}
           <div className="lg:col-start-2 lg:row-start-1" style={fade(inView, 80)}>
