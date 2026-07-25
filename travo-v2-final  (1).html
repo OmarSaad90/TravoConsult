@@ -1,0 +1,2724 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TRAVO — Complete Text (no figures)</title>
+<meta content="Complete text of the TRAVO website in a single navigable file, with all figures and visualizations removed." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&amp;family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&amp;display=swap" rel="stylesheet"/>
+<style>
+/* ==========================================================================
+   TRAVO — Total Risk Analysis and Value Optimization
+   Global stylesheet
+   Locked palette: 8 approved colors + white. Locked typography:
+   Hanken Grotesk (display/interface), Newsreader (editorial serif),
+   IBM Plex Mono (quantitative/metadata).
+   ========================================================================== */
+
+/* ---------- Design tokens ---------- */
+:root {
+  --coral: #FF5B5E;
+  --coral-light: #FFB9BB;
+  --blue-light: #C5ECFE;
+  --teal: #59D1CE;
+  --teal-dark: #185453;
+  --slate: #93A4B3;
+  --indigo: #2C2D52;
+  --ink: #1E1E2E;
+  --white: #FFFFFF;
+
+  /* Typography */
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+  --serif: "Newsreader", serif;
+  --mono: "IBM Plex Mono", monospace;
+
+  /* Type scale */
+  --fs-hero: clamp(2.5rem, 6.4vw, 4.75rem);
+  --fs-h1: clamp(2.125rem, 5vw, 3.5rem);
+  --fs-h2: clamp(1.625rem, 3.6vw, 2.5rem);
+  --fs-h3: clamp(1.25rem, 2.2vw, 1.5rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.9375rem;
+  --fs-meta: 0.75rem;
+  --fs-micro: 0.6875rem;
+
+  /* Layout */
+  --wrap-max: 1160px;
+  --col-max: 46rem;
+  --gutter: clamp(1.375rem, 4vw, 3rem);
+  --space-section: clamp(4rem, 9vw, 7rem);
+  --space-block: clamp(1.75rem, 4vw, 2.75rem);
+
+  /* Borders */
+  --rule: 1px solid var(--slate);
+  --rule-heavy: 2px solid var(--ink);
+  --radius: 3px;
+
+  /* Motion */
+  --dur-fast: 160ms;
+  --dur-med: 320ms;
+  --ease: cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  overflow-x: clip; /* letter-spaced uppercase labels can add ~2px trailing scroll */
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--fs-body);
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--teal-dark); text-underline-offset: 3px; }
+a:hover { color: var(--teal-dark); text-decoration-color: var(--teal); text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 2px solid var(--teal-dark);
+  outline-offset: 3px;
+}
+
+::selection { background: var(--teal); color: var(--ink); }
+
+.wrap {
+  max-width: var(--wrap-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.col { max-width: var(--col-max); }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  clip: rect(0 0 0 0); clip-path: inset(50%);
+  overflow: hidden; white-space: nowrap;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: 1rem; top: -4rem;
+  z-index: 200;
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--sans);
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius);
+  transition: top var(--dur-fast) var(--ease);
+}
+.skip-link:focus { top: 1rem; color: var(--white); }
+
+/* ---------- Typography roles ---------- */
+h1, h2, h3, h4 {
+  font-family: var(--sans);
+  color: var(--indigo);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.75em;
+  font-weight: 800;
+}
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); letter-spacing: -0.01em; font-weight: 700; }
+h4 { font-size: 1.0625rem; font-weight: 700; letter-spacing: 0; }
+
+p { margin: 0 0 1.1em; }
+p:last-child { margin-bottom: 0; }
+
+.lede {
+  font-size: clamp(1.125rem, 2vw, 1.3125rem);
+  line-height: 1.55;
+  max-width: 62ch;
+}
+
+/* Newsreader editorial voice */
+.editorial,
+.editorial p {
+  font-family: var(--serif);
+  font-size: clamp(1.125rem, 2.1vw, 1.3125rem);
+  line-height: 1.66;
+  font-weight: 400;
+}
+.editorial em { font-style: italic; }
+
+.pullquote {
+  font-family: var(--serif);
+  font-size: clamp(1.375rem, 3vw, 1.875rem);
+  line-height: 1.42;
+  font-style: italic;
+  color: var(--indigo);
+  border-left: 3px solid var(--teal);
+  padding-left: clamp(1rem, 3vw, 1.75rem);
+  margin: var(--space-block) 0;
+  max-width: 42ch;
+}
+
+/* Mono roles: metadata, numbering, quantitative content */
+.mono,
+.kicker,
+.meta-list,
+.spec,
+.stat-value,
+.section-num {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.kicker {
+  display: block;
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--teal-dark);
+  margin: 0 0 1rem;
+}
+.kicker .section-num { color: var(--slate); margin-right: 0.75em; }
+
+.on-dark .kicker { color: var(--teal); }
+.on-dark .kicker .section-num { color: var(--slate); }
+
+.muted { color: var(--slate); }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  min-height: 44px;
+  border-radius: var(--radius);
+  border: 2px solid var(--teal-dark);
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease);
+}
+p > .btn { margin: 0 0.75rem 0.75rem 0; }
+.btn-primary { background: var(--teal-dark); color: var(--white); }
+.btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--white); }
+.btn-ghost { background: transparent; color: var(--teal-dark); }
+.btn-ghost:hover { background: var(--teal); color: var(--ink); border-color: var(--teal); }
+.on-dark .btn-ghost { border-color: var(--teal); color: var(--teal); }
+.on-dark .btn-ghost:hover { background: var(--teal); color: var(--ink); }
+
+/* ---------- Header / navigation ---------- */
+.site-header {
+  background: var(--white);
+  border-bottom: var(--rule);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.topbar {
+  border-bottom: var(--rule);
+}
+.topbar-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 2rem;
+  justify-content: space-between;
+  padding-block: 0.5rem;
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+.topbar-inner strong { color: var(--ink); font-weight: 600; }
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 0.9rem;
+}
+
+.wordmark {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: var(--indigo);
+}
+.wordmark:hover { color: var(--teal-dark); }
+.wordmark .tick { color: var(--teal); }
+
+.site-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 1.6vw, 1.5rem);
+}
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 2rem);
+}
+.site-nav a:not(.btn) {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  color: var(--ink);
+  padding: 0.35rem 0.1rem;
+  border-bottom: 2px solid transparent;
+}
+.site-nav a:not(.btn):hover { color: var(--teal-dark); border-bottom-color: var(--teal); }
+.site-nav a[aria-current="page"] {
+  color: var(--teal-dark);
+  border-bottom-color: var(--teal);
+}
+
+.nav-toggle {
+  display: none;
+  font-family: var(--mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--white);
+  color: var(--ink);
+  border: var(--rule);
+  border-radius: var(--radius);
+  padding: 0.6rem 1rem;
+  min-height: 44px;
+  cursor: pointer;
+}
+.nav-toggle[aria-expanded="true"] { background: var(--ink); color: var(--white); }
+
+@media (max-width: 900px) {
+  .nav-toggle { display: inline-block; }
+  .site-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border-bottom: var(--rule-heavy);
+    padding: 1rem var(--gutter) 1.5rem;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .site-nav.is-open { display: flex; }
+  .site-nav ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+  .site-nav li { border-bottom: var(--rule); }
+  .site-nav a:not(.btn) {
+    display: block;
+    padding: 0.9rem 0.25rem;
+    font-size: 1.0625rem;
+    border-bottom: none;
+  }
+  .site-nav a[aria-current="page"] { border-left: 3px solid var(--teal); padding-left: 0.75rem; }
+  .site-nav .btn { margin-top: 1.25rem; text-align: center; }
+}
+
+/* ---------- Sections ---------- */
+.section { padding-block: var(--space-section); }
+.section + .section { border-top: var(--rule); }
+.section-dark {
+  background: var(--indigo);
+  color: var(--white);
+  border-top: none !important;
+}
+.section-ink {
+  background: var(--ink);
+  color: var(--white);
+  border-top: none !important;
+}
+.section-dark h1, .section-dark h2, .section-dark h3,
+.section-ink h1, .section-ink h2, .section-ink h3 { color: var(--white); }
+.section-dark a:not(.btn), .section-ink a:not(.btn) { color: var(--teal); }
+.section-dark a:not(.btn):hover, .section-ink a:not(.btn):hover { color: var(--teal); text-decoration: underline; text-decoration-color: var(--teal); text-decoration-thickness: 2px; }
+.section-dark .muted, .section-ink .muted { color: var(--slate); }
+
+.section-head { max-width: var(--col-max); margin-bottom: var(--space-block); }
+
+/* Page hero */
+.page-hero { padding-block: clamp(3.5rem, 8vw, 6rem); }
+.page-hero h1 { font-size: var(--fs-hero); max-width: 20ch; }
+.page-hero .lede { margin-top: 1.25rem; }
+.hero-rule {
+  width: 56px;
+  border: none;
+  border-top: 3px solid var(--teal);
+  margin: 1.75rem 0 0;
+  position: relative;
+}
+
+/* ---------- Cards & grids ---------- */
+.grid {
+  display: grid;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 900px) { .grid-3, .grid-2 { grid-template-columns: minmax(0, 1fr); } }
+
+.card {
+  background: var(--white);
+  border: var(--rule);
+  border-radius: var(--radius);
+  padding: clamp(1.5rem, 3vw, 2.125rem);
+}
+.card h3 { margin-top: 0.35rem; }
+.card-label {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--teal-dark);
+}
+.card .card-label + h3 { margin-top: 0.6rem; }
+
+.on-dark.card,
+.section-dark .card,
+.section-ink .card {
+  background: transparent;
+  border-color: var(--slate);
+}
+.section-dark .card-label, .section-ink .card-label { color: var(--teal); }
+
+/* Definition/meta lists (report metadata) */
+.meta-list {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.35rem 1.5rem;
+  margin: 1.25rem 0 0;
+  font-size: 0.8125rem;
+}
+.meta-list dt { color: var(--slate); text-transform: uppercase; letter-spacing: 0.08em; }
+.meta-list dd { margin: 0; color: var(--ink); }
+.section-dark .meta-list dd, .section-ink .meta-list dd { color: var(--white); }
+@media (max-width: 480px) {
+  .meta-list { grid-template-columns: 1fr; gap: 0.1rem; }
+  .meta-list dd { margin-bottom: 0.6rem; }
+}
+
+/* ---------- Service accordions ---------- */
+.service-cat { margin-top: var(--space-block); }
+.service-cat + .service-cat { margin-top: var(--space-section); }
+.cat-head {
+  border-top: var(--rule-heavy);
+  padding-top: 1.25rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.5rem;
+}
+
+.service {
+  border: var(--rule);
+  border-radius: var(--radius);
+  margin-top: 1rem;
+  background: var(--white);
+}
+.service summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.25rem clamp(1.25rem, 3vw, 1.75rem);
+}
+.service summary::-webkit-details-marker { display: none; }
+.service summary:hover { background: var(--teal); }
+.service summary:hover .svc-code,
+.service summary:hover .svc-marker { color: var(--ink); }
+.service summary:focus-visible { outline: 2px solid var(--teal-dark); outline-offset: -2px; }
+.service .svc-code {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  color: var(--teal-dark);
+  min-width: 2.25rem;
+}
+.service .svc-name {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--indigo);
+  flex: 1;
+}
+.service .svc-marker {
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--slate);
+  transition: transform var(--dur-fast) var(--ease);
+}
+.service[open] .svc-marker { transform: rotate(45deg); }
+.service .svc-body {
+  padding: 0 clamp(1.25rem, 3vw, 1.75rem) 1.75rem;
+  border-top: var(--rule);
+  padding-top: 1.5rem;
+  max-width: 100%;
+}
+.service .svc-body p { max-width: 66ch; }
+
+/* ---------- Figures / charts ---------- */
+.fig {
+  border: var(--rule);
+  border-radius: var(--radius);
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  margin: var(--space-block) 0 0;
+  background: var(--white);
+}
+.fig svg { display: block; width: 100%; height: auto; }
+.fig-title {
+  font-family: var(--mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal-dark);
+  margin: 0 0 1rem;
+}
+.spec {
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-top: 1rem;
+  text-align: center;
+}
+.fig-desc {
+  font-size: var(--fs-small);
+  color: var(--ink);
+  margin-top: 1rem;
+  max-width: 70ch;
+}
+.section-dark .fig, .section-ink .fig { border-color: var(--slate); background: transparent; }
+.section-dark .fig-title, .section-ink .fig-title { color: var(--teal); }
+
+/* Risk legend chips — color plus text, never color alone */
+.risk-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-top: 1rem;
+  padding: 0;
+  list-style: none;
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.risk-legend li { display: flex; align-items: center; gap: 0.5rem; }
+.swatch { width: 14px; height: 14px; border-radius: 2px; border: 1px solid var(--ink); flex: none; }
+.swatch-coral { background: var(--coral); }
+.swatch-coral-light { background: var(--coral-light); }
+.swatch-blue-light { background: var(--blue-light); }
+.swatch-teal { background: var(--teal); }
+.swatch-teal-dark { background: var(--teal-dark); }
+.swatch-slate { background: var(--slate); }
+.swatch-indigo { background: var(--indigo); }
+.section-dark .risk-legend, .section-ink .risk-legend { color: var(--white); }
+.section-dark .swatch, .section-ink .swatch { border-color: var(--white); }
+
+/* ---------- Tables ---------- */
+.table-scroll { overflow-x: auto; margin-top: var(--space-block); }
+table.ledger {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-small);
+  min-width: 560px;
+}
+table.ledger caption {
+  text-align: left;
+  font-family: var(--mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal-dark);
+  padding-bottom: 0.75rem;
+}
+table.ledger th {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--slate);
+  font-weight: 500;
+  border-bottom: var(--rule-heavy);
+  padding: 0.6rem 1rem 0.6rem 0;
+}
+table.ledger td {
+  border-bottom: var(--rule);
+  padding: 0.85rem 1rem 0.85rem 0;
+  vertical-align: top;
+}
+table.ledger td.mono { font-size: 0.8125rem; }
+
+/* ---------- Image placeholders ---------- */
+.img-placeholder {
+  background: var(--indigo);
+  color: var(--white);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.25rem;
+  min-height: 240px;
+}
+.img-placeholder.ratio-portrait { aspect-ratio: 4 / 5; min-height: 0; }
+.img-placeholder.ratio-wide { aspect-ratio: 16 / 9; min-height: 0; }
+.img-placeholder .ph-label {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+.img-placeholder .ph-file {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  color: var(--slate);
+  word-break: break-all;
+  margin-top: 0.35rem;
+}
+
+/* ---------- Numbered story / process ---------- */
+.story-list {
+  list-style: none;
+  counter-reset: story;
+  margin: var(--space-block) 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+.story-list > li {
+  counter-increment: story;
+  border-top: var(--rule);
+  padding: 1.5rem 0;
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 1.25rem;
+}
+.story-list > li::before {
+  content: counter(story, decimal-leading-zero);
+  font-family: var(--mono);
+  font-size: 0.9375rem;
+  color: var(--teal-dark);
+  padding-top: 0.15rem;
+}
+.section-dark .story-list > li::before,
+.section-ink .story-list > li::before { color: var(--teal); }
+.story-list h3, .story-list h4 { margin-bottom: 0.4rem; }
+.story-list p { max-width: 62ch; }
+@media (max-width: 480px) {
+  .story-list > li { grid-template-columns: 2.5rem 1fr; gap: 0.75rem; }
+}
+
+/* ---------- Founder's letter ---------- */
+.letter {
+  max-width: 42rem;
+  margin-inline: auto;
+}
+.letter p {
+  font-family: var(--serif);
+  font-size: clamp(1.1875rem, 2.2vw, 1.375rem);
+  line-height: 1.72;
+  margin-bottom: 1.4em;
+}
+.letter .signoff {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--indigo);
+  margin-top: 2.5rem;
+}
+.letter .signoff .role {
+  display: block;
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: var(--fs-meta);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-top: 0.4rem;
+}
+.drop-rule {
+  width: 56px;
+  border: none;
+  border-top: 3px solid var(--teal);
+  margin: 0 0 2.25rem;
+}
+
+/* ---------- Notices ---------- */
+.notice {
+  border-left: 3px solid var(--coral);
+  padding: 1rem 1.5rem;
+  margin: var(--space-block) 0 0;
+  border-top: var(--rule);
+  border-right: var(--rule);
+  border-bottom: var(--rule);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.notice-label {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--coral);
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+.notice p { font-size: var(--fs-small); max-width: 70ch; }
+
+.notice-neutral { border-left-color: var(--teal-dark); }
+.notice-neutral .notice-label { color: var(--teal-dark); }
+
+/* ---------- Forms ---------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem 1.5rem;
+  margin-top: var(--space-block);
+}
+.form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-field.full { grid-column: 1 / -1; }
+@media (max-width: 680px) { .form-grid { grid-template-columns: 1fr; } }
+
+.form-field label {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: var(--fs-small);
+}
+.form-field .req { color: var(--coral); }
+.form-field .hint {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  color: var(--slate);
+  letter-spacing: 0.04em;
+}
+.form-field input,
+.form-field select,
+.form-field textarea {
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--white);
+  border: var(--rule);
+  border-radius: var(--radius);
+  padding: 0.75rem 0.9rem;
+  min-height: 48px;
+  width: 100%;
+}
+.form-field select { appearance: auto; }
+.form-field textarea { min-height: 10rem; resize: vertical; }
+.form-field input:focus-visible,
+.form-field select:focus-visible,
+.form-field textarea:focus-visible {
+  outline: 2px solid var(--teal-dark);
+  outline-offset: 1px;
+  border-color: var(--teal-dark);
+}
+.form-field input[aria-invalid="true"],
+.form-field select[aria-invalid="true"],
+.form-field textarea[aria-invalid="true"] { border: 2px solid var(--coral); }
+
+.field-error {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--coral);
+  min-height: 1.1em;
+}
+
+.consent {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  font-size: var(--fs-small);
+}
+.consent input[type="checkbox"] {
+  width: 1.35rem; height: 1.35rem;
+  min-height: 0;
+  margin-top: 0.15rem;
+  accent-color: var(--teal-dark);
+  flex: none;
+}
+
+.form-status {
+  margin-top: 1.5rem;
+  font-weight: 600;
+}
+.form-status.is-error { color: var(--coral); }
+.form-status.is-ok { color: var(--teal-dark); }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: var(--ink);
+  color: var(--white);
+  margin-top: 0;
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.4fr;
+  gap: 2.5rem;
+  padding-block: clamp(3rem, 6vw, 4.5rem) 2.5rem;
+}
+@media (max-width: 900px) { .footer-top { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .footer-top { grid-template-columns: 1fr; } }
+
+.site-footer .wordmark { color: var(--white); font-size: 1.375rem; }
+.footer-tag {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-top: 0.75rem;
+}
+.footer-region {
+  font-size: var(--fs-small);
+  color: var(--slate);
+  margin-top: 1rem;
+  max-width: 34ch;
+}
+.footer-independence {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--white);
+  margin-top: 1.25rem;
+  max-width: 38ch;
+}
+.site-footer h4 {
+  color: var(--white);
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+.site-footer a { color: var(--white); text-decoration: none; font-size: var(--fs-small); }
+.site-footer a:hover { color: var(--teal); text-decoration: underline; }
+.footer-contact { font-family: var(--mono); font-size: 0.8125rem; color: var(--slate); }
+.footer-contact span { display: block; margin-bottom: 0.4rem; }
+
+.footer-bottom {
+  border-top: 1px solid var(--indigo);
+  padding-block: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.08em;
+  color: var(--slate);
+}
+.footer-bottom a { color: var(--slate); font-size: var(--fs-micro); }
+.footer-bottom a:hover { color: var(--white); }
+
+/* ---------- Stat rows ---------- */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: var(--space-block);
+}
+@media (max-width: 760px) { .stat-row { grid-template-columns: 1fr; } }
+.stat {
+  border-top: var(--rule-heavy);
+  padding-top: 1rem;
+}
+.section-dark .stat, .section-ink .stat { border-top-color: var(--white); }
+.stat-value {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 500;
+  color: var(--teal-dark);
+  display: block;
+  line-height: 1.1;
+}
+.section-dark .stat-value, .section-ink .stat-value { color: var(--teal); }
+.stat-label {
+  display: block;
+  font-size: var(--fs-small);
+  margin-top: 0.5rem;
+  max-width: 30ch;
+}
+
+/* ---------- Reveal on scroll ---------- */
+.reveal { opacity: 0; transform: translateY(14px); }
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--dur-med) var(--ease), transform var(--dur-med) var(--ease);
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Utility ---------- */
+.mt-block { margin-top: var(--space-block); }
+.two-col-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+@media (max-width: 900px) { .two-col-split { grid-template-columns: minmax(0, 1fr); } }
+
+.tag-list {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.tag-list li {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: var(--rule);
+  border-radius: 2px;
+  padding: 0.35rem 0.7rem;
+  color: var(--ink);
+}
+.section-dark .tag-list li, .section-ink .tag-list li { color: var(--white); border-color: var(--slate); }
+
+/* Source lists */
+.source-list {
+  font-size: var(--fs-small);
+  margin: 1rem 0 0;
+  padding-left: 1.1rem;
+}
+.source-list li { margin-bottom: 0.5rem; }
+
+/* ---------- Teal-forward interaction accents ---------- */
+.service[open] { border-color: var(--teal-dark); }
+.card:has(a):hover { border-color: var(--teal-dark); transition: border-color var(--dur-fast, 150ms) var(--ease, ease); }
+.nav-toggle:hover { border-color: var(--teal-dark); color: var(--teal-dark); }
+.story-list a:hover { text-decoration-color: var(--teal); text-decoration-thickness: 2px; }
+.btn-primary:focus-visible, .btn-ghost:focus-visible { outline-color: var(--teal); }
+
+/* ---------- Animated sample visualizations (scroll-triggered) ---------- */
+.swatch-slate { background: var(--slate); }
+.tv .a-bar { transform: scaleY(0); transform-box: fill-box; transform-origin: center bottom;
+  transition: transform 0.9s cubic-bezier(0.4,0,0.2,1); transition-delay: calc(var(--i,0) * 120ms); }
+.tv.in .a-bar { transform: scaleY(1); }
+.tv .a-draw { stroke-dasharray: 1; stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.4s ease; transition-delay: calc(var(--i,0) * 260ms); }
+.tv.in .a-draw { stroke-dashoffset: 0; }
+.tv .a-fade { opacity: 0; transition: opacity 0.8s ease; transition-delay: calc(var(--i,0) * 70ms); }
+.tv.in .a-fade { opacity: 1; }
+.tv .a-pop { opacity: 0; transform: scale(0.35); transform-box: fill-box; transform-origin: center;
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.34,1.5,0.5,1); transition-delay: calc(var(--i,0) * 70ms); }
+.tv.in .a-pop { opacity: 1; transform: none; }
+@keyframes tv-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+.tv.in .a-pulse { animation: tv-pulse 2.4s ease-in-out infinite; animation-delay: 1.1s; }
+@media (prefers-reduced-motion: reduce) {
+  .tv .a-bar, .tv .a-draw, .tv .a-fade, .tv .a-pop { transition: none !important; animation: none !important; }
+  .tv .a-bar { transform: scaleY(1); }
+  .tv .a-draw { stroke-dashoffset: 0; }
+  .tv .a-fade { opacity: 1; }
+  .tv .a-pop { opacity: 1; transform: none; }
+  .tv.in .a-pulse { animation: none; }
+}
+
+/* ---------- Register ledger state pills ---------- */
+.pill-active, .pill-watch, .pill-mitig, .pill-closed {
+  font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.25rem 0.5rem; border-radius: 2px; border: 1px solid var(--ink); white-space: nowrap; color: var(--ink);
+}
+.pill-active { background: var(--coral); }
+.pill-watch  { background: var(--blue-light); }
+.pill-mitig  { background: var(--teal); }
+.pill-closed { background: var(--slate); }
+.ledger .spec { font-size: 0.625rem; letter-spacing: 0.08em; color: var(--slate); margin-top: 0.15rem; }
+
+.page[hidden]{display:none!important;}
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="topbar">
+<div class="wrap topbar-inner">
+<span><strong>TRAVO</strong> · Total Risk Analysis and Value Optimization</span>
+<span>Specialty Quantitative Risk Advisory</span>
+<span>New Jersey · New York Metropolitan Region</span>
+</div>
+</div>
+<div class="wrap navbar">
+<a class="wordmark" href="index.html">TRAVO<span class="tick">.</span></a>
+<button aria-controls="site-nav" aria-expanded="false" class="nav-toggle">Menu</button>
+<nav aria-label="Primary" class="site-nav" id="site-nav">
+<ul>
+<li><a href="services.html">Services</a></li>
+<li><a href="methodology.html">Methodology</a></li>
+<li><a href="research.html">Research</a></li>
+<li><a href="insights.html">Insights</a></li>
+<li><a href="risk-index.html">Risk Index</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="engagements.html">Engagements</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+<a class="btn btn-primary" href="contact.html">Discuss a Project</a>
+</nav>
+</div>
+</header>
+<main id="main">
+<div class="page" data-page="home">
+<!-- 01 · Hero -->
+<section aria-labelledby="hero-title" class="section page-hero">
+<div class="wrap">
+<p class="kicker"><span class="section-num">01</span>Total Risk Analysis and Value Optimization</p>
+<h1 id="hero-title">Quantified Risk. Disciplined Decisions.</h1>
+<p class="lede editorial"><em>Independent quantitative risk analysis for the New Jersey and New York construction market.</em></p>
+<p class="lede col">TRAVO is a specialty quantitative risk advisory practice built around a single discipline — quantitative project risk analysis — applied to the decisions where uncertainty most directly affects financial outcomes. Risk analysis is the method. Value optimization is the result. The two are not separate offerings — the second is what the first is for.</p>
+<hr aria-hidden="true" class="hero-rule"/>
+<p class="mt-block">
+<a class="btn btn-primary" href="contact.html">Discuss a Project</a>
+<a class="btn btn-ghost" href="services.html">View the Service Catalog</a>
+</p>
+
+</div>
+</section>
+<!-- 02 · The problem -->
+<section aria-labelledby="problem-title" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">01</span>The Construction-Risk Problem</p>
+<h2 id="problem-title">Most construction project failures are quantifiable in advance.</h2>
+<p class="editorial">Peer-reviewed research on capital project performance — most prominently Flyvbjerg and colleagues — finds cost overruns on roughly nine of ten large projects, with average overruns in the range of 20–30 percent and a heavy tail of far worse outcomes. The pattern is durable across sectors, regions, and decades. It is not a problem of effort, talent, or capital availability. It is a problem of methodology. Regionally, the current numbers agree: Arcadis&rsquo; 2025 Global Construction Disputes Report puts the average North American construction dispute at $60.1&nbsp;million, and HKA&rsquo;s CRUX program finds disputed sums averaging roughly one-third of capital expenditure on affected projects, with payment and cash-flow disputes rising fastest in the Americas. Every figure TRAVO publishes, including this one, is traceable to its source and quoted within the bounds of what the source actually found.</p>
+</div>
+<div class="two-col-split">
+<div>
+<h3>Where qualitative methods fall short</h3>
+<p>The risks that drive cost overruns, schedule delays, and disputes are usually visible at the preconstruction stage and then through the project lifecycle. They are rarely modeled with sufficient rigor to inform decisions before they materialize. The industry routinely defaults to qualitative heat maps, single-point cost estimates, and intuition-driven contingencies — methods that obscure rather than illuminate the actual distribution of likely outcomes.</p>
+<p>TRAVO exists to close that gap. Through methodology, not advocacy. Through quantitative analysis, not narrative reassurance. Through independence, not alignment with any single party’s commercial position.</p>
+</div>
+<div>
+<h3>Why precision optimizes value</h3>
+<p>Closing the gap is not only safer. It is more valuable. Capital held against risk that never materializes is capital that could have built scope, funded reserves, or earned a return elsewhere — while an under-held contingency exposes the project to outcomes it cannot absorb. Precision is what converts risk analysis into decisions that optimize value.</p>
+<ul aria-label="Qualitative methods TRAVO replaces" class="tag-list">
+<li>Heat maps → probability distributions</li>
+<li>Single points → P10 / P50 / P80</li>
+<li>Intuition → derived contingency</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- 03 · Vision & mission -->
+<section aria-labelledby="vision-title" class="section section-dark on-dark">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">02</span>Vision &amp; Mission</p>
+<h2 id="vision-title">A standards-setting position, not a generalist practice.</h2>
+</div>
+<div class="grid grid-2">
+<div class="card on-dark reveal">
+<p class="card-label">Vision</p>
+<p class="editorial"><em>To establish the regional standard for quantitative construction risk analysis in the New Jersey and New York metropolitan market — and to be the firm whose published benchmarks define how that standard is measured.</em></p>
+<p>The vision is deliberately not to be the largest advisory firm in the region, nor to serve the broadest range of clients. It is to earn a standards-setting position: the firm whose methodology, published research, and demonstrated outcomes become the reference point others are measured against. The position is earned through completed engagements, verifiable outcomes, and published work — in that order — and the firm does not describe itself as the standard until the market does.</p>
+</div>
+<div class="card on-dark reveal">
+<p class="card-label">Mission</p>
+<p class="editorial"><em>TRAVO helps sureties, construction lenders, litigation counsel, institutional owners, public agencies, and contractors in New Jersey and New York make better decisions, by applying rigorous quantitative risk methodology to the decisions where uncertainty most directly affects financial outcomes.</em></p>
+<p>The mission is operational, not aspirational: rigorous quantitative methodology, a deliberate NJ/NY regional focus, and the decision points — underwriting and monitoring, trend reassessment when projects drift, pre-claim positioning, contingency derivation, schedule baselines, and procurement — where the difference between rigorous analysis and intuition translates into millions of dollars.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 04 · How TRAVO differs -->
+<section aria-labelledby="differs-title" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">03</span>Positioning</p>
+<h2 id="differs-title">A specialty practice, not a generalist consultancy.</h2>
+<p class="lede">The construction advisory market is crowded with generalists who provide some risk work alongside many other services. There are very few firms that practice quantitative risk methodology with rigor, fewer still that combine it with senior operator credibility, and almost none that maintain the academic standards required to defend their analyses under serious scrutiny. TRAVO occupies that intersection.</p>
+</div>
+<div class="grid grid-3">
+<div class="card reveal">
+<p class="card-label">Credential 01</p>
+<h3>Graduate-level methodology</h3>
+<p>Monte Carlo–based cost and schedule simulation, sensitivity analysis, and probabilistic contingency derivation — grounded in AACE Recommended Practices, peer-reviewed academic research, and established quantitative standards.</p>
+</div>
+<div class="card reveal">
+<p class="card-label">Credential 02</p>
+<h3>Senior operator experience</h3>
+<p>Operating experience at scale in heavy civil construction delivery — the base of completed project audits, post-project reviews, and lessons learned that separates analysis that is academically sound from analysis that has survived contact with a live project.</p>
+</div>
+<div class="card reveal">
+<p class="card-label">Credential 03</p>
+<h3>An active research program</h3>
+<p>Published regional benchmarks against which TRAVO’s analyses are continuously validated — the mechanism by which a standards-setting position is built and maintained.</p>
+</div>
+</div>
+<p class="mt-block col">Unlike traditional construction management consultants, TRAVO does not augment client staff or provide lifecycle project services. We provide independent, methodologically rigorous risk analysis at the specific decision points where uncertainty has the largest financial impact: underwriting and monitoring, mid-project trend analysis, pre-claim assessment, contingency derivation, and procurement. The analysis is the method. A better-optimized capital decision — a right-sized contingency, a value-adjusted procurement, a defensible reserve — is the result.</p>
+</div>
+</section>
+<!-- 05 · Services overview -->
+<section aria-labelledby="svc-title" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">04</span>Services</p>
+<h2 id="svc-title">Fourteen named services across five categories.</h2>
+<p class="lede">The catalog is deliberately bounded and productized: each offering is a recognizable, repeatable service with a defined deliverable, methodology, and scope. The firm enters the market in phases: independent reviews for sureties, lenders, and counsel — and trend and pre-claim work on drifting projects — lead; owner-side preconstruction studies scale on the strength of those references. Recurring capital-at-risk services carry published indicative fees; analytical engagements are scoped per decision.</p>
+</div>
+<div class="grid grid-3">
+<div class="card reveal">
+<p class="card-label">Category A</p>
+<h3>Owner-Side Preconstruction Analysis</h3>
+<p>Quantitative risk analysis and contingency derivation, independent risk peer review, risk-adjusted bid leveling, and strategic alternatives analysis — the front-end decisions where analysis has the highest leverage on financial outcomes.</p>
+<a href="services.html#category-a">Category A services →</a>
+</div>
+<div class="card reveal">
+<p class="card-label">Category B</p>
+<h3>Capital at Risk — Lender, Surety &amp; Underwriting</h3>
+<p>The firm&rsquo;s early go-to-market lead and recurring commercial core: construction loan monitoring and draw review, underwriting risk opinions on complex collateral, and continuous contractor financial-health monitoring for sureties and subcontractor-default programs. Panel-ready deliverables, reliance letters, published indicative fees.</p>
+<a href="services.html#category-b">Category B services →</a>
+</div>
+<div class="card reveal">
+<p class="card-label">Category C</p>
+<h3>During-Project Risk Management</h3>
+<p>Risk discipline during execution — risk register management retainers with defined tiers, trend risk analysis and cost-at-completion forecasting (including a 10-day urgent triage), and pre-claim, dispute-readiness review.</p>
+<a href="services.html#category-c">Category C services →</a>
+</div>
+<div class="card reveal">
+<p class="card-label">Category D</p>
+<h3>Post-Project, Portfolio &amp; Public-Interest</h3>
+<p>Lessons-learned risk capture, portfolio risk benchmarking against the regional dataset, and independent third-party review of large public and private project proposals for the decision-makers who must approve or fund them.</p>
+<a href="services.html#category-d">Category D services →</a>
+</div>
+<div class="card reveal">
+<p class="card-label">Category E</p>
+<h3>Training &amp; Capability Building</h3>
+<p>Structured transfer of TRAVO&rsquo;s methodology into client organizations — implementation and training for owners and contractors building internal quantitative risk capability, with the same rigor the firm applies on its own engagements.</p>
+<a href="services.html#category-e">Category E services →</a>
+</div>
+</div>
+</div>
+</section>
+<!-- 06 · Methodology intro -->
+<section aria-labelledby="method-title" class="section">
+<div class="wrap two-col-split">
+<div>
+<p class="kicker"><span class="section-num">05</span>Methodology</p>
+<h2 id="method-title">Experience-based risk intelligence, quantified.</h2>
+<p>TRAVO’s methodology is grounded in quantitative analysis but is not limited to it. The firm draws on an extensive base of completed project audits, post-project reviews, historical performance data, and lessons learned — the input layer that transforms Monte Carlo simulation from a generic statistical exercise into a context-specific assessment of the risks that actually matter on a given project.</p>
+<p>Every quantitative output — every P50, every P80, every contingency recommendation — is derivable from documented methodology, traceable inputs, and validated assumptions. Where it strengthens the process, TRAVO applies AI-supported analysis to surface recurring risk categories across historical data; such techniques remain strictly subordinate to expert judgment, and the principal personally reviews and signs every analytical product.</p>
+<p class="mt-block"><a class="btn btn-ghost" href="methodology.html">Read the Methodology</a></p>
+</div>
+<div>
+<ul aria-label="Methodology components" class="story-list">
+<li><div><h4>Monte Carlo simulation</h4><p>Probabilistic cost and schedule distributions in place of single points.</p></div></li>
+<li><div><h4>Sensitivity analysis</h4><p>Ranked identification of the drivers that actually move the outcome.</p></div></li>
+<li><div><h4>Contingency derivation</h4><p>Defensible P50/P80-based recommendations with capital implications made explicit.</p></div></li>
+<li><div><h4>Principal review &amp; sign-off</h4><p>Every deliverable carries the principal’s name and credentials.</p></div></li>
+</ul>
+</div>
+</div>
+</section>
+<!-- 07 · Region + principal credibility -->
+<section aria-labelledby="region-title" class="section section-ink on-dark">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">06</span>Region &amp; Principal</p>
+<h2 id="region-title">Regionally focused. Personally accountable.</h2>
+</div>
+<div class="col">
+<div>
+<p>TRAVO operates within the relationships, regulatory environment, and capital project ecosystem of the NJ/NY metropolitan region — New Jersey primary, New York metropolitan secondary. The practice serves sureties, construction lenders, construction-litigation counsel, institutional owners, public agencies and municipalities, and mid-sized general contractors.</p>
+<p>TRAVO is founded and led by <strong>Dr. Karim S. Karam</strong>, who brings together three capabilities the regional construction-advisory market rarely combines: graduate-level risk methodology (Imperial College London; Master’s and Ph.D. at MIT), operator credibility at scale as part of the founding family of Sarooj Construction Company in Oman, and an active academic platform as Teaching Associate Professor of Civil, Environmental and Ocean Engineering at Stevens Institute of Technology in New Jersey.</p>
+<p class="mt-block">
+<a class="btn btn-ghost" href="about.html">About TRAVO &amp; the Principal</a>
+<a class="btn btn-ghost" href="founders-letter.html">Founder’s Letter</a>
+</p>
+</div>
+
+</div>
+</div>
+</section>
+<!-- 08 · Publishing & Risk Index -->
+<section aria-labelledby="pub-title" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">07</span>Research &amp; Publication</p>
+<h2 id="pub-title">Publication is operational, not optional.</h2>
+<p class="lede">TRAVO publishes — peer-reviewed research, industry-press articles, an annual regional benchmark, and insights from past projects — on a defined cadence regardless of how busy engagement work becomes. Publication is the mechanism by which the firm’s standards-setting position is built and maintained.</p>
+</div>
+<div class="grid grid-2">
+<div class="card reveal">
+<p class="card-label">Publishing Program</p>
+<h3>Four continuous streams</h3>
+<p>Peer-reviewed academic publication, industry-press publication, self-published Insights and Commentary, and the annual NJ/NY Construction Risk Index.</p>
+<a href="insights.html">Explore the publishing program →</a>
+</div>
+<div class="card reveal">
+<p class="card-label">Planned Benchmark</p>
+<h3>The NJ/NY Construction Risk Index</h3>
+<p>A planned annual benchmark report on regional construction outcomes — schedule slippage rates, cost overrun distributions, contingency adequacy, and claim emergence patterns — segmented by project type and asset class.</p>
+<a href="risk-index.html">About the Risk Index →</a>
+</div>
+</div>
+</div>
+</section>
+<!-- 09 · Engagement triggers / final CTA -->
+<section aria-labelledby="cta-title" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">08</span>When to Engage TRAVO</p>
+<h2 id="cta-title">Defined decision points. A defined way in.</h2>
+<p class="lede">TRAVO engagements attach to specific decisions: underwriting or monitoring a bonded or financed project, reassessing a project that has begun to drift, forecasting cost or schedule at completion, preparing for a potential claim, reviewing a contractor’s risk submission, setting a project contingency, leveling bids, comparing strategic alternatives, commissioning an independent review of a major project proposal, capturing lessons learned, benchmarking a portfolio, or implementing a risk methodology.</p>
+</div>
+<p>
+<a class="btn btn-primary" href="contact.html">Discuss a Project</a>
+<a class="btn btn-ghost" href="engagements.html">How Engagements Work</a>
+</p>
+</div>
+</section>
+</div>
+<div class="page" data-page="services" hidden="">
+<section aria-labelledby="svc-hero" class="section page-hero">
+<div class="wrap">
+<p class="kicker"><span class="section-num">02</span>Service Catalog</p>
+<h1 id="svc-hero">One discipline. A deliberately bounded catalog.</h1>
+<p class="lede col">TRAVO&rsquo;s service offerings are organized into five categories aligned to the construction project lifecycle. The catalog is deliberately bounded, and each offering is productized: a recognizable, repeatable service with defined deliverables, methodology, and scope — so a buyer understands exactly what they are purchasing. The catalog is entered in phases: independent underwriting, monitoring, trend, pre-claim, and peer-review work (Category B, C2, C3, and the A2 peer review) leads the firm&rsquo;s early go-to-market; full preconstruction studies and portfolio services scale on the references that work produces. Recurring capital-at-risk services (Category B and the C1 retainer) carry published indicative fees and standardized, reliance-ready deliverables; analytical engagements are scoped per decision. Indicative fees are planning figures, not quotations; every engagement is confirmed by a written proposal with defined scope and re-open triggers.</p>
+<hr aria-hidden="true" class="hero-rule"/>
+</div>
+</section>
+<section aria-labelledby="cat-a-title" class="section">
+<div class="wrap">
+
+<div class="service-cat" id="category-a">
+<div class="cat-head">
+<p class="kicker"><span class="section-num">A</span>Category A · Owner-Side Preconstruction</p>
+<h2 id="cat-a-title">Pre-Project Risk and Contingency Analysis</h2>
+<p class="col">Risk and contingency work performed during planning and procurement, before construction begins — the front-end discipline through which the largest improvements in project net present value are achievable, before final investment decision is made. TRAVO provides the quantitative risk component of that discipline. Within the firm&rsquo;s phased go-to-market, the short Independent Risk Peer Review (A2) is the early entry point — fixed-fee, principal-signed, and the fastest way for a new client to test the methodology; the full studies are typically engaged on the strength of completed regional references.</p>
+</div>
+<details class="service" id="a1">
+<summary>
+<span class="svc-code">A1</span>
+<span class="svc-name">Quantitative Risk Analysis and Contingency Derivation</span>
+<span aria-hidden="true" class="svc-marker">+</span>
+</summary>
+<div class="svc-body">
+<p><strong>Purpose.</strong> Independent Monte Carlo–based probabilistic analysis of cost and schedule outcomes for a defined project, producing P10/P50/P80 distributions for cost-at-completion and completion date, and a defensible contingency recommendation — including identification of where contingency can be right-sized, quantifying capital currently held against risk the analysis shows is not warranted.</p>
+<p><strong>Use case.</strong> The flagship analytical engagement: an owner or capital decision-maker setting contingency and schedule baselines on a defined project, where the difference between a derived contingency and an intuition-based one is directly financial. It is most often the second engagement with a client, following an A2 peer review.</p>
+<p><strong>Structured risk register — included, not sold naked.</strong> Workshop-driven risk identification, characterization, and register development is delivered as an integral component of this service (and of A2). TRAVO does not issue standalone qualitative registers: a register without the quantitative layer is exactly the heat-map product this practice exists to replace. Ongoing register updating is provided through the C1 retainer.</p>
+<p><strong>Public-sector variant.</strong> For federally supported transit and infrastructure projects, deliverables are mapped to FTA Oversight Procedure OP-40/40b review formats and AACE deliverable structures, so a sponsor or its program-management consultant can place TRAVO&rsquo;s work product directly into an oversight review package.</p>
+<p><strong>Methodology.</strong> Grounded in AACE Recommended Practices 41R-08 and 57R-09, with documented sensitivity analysis and traceable input assumptions.</p>
+<dl class="meta-list">
+<dt>Deliverable</dt>
+<dd>30–50 page report: executive summary, integrated risk register, methodology documentation, simulation outputs, sensitivity and tornado analyses, and recommended contingency with rationale — including the capital implication of over- or under-held contingency against modeled risk. Working files delivered to client on request.</dd>
+<dt>Engagement scope</dt>
+<dd>5–7 weeks</dd>
+<dt>Indicative fee</dt>
+<dd>$75,000–$250,000, by project size and complexity</dd>
+<dt>Tooling</dt>
+<dd>Primavera Risk Analysis or Safran Risk (schedule simulation); @RISK, Crystal Ball, or Python-based simulation (cost modeling)</dd>
+</dl>
+</div>
+</details>
+<details class="service" id="a2">
+<summary>
+<span class="svc-code">A2</span>
+<span class="svc-name">Independent Risk Peer Review</span>
+<span aria-hidden="true" class="svc-marker">+</span>
+</summary>
+<div class="svc-body">
+<p><strong>Purpose.</strong> Owner-side review of a contractor&rsquo;s submitted risk register and contingency analysis. Identifies methodological gaps, missing risks, underestimated impacts, and structural weaknesses in the contractor&rsquo;s approach.</p>
+<p><strong>Use case.</strong> The catalog&rsquo;s deliberate door-opener and a lead service in the firm&rsquo;s early go-to-market: a short, fixed-fee, principal-signed engagement with large value to the owner, giving an independent quantitative check on the risk submissions on which contingency and procurement decisions rest — and a low-commitment way to evaluate TRAVO&rsquo;s methodology before a full A1 analysis or C1 retainer.</p>
+<dl class="meta-list">
+<dt>Deliverable</dt>
+<dd>Peer review report with findings, ranked recommendations, and required remediations.</dd>
+<dt>Engagement scope</dt>
+<dd>2–3 weeks</dd>
+<dt>Indicative fee</dt>
+<dd>Fixed fee, $25,000–$60,000</dd>
+</dl>
+</div>
+</details>
+<details class="service" id="a3">
+<summary>
+<span class="svc-code">A3</span>
+<span class="svc-name">Risk-Adjusted Bid Leveling and Procurement Support</span>
+<span aria-hidden="true" class="svc-marker">+</span>
+</summary>
+<div class="svc-body">
+<p><strong>Purpose.</strong> Independent analysis of bidder pricing through a quantitative risk lens. Identifies which bids are realistic given market conditions, which are buying the work, where contractual risk has been shifted in ways the owner may not fully recognize, and what the risk-adjusted ranking of bidders should be.</p>
+<p><strong>Use case.</strong> Particularly valuable for institutional and private owners selecting general contractors on $30M–$150M projects where the lowest nominal bid is not the lowest expected total cost — including data-center and healthcare procurements, where award discretion exists and latent risk transfer is common. A fixed-price bid is the floor of project cost, not the ceiling; risk-adjusted analysis is what allows owners to see the difference.</p>
+<p><strong>Public-bidding caveat.</strong> On public work governed by lowest-responsible-bidder statutes in New Jersey and New York, this analysis informs contingency setting, contract administration, and risk-allocation strategy; it does not and cannot re-rank a statutory award. Public owners should confirm the permissible use of bid-risk analysis with procurement counsel before engagement.</p>
+<dl class="meta-list">
+<dt>Deliverable</dt>
+<dd>Bid-leveling analysis report with risk-adjusted ranking (or, on statutory public bids, risk exposure analysis by bidder), identification of latent risk transfer in each bid, and a procurement or contract-administration recommendation supported by quantitative reasoning.</dd>
+<dt>Engagement scope</dt>
+<dd>3–5 weeks, aligned to the procurement calendar</dd>
+</dl>
+</div>
+</details>
+<details class="service" id="a4">
+<summary>
+<span class="svc-code">A4</span>
+<span class="svc-name">Strategic Alternatives and Scenario Analysis</span>
+<span aria-hidden="true" class="svc-marker">+</span>
+</summary>
+<div class="svc-body">
+<p><strong>Purpose.</strong> Structured scenario analysis for capital decisions involving choice among significantly different alternatives — make versus buy, build versus retrofit, alternative technology paths, alternative delivery models, alternative phasing strategies. Distinct from operational quantitative risk analysis (which quantifies variation within a chosen plan), strategic alternatives analysis quantifies the relative attractiveness of substantively different paths under long-horizon uncertainty.</p>
+<p><strong>Use case.</strong> Value optimization in its most direct form, at concept-select stage. TRAVO accepts these engagements selectively: because long-horizon inputs are inherently softer than project-stage data, every scenario analysis documents its priors explicitly and presents sensitivity to them, so the analysis remains defensible under the same scrutiny applied to the firm&rsquo;s project-stage work.</p>
+<p><strong>Methodology.</strong> Grounded in decision analysis literature, multi-criteria scenario methods, and real-options analysis where appropriate.</p>
+<dl class="meta-list">
+<dt>Deliverable</dt>
+<dd>Scenario analysis report with structured comparison of alternatives across cost, schedule, risk, and strategic-value dimensions; decision recommendation supported by quantitative reasoning; and sensitivity analysis on key drivers, including the stated priors.</dd>
+<dt>Engagement scope</dt>
+<dd>4–8 weeks</dd>
+</dl>
+</div>
+</details>
+</div>
+
+<div class="service-cat" id="category-b">
+<div class="cat-head">
+<p class="kicker"><span class="section-num">B</span>Category B · Capital at Risk</p>
+<h2>Lender, Surety and Underwriting Services</h2>
+<p class="col">Independent risk services for the parties whose capital is at risk — construction lenders, sureties, and investors. This category leads the firm&rsquo;s early go-to-market, is its first source of recurring monitoring revenue, and is built the way capital providers procure: standardized, panel-ready deliverables in credit-file format; published indicative fees; reliance letters issued under the firm&rsquo;s professional-liability program; and TRAVO&rsquo;s quantitative P50/P80 layer included within every product rather than sold as an exotic add-on. Independence is the product, not a feature of it.</p>
+</div>
+<details class="service" id="b1">
+<summary>
+<span class="svc-code">B1</span>
+<span class="svc-name">Construction Loan Monitoring and Draw Review</span>
+<span aria-hidden="true" class="svc-marker">+</span>
+</summary>
+<div class="svc-body">
+<p><strong>Purpose.</strong> The standard lender-services product, delivered to panel expectations: pre-closing plan and cost review (budget, schedule, and contract review; contractor and borrower capability assessment), followed by monthly draw-request review, site monitoring, contingency tracking, and cost-to-complete analysis through loan maturity — with TRAVO&rsquo;s probabilistic cost- and schedule-risk layer included in every report at no separate charge.</p>
+<p><strong>Use case.</strong> Regional banks, community banks, debt funds, and private-credit lenders on construction loans of $10M–$150M — including complex collateral where template monitoring underperforms: data centers, affordable-housing and public-housing conversion deals, and building-decarbonization retrofit lending.</p>
+<p><strong>Reliance.</strong> Reports are issued in credit-file format with reliance letters on TRAVO&rsquo;s standard terms, backed by the firm&rsquo;s errors-and-omissions program. Turnaround commitments are stated in the engagement letter.</p>
+<dl class="meta-list">
+<dt>Deliverable</dt>
+<dd>Pre-closing plan &amp; cost review report; monthly monitoring report with draw recommendation, site observations, schedule status, contingency position, cost-to-complete, and probabilistic outlook; early-warning flags on emerging deterioration.</dd>
+<dt>Engagement scope</dt>
+<dd>Pre-closing review 2–4 weeks; monthly monitoring for the life of the loan</dd>
+<dt>Indicative fee</dt>
+<dd>Plan &amp; cost review $15,000–$50,000 per loan; monitoring $2,500–$7,500 per month, by project size and inspection cadence; portfolio pricing available for five or more concurrent loans</dd>
+</dl>
+</div>
+</details>
+<details class="service" id="b2">
+<summary>
+<span class="svc-code">B2</span>
+<span class="svc-name">Underwriting Risk Opinion</span>
+<span aria-hidden="true" class="svc-marker">+</span>
+</summary>
+<div class="svc-body">
+<p><strong>Purpose.</strong> Independent, third-party quantitative risk opinion commissioned by a surety, construction lender, or investor at underwriting or financing: P50/P80 cost and schedule distributions for the project, an independent contingency adequacy assessment, and an explicit statement of the assumptions the credit or bond decision would be relying on — tracked against realized performance through execution where monitoring is retained.</p>
+<p><strong>Use case.</strong> The buyer is the party with capital at risk, not the project team. Complex or unusual collateral where a standard plan-and-cost review is not enough: large or phased projects, data centers and power-adjacent work, conversion and retrofit programs, and any account where the underwriting committee wants a probabilistic view rather than a single-point opinion.</p>
+<dl class="meta-list">
+<dt>Deliverable</dt>
+<dd>Underwriting-stage risk opinion with P50/P80 cost and schedule distributions, contingency assessment, and stated reliance terms; optional periodic monitoring memos benchmarking realized trend against underwritten assumptions.</dd>
+<dt>Engagement scope</dt>
+<dd>Underwriting review 2–4 weeks; monitoring on a defined cadence</dd>
+<dt>Indicative fee</dt>
+<dd>$25,000–$75,000 per opinion, by project size and complexity; monitoring per B1 rates</dd>
+</dl>
+</div>
+</details>
+<details class="service" id="b3">
+<summary>
+<span class="svc-code">B3</span>
+<span class="svc-name">Contractor Financial-Health and Default-Risk Monitoring</span>
+<span aria-hidden="true" class="svc-marker">+</span>
+</summary>
+<div class="svc-body">
+<p><strong>Purpose.</strong> Initial assessment and continuous monitoring of contractor and subcontractor financial condition for sureties, subcontractor-default-insurance (SDI) programs, and owners — reading the signals that annual financial statements miss: pay-application cycle drift, unapproved change-order balances, underbilling swings, backlog concentration, and trade-credit tightening.</p>
+<p><strong>Use case.</strong> The industry-wide condition this service answers is documented: payment and cash-flow disputes are the fastest-rising dispute category in the Americas, and record backlogs routinely mask margin compression and cash stress that surface only at 60–80 percent completion. Sureties, SDI underwriters, and owners with significant contractor exposure need continuous, quantitative visibility — not an annual statement review.</p>
+<dl class="meta-list">
+<dt>Deliverable</dt>
+<dd>Initial financial-health and default-risk assessment; quarterly (or monthly, on watchlist accounts) monitoring memos with defined early-warning indicators and threshold triggers.</dd>
+<dt>Engagement scope</dt>
+<dd>Initial assessment 2–4 weeks; continuous monitoring by subscription</dd>
+<dt>Indicative fee</dt>
+<dd>Initial assessment $15,000–$60,000 per account; monitoring $2,000–$5,000 per month per account, by cadence and account complexity</dd>
+</dl>
+</div>
+</details>
+</div>
+
+<div class="service-cat" id="category-c">
+<div class="cat-head">
+<p class="kicker"><span class="section-num">C</span>Category C · Execution</p>
+<h2>During-Project Risk Management</h2>
+<p class="col">Risk and contingency work performed during construction execution — the bridge between procurement-stage analysis and project completion, sustaining risk discipline as conditions change. Trend and pre-claim work on drifting projects (C2, C3) sits alongside Category B in the firm&rsquo;s early go-to-market; the C1 retainer is the default continuation of every A1 analysis and C2 reassessment — the mechanism by which a one-time analysis becomes a maintained discipline.</p>
+</div>
+<details class="service" id="c1">
+<summary>
+<span class="svc-code">C1</span>
+<span class="svc-name">Risk Register Management Retainer</span>
+<span aria-hidden="true" class="svc-marker">+</span>
+</summary>
+<div class="svc-body">
+<p><strong>Purpose.</strong> Recurring retainer to maintain and update the project&rsquo;s live risk register, run change-impact assessments, chair scheduled risk review meetings, and provide ongoing methodology guidance — the &ldquo;risk updating&rdquo; discipline described on the Methodology page, practiced on a defined cadence.</p>
+<p><strong>Use case.</strong> Projects 12–36 months in duration where ongoing risk discipline is required and the owner or general contractor lacks the internal capacity to maintain it independently. Offered in two defined tiers so the cadence matches the project&rsquo;s tempo.</p>
+<dl class="meta-list">
+<dt>Deliverable</dt>
+<dd>Maintained risk register with updates on the retained cadence; written status report each cycle; facilitated risk review meetings; change-impact memos as triggered by defined thresholds; refreshed P50/P80 cost and schedule forecast against current data.</dd>
+<dt>Tiers &amp; indicative fees</dt>
+<dd>Quarterly cadence: $3,500–$5,000 per month. Monthly cadence (register updates, status report, and chaired review every month): $6,000–$10,000 per month. 12–36 month terms.</dd>
+<dt>Engagement scope</dt>
+<dd>12–36 months, recurring</dd>
+</dl>
+</div>
+</details>
+<details class="service" id="c2">
+<summary>
+<span class="svc-code">C2</span>
+<span class="svc-name">Trend Risk Analysis and Cost-at-Completion Forecasting</span>
+<span aria-hidden="true" class="svc-marker">+</span>
+</summary>
+<div class="svc-body">
+<p><strong>Purpose.</strong> Independent quantitative reassessment of project outcome distributions — cost, schedule, and earned value — when a project begins trending negatively. Updates the original risk analysis with current data and produces revised P50/P80 forecasts.</p>
+<p><strong>Use case.</strong> Typically triggered by a board, lender, owner, or surety concerned about emerging cost or schedule deterioration. Often urgent, often premium-priced — and, alongside Category B, a lead service in the firm&rsquo;s early go-to-market.</p>
+<p><strong>Urgent triage variant.</strong> A 10-business-day engagement, at a premium day rate, producing a preliminary revised cost-at-completion range, the three-to-five dominant drivers, and a board- or credit-committee-ready briefing — with the full reassessment to follow if retained. Built for the lenders and sureties who most often trigger these engagements and cannot wait five weeks for an answer.</p>
+<dl class="meta-list">
+<dt>Deliverable</dt>
+<dd>Updated risk analysis report with revised cost-at-completion and schedule-at-completion distributions, identification of root-cause drivers, and recommended management response. Urgent triage: preliminary range, driver ranking, and executive briefing within 10 business days.</dd>
+<dt>Engagement scope</dt>
+<dd>Full reassessment 3–5 weeks; urgent triage 10 business days</dd>
+</dl>
+</div>
+</details>
+<details class="service" id="c3">
+<summary>
+<span class="svc-code">C3</span>
+<span class="svc-name">Pre-Claim and Dispute-Readiness Risk Review</span>
+<span aria-hidden="true" class="svc-marker">+</span>
+</summary>
+<div class="svc-body">
+<p><strong>Purpose.</strong> Structured analysis conducted when delays or cost overruns are starting to materialize. Examines where contractual risk allocation actually sits, what claims may emerge, what the project&rsquo;s defensible position is, and what documentation should be assembled.</p>
+<p><strong>Use case.</strong> A bridge between project advisory and forensic claims work — positioning the project before a dispute fully materializes, and a lead service in the firm&rsquo;s early go-to-market. Most engagements arrive by referral from construction-litigation counsel; TRAVO maintains active referral relationships with the regional construction bar and offers joint continuing-education seminars built on the firm&rsquo;s claim-emergence research.</p>
+<p><strong>Role-sequencing rule.</strong> Which role TRAVO plays on a project is decided at engagement acceptance, in writing: where the firm has performed the project&rsquo;s risk analysis or retainer work, its pre-claim role is bounded so that prior work product and potential fact-witness exposure are disclosed to counsel at the outset. TRAVO does not serve owner and contractor on the same project in any combination of roles.</p>
+<dl class="meta-list">
+<dt>Deliverable</dt>
+<dd>Pre-claim analysis report; documentation strategy; recommended evidence-preservation actions; risk-allocation map.</dd>
+<dt>Engagement scope</dt>
+<dd>4–6 weeks</dd>
+</dl>
+</div>
+</details>
+</div>
+
+<div class="service-cat" id="category-d">
+<div class="cat-head">
+<p class="kicker"><span class="section-num">D</span>Category D · Portfolio &amp; Public-Interest</p>
+<h2>Post-Project Learning, Portfolio Benchmarking and Public-Interest Review</h2>
+<p class="col">Risk work performed after project completion, across portfolios, and for public decision-makers — converting completed projects into systematic improvement across capital programs, and providing independent analysis where communities and capital intersect.</p>
+</div>
+<details class="service" id="d1">
+<summary>
+<span class="svc-code">D1</span>
+<span class="svc-name">Lessons-Learned Risk Capture</span>
+<span aria-hidden="true" class="svc-marker">+</span>
+</summary>
+<div class="svc-body">
+<p><strong>Purpose.</strong> Structured post-mortem on which risks materialized, which were missed, where mitigation worked, and what should be updated in the next project&rsquo;s risk approach.</p>
+<p><strong>Use case.</strong> Institutional owners with ongoing capital programs who want to systematically improve forward project performance through structured learning rather than informal recollection. With client consent, anonymized findings also strengthen the regional dataset behind the NJ/NY Construction Risk Index.</p>
+<dl class="meta-list">
+<dt>Deliverable</dt>
+<dd>Lessons-learned report with specific updates to the owner&rsquo;s risk methodology, templates, and procurement language for future projects.</dd>
+<dt>Engagement scope</dt>
+<dd>4–6 weeks</dd>
+</dl>
+</div>
+</details>
+<details class="service" id="d2">
+<summary>
+<span class="svc-code">D2</span>
+<span class="svc-name">Portfolio Risk Benchmarking</span>
+<span aria-hidden="true" class="svc-marker">+</span>
+</summary>
+<div class="svc-body">
+<p><strong>Purpose.</strong> An annual subscription product providing institutional owners with comparative benchmarks of their portfolio&rsquo;s risk profile and outcome distributions against the firm&rsquo;s regional dataset, with quarterly updates and benchmark refreshes.</p>
+<p><strong>Use case.</strong> Owners who want portfolio-level visibility into how their projects&rsquo; risk profiles and outcomes compare to the regional pattern — anchored to the <a href="risk-index.html">NJ/NY Construction Risk Index</a> dataset.</p>
+<p><strong>Sequencing.</strong> This service launches deliberately behind the Index: founding-subscriber commitments open following publication of Index Edition 1, and full subscription delivery begins alongside Edition 2, once the dataset supports portfolio-level comparison. TRAVO will not sell benchmarking against a dataset that does not yet exist.</p>
+<dl class="meta-list">
+<dt>Deliverable</dt>
+<dd>Annual benchmark report; quarterly update memos; portfolio-specific comparative analysis; direct access to the firm&rsquo;s research staff for ad hoc questions.</dd>
+<dt>Engagement scope</dt>
+<dd>Annual subscription; multi-year commitments preferred</dd>
+<dt>Indicative fee</dt>
+<dd>$10,000–$25,000 per year per institution, by portfolio size</dd>
+<dt>Status</dt>
+<dd>Founding subscriptions open after Index Edition 1; delivery begins with Edition 2</dd>
+</dl>
+</div>
+</details>
+<details class="service" id="d3">
+<summary>
+<span class="svc-code">D3</span>
+<span class="svc-name">Independent Third-Party Review</span>
+<span aria-hidden="true" class="svc-marker">+</span>
+</summary>
+<div class="svc-body">
+<p><strong>Purpose.</strong> Independent quantitative review of large public and private projects for municipalities, counties, state frameworks, and private owners: probabilistic assessment of construction cost and schedule claims, utility-interconnection and grid-cost exposure, water and infrastructure demands, fiscal-impact assumptions, and the adequacy of proposed community-benefit commitments — commissioned by the decision-maker, public or private, never by the party whose proposal is under review.</p>
+<p><strong>Use case.</strong> New Jersey&rsquo;s data-center boom has produced exactly the condition this service answers: municipalities approving or rejecting billion-dollar facilities without analysis they can trust, communities asking publicly for review by a third party paid by neither the town nor the developer, and a state regulatory framework taking shape around community-benefit agreements and grid-cost accountability. TRAVO&rsquo;s independence — of contractors, owners, developers, and technology vendors — is the qualification.</p>
+<dl class="meta-list">
+<dt>Deliverable</dt>
+<dd>Independent review report in plain public language with technical appendix: quantified assessment of the proposal&rsquo;s cost, schedule, infrastructure, and fiscal claims; risk register for the host community; and an adequacy opinion on proposed community-benefit terms.</dd>
+<dt>Engagement scope</dt>
+<dd>4–8 weeks, aligned to the approval calendar</dd>
+</dl>
+</div>
+</details>
+</div>
+
+<div class="service-cat" id="category-e">
+<div class="cat-head">
+<p class="kicker"><span class="section-num">E</span>Category E · Training</p>
+<h2>Training and Capability Building</h2>
+<p class="col">Structured transfer of TRAVO&rsquo;s methodology into client organizations — training owners&rsquo; and contractors&rsquo; teams to practice quantitative risk analysis internally, with the same rigor the firm applies on its own engagements. TRAVO deliberately does not protect itself from clients building internal capability: a client that learns the methodology becomes a more sophisticated buyer of the firm&rsquo;s higher-order work, and the region&rsquo;s standard rises with it.</p>
+</div>
+<details class="service" id="e1">
+<summary>
+<span class="svc-code">E1</span>
+<span class="svc-name">Methodology Implementation and Training</span>
+<span aria-hidden="true" class="svc-marker">+</span>
+</summary>
+<div class="svc-body">
+<p><strong>Purpose.</strong> Engagement to help an institutional owner or large contractor build their internal risk methodology, train their team on quantitative risk analysis tooling, and stand up their own ongoing risk management capability.</p>
+<p><strong>Use case.</strong> Owners and contractors building internal quantitative risk capability. Clients who build their own capability remain TRAVO clients for higher-order work and refer the firm broadly.</p>
+<p><strong>Executive short course.</strong> Subject to university approval, TRAVO plans a periodic executive short course in quantitative construction risk analysis delivered through the principal&rsquo;s academic platform — an open-enrollment introduction to the methodology for owner and agency capital-program staff, and the natural entry point to a full implementation engagement.</p>
+<dl class="meta-list">
+<dt>Deliverable</dt>
+<dd>Methodology framework; training program; implementation support; templates, tooling configuration, and organizational change recommendations.</dd>
+<dt>Engagement scope</dt>
+<dd>8–16 weeks</dd>
+</dl>
+</div>
+</details>
+</div>
+
+<div class="notice notice-neutral">
+<span class="notice-label">Commercial terms</span>
+<p>TRAVO is a focused specialty practice, not a generalist construction-management consultancy. Engagements without a quantitative risk component at the core, staff augmentation, and lifecycle project-services bundles sit outside the catalog. Indicative fees above are planning figures for recurring capital-at-risk products; all engagements are confirmed by written proposal with defined scope, deliverables, timeline, and re-open triggers. TRAVO does not accept success-based or contingent compensation on any independence-sensitive engagement. <a href="contact.html">Discuss a project</a> to receive a proposal.</p>
+</div>
+
+<div class="mt-block col">
+<div>
+<h3>Public-sector pathway</h3>
+<p>TRAVO serves public buyers the way public procurement actually works. The firm is completing vendor registration in the region&rsquo;s procurement systems — NJSTART (New Jersey), PASSPort (New York City), and the Port Authority and MTA vendor programs — and is pursuing the small-business and diversity certifications for which it is eligible. On major federally supported programs, TRAVO&rsquo;s primary route is as a specialist quantitative-risk subconsultant to program-management and oversight primes, with deliverables mapped to FTA Oversight Procedure and AACE formats so they drop directly into existing review structures. Direct public engagements are pursued where sole-source or small-purchase thresholds permit — including Category D3 municipal reviews.</p>
+</div>
+<div>
+<h3>Governance, reliance and capacity</h3>
+<p>Every capital provider&rsquo;s first questions — professional-liability coverage, reliance terms, conflict management, data security, and who actually does the work — are answered in writing before engagement. The firm&rsquo;s governance framework is published on the <a href="about.html#governance">About page</a>.</p>
+</div>
+</div>
+
+<p class="mt-block">
+<a class="btn btn-primary" href="contact.html">Discuss a Project</a>
+<a class="btn btn-ghost" href="methodology.html">How the Analysis Is Built</a>
+</p>
+</div>
+</section>
+</div>
+<div class="page" data-page="methodology" hidden="">
+<section aria-labelledby="m-hero" class="section page-hero">
+<div class="wrap">
+<p class="kicker"><span class="section-num">03</span>Methodology</p>
+<h1 id="m-hero">The rigor is the product.</h1>
+<p class="lede col">Every quantitative output — every P50, every P80, every contingency recommendation — is derivable from documented methodology, traceable inputs, and validated assumptions. TRAVO will not produce visually impressive risk registers and color-coded heat maps without underlying probabilistic analysis.</p>
+<hr aria-hidden="true" class="hero-rule"/>
+</div>
+</section>
+<section aria-labelledby="m-two" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">01</span>Two Forms of Quantitative Analysis</p>
+<h2 id="m-two">Operational risk analysis and strategic alternatives analysis.</h2>
+</div>
+<div class="grid grid-2">
+<div class="card reveal">
+<p class="card-label">Within a chosen plan</p>
+<h3>Operational quantitative risk analysis</h3>
+<p>Monte Carlo–based schedule and cost simulation, sensitivity analysis, and probabilistic contingency derivation — quantifying uncertainty <em>within</em> a chosen plan: how much could this project cost, how long could it take, and how much contingency is defensible.</p>
+</div>
+<div class="card reveal">
+<p class="card-label">Among different paths</p>
+<h3>Strategic alternatives analysis</h3>
+<p>Structured scenario methods, multi-criteria comparison, and real-options framing where appropriate — quantifying the comparative attractiveness <em>among</em> substantively different alternatives under long-horizon uncertainty: make versus buy, build versus retrofit, alternative delivery models or phasing strategies.</p>
+</div>
+</div>
+
+<p class="mt-block col">All methodology is grounded in AACE Recommended Practices, peer-reviewed academic research, established quantitative standards, and institutional experience drawn from completed project audits and lessons learned.</p>
+</div>
+</section>
+<section aria-labelledby="m-op" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">02</span>Operational Risk Management</p>
+<h2 id="m-op">Within a chosen plan: from single points to distributions.</h2>
+<p class="lede">Quantifying uncertainty <em>within</em> a chosen plan — how much could this project cost, how long could it take, and how much contingency is defensible. A brief technical primer: the explanations below are general methodology context, distinct from claims about TRAVO’s own engagements; sources are listed at the end of this page.</p>
+</div>
+<ul aria-label="Operational risk management techniques" class="story-list">
+<li><div>
+<h3>Monte Carlo simulation</h3>
+<p>A computational method that models an uncertain outcome by sampling its input variables from probability distributions thousands of times and recording the result of each iteration. Instead of one cost figure or one completion date, the simulation produces a full <strong>cost distribution</strong> and <strong>schedule distribution</strong> — the range of outcomes and how likely each is. It is the standard technique underlying probabilistic cost and schedule analysis in capital projects.</p>
+</div></li>
+<li><div>
+<h3>P10 · P50 · P80</h3>
+<p>Percentile readings of a simulated distribution, expressed in <span class="mono">IBM Plex Mono</span> throughout TRAVO deliverables. <span class="mono">P10</span>: a 10 percent chance the outcome will not exceed this value — an optimistic bound. <span class="mono">P50</span>: the median; outcomes are equally likely to land above or below. <span class="mono">P80</span>: an 80 percent chance the outcome will not exceed this value — a common basis for owner budgets and contingency positions. Whether “exceed” means more cost or more time depends on the distribution being read; TRAVO states the adverse direction on every chart.</p>
+</div></li>
+<li><div>
+<h3>Sensitivity analysis</h3>
+<p>Sensitivity analysis measures the relative influence each uncertain input has on the simulated project outcome. It lets decision-makers interrogate assumptions and determine where money and time spent on mitigation will actually move the result. The results are typically visualized in a tornado chart — influences ranked as horizontal bars — so it is visible at a glance which few risks dominate the outcome and deserve attention.</p>
+</div></li>
+<li><div>
+<h3>Contingency derivation</h3>
+<p>Setting contingency as the difference between the base estimate and a selected confidence level of the simulated distribution (for example, funding to <span class="mono">P80</span>), rather than applying a flat percentage by habit. A derived contingency is defensible, auditable, and right-sized — it makes explicit both the risk of holding too little and the capital cost of holding too much.</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section aria-labelledby="m-strat" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">03</span>Strategic Risk Management</p>
+<h2 id="m-strat">Among different paths: comparing alternatives under uncertainty.</h2>
+<p class="lede">Quantifying the comparative attractiveness <em>among</em> substantively different alternatives under long-horizon uncertainty — before commitment, at the stage where the largest improvements in project value are achievable and the cost of methodological rigor is lowest.</p>
+</div>
+<ul aria-label="Strategic risk management techniques" class="story-list">
+<li><div>
+<h3>Strategic alternatives analysis</h3>
+<p>Decision-analysis techniques for comparing substantively different paths — make versus buy, build versus retrofit, alternative technology choices, alternative delivery models or phasing strategies — quantifying the relative attractiveness of each path across cost, schedule, risk, and strategic-value dimensions, so the choice is made on evidence rather than advocacy.</p>
+</div></li>
+<li><div>
+<h3>Scenario and multi-criteria methods</h3>
+<p>Decision-analysis techniques for comparing substantively different paths: structured scenario analysis stresses each alternative against coherent future states; multi-criteria analysis scores alternatives across cost, schedule, risk, and strategic-value dimensions; real-options framing values flexibility — the ability to defer, stage, expand, or abandon — where that flexibility has economic worth under long-horizon uncertainty.</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section aria-labelledby="m-register" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">04</span>Risk Register Development &amp; Updating</p>
+<h2 id="m-register">The register: developed once, kept alive throughout.</h2>
+<p class="lede">The risk register is the structured foundation beneath both forms of analysis — the documented record of what could go wrong, how likely, how large, and who owns the response. A register that is built and then shelved is methodological theater; TRAVO treats it as a living instrument.</p>
+</div>
+<ul aria-label="Risk register development and updating" class="story-list">
+<li><div>
+<h3>Risk register development</h3>
+<p>Workshop-driven identification, characterization, and structuring of project risks across cost, schedule, technical, regulatory, environmental, and external categories — each risk assigned an owner, a probability and impact assessment, and a mitigation strategy. The structured register is what feeds defensible probability distributions and impact assessments into the quantitative model. <a href="services.html#a1">Structured risk register development →</a></p>
+</div></li>
+<li><div>
+<h3>Risk updating</h3>
+<p>Conditions change; the register must change with them. On a defined cadence — and whenever a material change occurs — risks are re-scored, retired risks are closed with their outcomes recorded, emerging risks are added, change-impact assessments are run, and the quantitative forecast (P50/P80 cost and schedule) is refreshed against current data. Updating is what converts a register from a compliance artifact into an early-warning system. <a href="services.html#c1">Risk register management retainer →</a> &nbsp;·&nbsp; <a href="services.html#c2">Trend risk analysis →</a></p>
+</div></li>
+</ul>
+</div>
+</section>
+<section aria-labelledby="m-obs" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">05</span>The Observational Method</p>
+<h2 id="m-obs">Construction as an information-gathering phase.</h2>
+</div>
+<ul aria-label="The observational method" class="story-list">
+<li><div>
+<h3>The observational method</h3>
+<p>An approach from geotechnical engineering in which construction itself is treated as an information-gathering phase: the plan is updated as new data arrives and uncertainty resolves. It is central to the principal’s doctoral research and to how TRAVO frames during-project risk management — monitoring, reassessment, and structured response as conditions change.</p>
+</div></li>
+</ul>
+</div>
+</section>
+
+<section aria-labelledby="m-exp" class="section section-dark on-dark">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">06</span>Experience-Based Risk Intelligence</p>
+<h2 id="m-exp">The knowledge base behind the model.</h2>
+</div>
+<div class="two-col-split">
+<div>
+<p>TRAVO’s methodology is grounded in quantitative analysis but is not limited to it. The firm draws on an extensive base of <strong>completed project audits, post-project reviews, historical performance data, and lessons learned</strong> — generated across decades of capital project delivery through the principal’s operating experience at Sarooj Construction Company and refined through TRAVO’s ongoing applied research.</p>
+<p>This institutional knowledge informs how risks are identified, interpreted, and prioritized. It is the input layer that transforms Monte Carlo simulation from a generic statistical exercise into a context-specific assessment of the risks that actually matter on a given project.</p>
+<p>The premise is consistent with established methodology: AACE Recommended Practice 41R-08 identifies <strong>expert judgment and historical analog projects</strong> as primary inputs to probabilistic risk analysis. No quantitative model produces useful outputs without a defensible knowledge base feeding its probability distributions and impact assessments. TRAVO’s combination of academic methodology and substantial completed-project experience provides that knowledge base in a way pure-academic and pure-consulting competitors typically cannot.</p>
+</div>
+<div>
+<div class="card on-dark reveal">
+<p class="card-label">AI-supported analysis — and its limits</p>
+<p>Where it strengthens the process, TRAVO applies analytical tools — informed by the principal’s active research into AI applications in risk assessment — to surface recurring risk categories and early-warning indicators across historical audit and lessons-learned data that traditional methods may overlook.</p>
+<p><strong>Such techniques remain strictly subordinate to expert judgment and established quantitative methods.</strong> The principal personally reviews and signs every analytical product.</p>
+</div>
+<div class="card on-dark reveal mt-block">
+<p class="card-label">Independence &amp; traceability</p>
+<p>TRAVO does not take engagements from contractors and owners on the same project, does not enter referral arrangements that compromise objectivity, and does not soften analysis to maintain client relationships. Every analysis is built on traceable inputs and documented assumptions, so it can be defended under serious scrutiny.</p>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+<section aria-labelledby="m-standards" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">07</span>Standards &amp; Tooling</p>
+<h2 id="m-standards">Named standards. Named software.</h2>
+</div>
+<div class="grid grid-2">
+<div class="card reveal">
+<p class="card-label">Standards</p>
+<h3>AACE Recommended Practices</h3>
+<p>TRAVO’s contingency and risk analysis methodology is grounded in AACE International Recommended Practices, including:</p>
+<dl class="meta-list">
+<dt>RP 41R-08</dt><dd>Risk Analysis and Contingency Determination Using Range Estimating — identifying expert judgment and historical analog projects as primary inputs to probabilistic analysis</dd>
+<dt>RP 57R-09</dt><dd>Integrated Cost and Schedule Risk Analysis Using Monte Carlo Simulation of a CPM Model</dd>
+</dl>
+</div>
+<div class="card reveal">
+<p class="card-label">Software</p>
+<h3>Simulation tooling</h3>
+<dl class="meta-list">
+<dt>Schedule</dt><dd>Primavera Risk Analysis · Safran Risk</dd>
+<dt>Cost</dt><dd>@RISK · Crystal Ball · Python-based simulation</dd>
+</dl>
+<p class="mt-block">Tool selection follows the problem; the methodology — documented, traceable, reviewable — does not change with the software.</p>
+</div>
+</div>
+
+<div class="mt-block">
+<h3>Sources &amp; further reading</h3>
+<p class="col">General technical context on this page draws on the official sources below. These references explain methods and tools; they are not claims about TRAVO engagements, and no endorsement or affiliation is implied.</p>
+<ul class="source-list">
+<li>AACE International — Recommended Practices: <a href="https://web.aacei.org" rel="external noopener">web.aacei.org</a></li>
+<li>Oracle — Primavera Risk Analysis and Crystal Ball documentation: <a href="https://www.oracle.com" rel="external noopener">www.oracle.com</a></li>
+<li>Safran — Safran Risk product documentation: <a href="https://www.safran.com" rel="external noopener">www.safran.com</a></li>
+<li>Lumivero — @RISK product documentation: <a href="https://lumivero.com" rel="external noopener">lumivero.com</a></li>
+<li>Python Software Foundation — Python language: <a href="https://www.python.org" rel="external noopener">www.python.org</a></li>
+</ul>
+</div>
+<p class="mt-block">
+<a class="btn btn-primary" href="contact.html">Discuss a Project</a>
+<a class="btn btn-ghost" href="services.html">See Where the Methodology Is Applied</a>
+</p>
+</div>
+</section>
+</div>
+<div class="page" data-page="research" hidden="">
+<section aria-labelledby="r-hero" class="section page-hero">
+<div class="wrap">
+<p class="kicker"><span class="section-num">05</span>Research</p>
+<h1 id="r-hero">Research is operational, not ornamental.</h1>
+<p class="lede col">TRAVO maintains an active applied-research program. It exists for three reasons: to keep the firm’s methodology defensible when it is challenged in formal proceedings, to build the regional dataset that underpins the NJ/NY Construction Risk Index, and to ensure that what is learned on one engagement improves the next. Research topics originate in anonymised engagement data and in supervised graduate research.</p>
+<hr aria-hidden="true" class="hero-rule"/>
+</div>
+</section>
+<section aria-labelledby="r-loop" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">01</span>The Compounding Loop</p>
+<h2 id="r-loop">Engagements feed research; research improves engagements.</h2>
+</div>
+
+</div>
+</section>
+<section aria-labelledby="r-lines" class="section section-dark on-dark">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">02</span>Lines of Inquiry</p>
+<h2 id="r-lines">What the practice is researching.</h2>
+<p>Four lines of inquiry are active. Each is grounded in the firm’s engagement and audit data, and each is intended to produce published output.</p>
+</div>
+<div class="grid grid-2">
+<div class="card on-dark reveal">
+<p class="card-label">Line 01</p>
+<h3>Regional outcome benchmarks</h3>
+<p>Schedule slippage, cost-overrun distributions, contingency adequacy, and claim-emergence patterns across the NJ/NY market — the dataset that will be published as the NJ/NY Construction Risk Index. <a href="risk-index.html">About the Index →</a></p>
+</div>
+<div class="card on-dark reveal">
+<p class="card-label">Line 02</p>
+<h3>Contingency adequacy after the fact</h3>
+<p>Whether contingencies held on completed projects proved sufficient, excessive, or exhausted — the empirical test of how contingency is actually being set, and the feedback loop that calibrates future derivations.</p>
+</div>
+<div class="card on-dark reveal">
+<p class="card-label">Line 03</p>
+<h3>Risk categorisation and early-warning indicators</h3>
+<p>Whether recurring risk categories and leading indicators can be surfaced systematically across historical audit and lessons-learned data, including AI-supported techniques. Such methods remain strictly subordinate to expert judgment. <a href="methodology.html">See the methodology →</a></p>
+</div>
+<div class="card on-dark reveal">
+<p class="card-label">Line 04</p>
+<h3>The observational method in construction</h3>
+<p>Treating construction as an information-gathering phase in which the plan updates as uncertainty resolves — the approach at the centre of the principal’s doctoral research, carried into applied capital-project decisions.</p>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="r-dataset" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">03</span>Questions the Dataset Answers</p>
+<h2 id="r-dataset">Portfolio-scale questions, asked quantitatively.</h2>
+<p class="lede">The regional dataset is built to answer questions a single project cannot — for example, whether a risk that has remained open for months is still being managed, or has quietly become a governance problem.</p>
+</div>
+
+</div>
+</section>
+<section aria-labelledby="r-platform" class="section">
+<div class="wrap two-col-split">
+<div>
+<p class="kicker"><span class="section-num">04</span>The Academic Platform</p>
+<h2 id="r-platform">Where the research is done.</h2>
+<p>The principal is Teaching Associate Professor of Civil, Environmental and Ocean Engineering at Stevens Institute of Technology in New Jersey. The appointment provides the research platform, the graduate-student analytical capacity, and the peer-review discipline that keep TRAVO’s methodology defensible under formal scrutiny.</p>
+<p>Supervised graduate researchers work exclusively on this research track — anonymized datasets, benchmark development, methodology, and co-authored publication. They never staff client engagements and never access client-confidential material; confidential work is executed by the principal and professional analysts under NDA. The arrangement is disclosed in writing under Stevens’ conflict-of-interest and conflict-of-commitment policies and renewed annually. Every published product carries the principal’s name and credentials.</p>
+<p class="mt-block">
+<a class="btn btn-ghost" href="insights.html">The Publishing Program</a>
+<a class="btn btn-ghost" href="about.html">About the Principal</a>
+</p>
+</div>
+<div>
+
+<div class="notice notice-neutral" style="margin-top:var(--space-block);">
+<span class="notice-label">Publication status</span>
+<p>No research findings are published yet. Papers, benchmarks, and Index editions will be listed as they are released — titles, dates, and links added only when work is actually published.</p>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="r-contribute" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">05</span>Contributing Data</p>
+<h2 id="r-contribute">Institutional owners and agencies can contribute.</h2>
+<p class="lede">Owners, agencies, sureties, lenders, and counsel who wish to contribute anonymised portfolio data — or to be notified when the first Index edition is published — are invited to get in touch. Contributed data is anonymised before it enters the dataset and is never attributed to a named project or client.</p>
+</div>
+<p class="mt-block">
+<a class="btn btn-primary" href="contact.html">Discuss Contributing Data</a>
+<a class="btn btn-ghost" href="risk-index.html">About the Risk Index</a>
+</p>
+</div>
+</section>
+</div>
+<div class="page" data-page="insights" hidden="">
+<section aria-labelledby="i-hero" class="section page-hero">
+<div class="wrap">
+<p class="kicker"><span class="section-num">04</span>The Publishing Program</p>
+<h1 id="i-hero">Publication is operational, not optional.</h1>
+<p class="lede col">TRAVO publishes on a defined cadence regardless of how busy engagement work becomes. Publication is not marketing — it is the mechanism by which the firm’s standards-setting position is built and maintained, and the means by which its methodology remains defensible under formal scrutiny. Four streams operate continuously.</p>
+<hr aria-hidden="true" class="hero-rule"/>
+</div>
+</section>
+<section aria-labelledby="i-streams" class="section">
+<div class="wrap">
+<p class="kicker"><span class="section-num">01</span>Four Streams</p>
+<h2 id="i-streams">Four streams operate continuously.</h2>
+<div class="grid grid-2">
+<div class="card reveal">
+<p class="card-label">Stream 01 · Planned publication</p>
+<h3>Peer-Reviewed Academic Publication</h3>
+<p><strong>Cadence.</strong> First submission targeted by the end of the firm’s second year; one peer-reviewed article per year thereafter.</p>
+<p><strong>Target journals.</strong> <em>Journal of Construction Engineering and Management</em>, <em>ASCE Journal of Management in Engineering</em>, or equivalent.</p>
+<p><strong>Subject matter.</strong> Topics drawn from anonymized engagement data and supervised graduate research.</p>
+<p><strong>Purpose.</strong> Defensibility of the firm’s methodology if challenged in formal proceedings, and reinforcement of the academic credentialing that anchors the practice.</p>
+</div>
+<div class="card reveal">
+<p class="card-label">Stream 02 · Planned publication</p>
+<h3>Industry-Press Publication</h3>
+<p><strong>Cadence.</strong> Two to three articles per year in the first two years, aimed first at the surety, lending, and construction-law audience; three to four per year thereafter.</p>
+<p><strong>Target outlets.</strong> <em>Engineering News-Record</em>, <em>Construction Executive</em>, <em>AACE Cost Engineering</em>, <em>ABA Construction Lawyer</em>, or <em>NJBIZ</em>.</p>
+<p><strong>Subject matter.</strong> Topics drawn from current engagement themes and the regional benchmark dataset, always bylined with the principal’s full credentials.</p>
+<p><strong>Purpose.</strong> Market presence among buyers and referral sources.</p>
+</div>
+<div class="card reveal">
+<p class="card-label">Stream 03 · Publication program</p>
+<h3>Insights and Commentary</h3>
+<p><strong>Cadence.</strong> A continuous stream of shorter-form, self-published commentary on TRAVO’s own channels — this website, professional networks, and a periodic newsletter — published as observations warrant rather than on a fixed schedule.</p>
+<p><strong>Subject matter.</strong> The principal’s operating experience, anonymized lessons from completed projects, observations arising from ongoing research, and commentary on industry developments affecting the New Jersey and New York capital projects market. This stream is also the home for the principal’s existing body of written work.</p>
+<p><strong>Purpose.</strong> A continuous published presence between formal publications, demonstrated active thinking for prospects and referral sources, and — over time — a searchable archive of expertise that compounds the firm’s authority. As with all TRAVO publishing, insights reinforce the firm’s risk-methodology focus rather than drifting into generic industry commentary.</p>
+</div>
+<div class="card reveal">
+<p class="card-label">Stream 04 · Forthcoming</p>
+<h3>The NJ/NY Construction Risk Index</h3>
+<p><strong>Cadence.</strong> Annual benchmark report, planned to begin in the firm’s third year, built from three data sources assembled from year one: public records obtained through OPRA and FOIL requests, anonymized data contributed under agreement by surety and lender partners, and the firm’s accumulating engagement base. A Pre-Index Baseline Briefing, built entirely from the public-records source, is published within the firm’s first year.</p>
+<p><strong>Subject matter.</strong> Regional construction outcomes — schedule slippage rates, cost overrun distributions, contingency adequacy, claim emergence patterns — segmented by project type and asset class.</p>
+<p><strong>Purpose.</strong> The standards-setting artifact of the practice: the published regional benchmark against which TRAVO’s own analyses are continuously validated.</p>
+<p><a href="risk-index.html">About the Risk Index →</a></p>
+</div>
+</div>
+<div class="notice notice-neutral">
+<span class="notice-label">Archive status</span>
+<p>No articles are listed here yet. Publications will appear on this page as they are released; titles, dates, and links will be added only when work is actually published. Streams above are labeled <em>planned</em> or <em>forthcoming</em> accordingly.</p>
+</div>
+<div class="mt-block col">
+<div>
+<h3>The research role</h3>
+<p>Research is a working part of the practice, not an adjacent activity. Topics originate in anonymized engagement data and supervised graduate research conducted through the principal’s academic platform at Stevens Institute of Technology, and findings feed back into engagement methodology. The objective is a body of published work — academic, industry, and benchmark — that defines how quantitative construction risk analysis is measured in the NJ/NY region.</p>
+</div>
+
+</div>
+</div>
+</section>
+<section aria-labelledby="i-commentary" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">02</span>Insights &amp; Commentary</p>
+<h2 id="i-commentary">Shorter-form writing, published as observations warrant.</h2>
+<p class="lede">Between formal publications, TRAVO publishes commentary drawn from the principal’s operating experience, anonymised lessons from completed projects, observations arising from ongoing research, and developments affecting the NJ/NY capital-projects market. Over time this becomes a searchable archive of expertise. Commentary reinforces the firm’s risk-methodology focus rather than drifting into generic industry commentary.</p>
+</div>
+<div class="grid grid-3">
+<div class="card reveal">
+<p class="card-label">Recurring theme</p>
+<h3>Why heat maps hide the answer</h3>
+<p>What a qualitative five-by-five actually communicates, what it conceals, and what a probability distribution shows in its place.</p>
+</div>
+<div class="card reveal">
+<p class="card-label">Recurring theme</p>
+<h3>Contingency is a decision, not a habit</h3>
+<p>Ten percent is a convention, not a derivation. What it costs an owner to hold capital against risk the analysis does not support — and to hold too little.</p>
+</div>
+<div class="card reveal">
+<p class="card-label">Recurring theme</p>
+<h3>Reading a claim before it is filed</h3>
+<p>The leading indicators that precede most disputes, and the documentation posture that determines the outcome once one emerges.</p>
+</div>
+</div>
+<div class="notice notice-neutral" style="margin-top:var(--space-block);">
+<span class="notice-label">Archive status</span>
+<p>The themes above describe the subjects this stream will address. No articles are listed yet — titles, dates, and links will appear here as pieces are published.</p>
+</div>
+</div>
+</section>
+
+</div>
+<div class="page" data-page="risk-index" hidden="">
+<section aria-labelledby="ri-hero" class="section page-hero">
+<div class="wrap">
+<p class="kicker"><span class="section-num">05</span>Forthcoming Regional Benchmark</p>
+<h1 id="ri-hero">The NJ/NY Construction Risk Index.</h1>
+<p class="lede col">A planned annual benchmark report on regional construction outcomes, built from public regional records, partner-contributed anonymized data, and the firm’s accumulating engagement and research base. The Index is the standards-setting artifact of the practice: the published reference against which the firm’s own analyses — and, in time, the region’s expectations — are measured.</p>
+<hr aria-hidden="true" class="hero-rule"/>
+</div>
+</section>
+<section aria-labelledby="ri-what" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">01</span>What the Index Will Measure</p>
+<h2 id="ri-what">Four benchmark categories, segmented by project type and asset class.</h2>
+</div>
+<div class="grid grid-2">
+<div class="card reveal">
+<p class="card-label">Category 01</p>
+<h3>Schedule slippage rates</h3>
+<p>How regional project completion dates move against baseline — the distribution of schedule outcomes, not an anecdote or an average alone.</p>
+</div>
+<div class="card reveal">
+<p class="card-label">Category 02</p>
+<h3>Cost overrun distributions</h3>
+<p>The shape of cost-at-completion outcomes across the regional dataset — where projects actually land relative to budget.</p>
+</div>
+<div class="card reveal">
+<p class="card-label">Category 03</p>
+<h3>Contingency adequacy</h3>
+<p>Whether the contingencies projects held were sufficient, excessive, or exhausted — the empirical test of how contingency is being set in the region.</p>
+</div>
+<div class="card reveal">
+<p class="card-label">Category 04</p>
+<h3>Claim emergence patterns</h3>
+<p>How and when claims and disputes surface across regional projects — the leading indicators visible before a dispute fully materializes.</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<section aria-labelledby="ri-role" class="section section-dark on-dark">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">02</span>Role &amp; Timing</p>
+<h2 id="ri-role">Dataset, benchmark, and standard.</h2>
+</div>
+<ul aria-label="Risk Index role and timing" class="story-list">
+<li><div>
+<h3>Dataset role</h3>
+<p>The Index is built from three sources assembled from year one: public records obtained systematically through OPRA and FOIL requests to NJ and NY agencies — bid tabulations, change orders, schedule and cost outcomes on public work; anonymized data contributed under agreement by surety and lender relationships; and TRAVO’s own accumulating engagement base. Every engagement that strengthens the dataset strengthens the benchmark, and the benchmark in turn validates the assumptions used in future analyses.</p>
+</div></li>
+<li><div>
+<h3>Planned launch timing</h3>
+<p>Publication is planned to begin in the firm’s third year, once the assembled dataset supports defensible regional benchmarks. The first edition is deliberately scoped to what the data honestly supports — likely public-sector schedule and cost outcome distributions — and expands from there; a narrow Index that is defensible beats a broad one that is not. It will be published annually thereafter. The credibility engine does not wait for year three: within the firm’s first year, TRAVO will publish a Pre-Index Baseline Briefing built entirely from the public records assembled through OPRA and FOIL — a short, fully sourced regional snapshot that demonstrates, in print, how the firm handles, verifies, and publishes data before any partner is asked to contribute theirs.</p>
+</div></li>
+<li><div>
+<h3>Relationship to portfolio benchmarking</h3>
+<p>The Index underpins TRAVO’s <a href="services.html#c2">Portfolio Risk Benchmarking</a> service: founding-subscriber commitments open after Index Edition 1, and full benchmarking delivery begins alongside Edition 2, once the dataset supports portfolio-level comparison.</p>
+</div></li>
+<li><div>
+<h3>Standards-setting ambition</h3>
+<p>Within five years, the Index should be the most cited regional benchmark for construction risk in the NJ/NY market — the reference an owner, agency, surety, or counsel reaches for when asking whether a project’s risk position is normal.</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section aria-labelledby="ri-cta" class="section">
+<div class="wrap">
+<h2 id="ri-cta">Interested in the Index?</h2>
+<p class="lede col">Institutional owners, public agencies, sureties, lenders, and counsel who want to be notified when the first edition is published — or to discuss contributing anonymized portfolio data or subscribing to portfolio benchmarking — are invited to get in touch.</p>
+<p class="mt-block">
+<a class="btn btn-primary" href="contact.html">Inquire About the Risk Index</a>
+</p>
+</div>
+</section>
+</div>
+<div class="page" data-page="about" hidden="">
+<section aria-labelledby="a-hero" class="section page-hero">
+<div class="wrap">
+<p class="kicker"><span class="section-num">07</span>About</p>
+<h1 id="a-hero">Risk analysis is the method. Value optimization is the result.</h1>
+<p class="lede col">TRAVO stands for <strong>Total Risk Analysis and Value Optimization</strong>. The name reflects the firm’s discipline: every engagement integrates risk identification, quantification, and management with the explicit goal of optimizing value for the owner, contractor, or capital decision-maker who has retained us. The two are not separate offerings — the second is what the first is for.</p>
+<hr aria-hidden="true" class="hero-rule"/>
+</div>
+</section>
+<section aria-labelledby="a-firm" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">01</span>The Firm</p>
+<h2 id="a-firm">A specialty quantitative risk advisory.</h2>
+</div>
+<div class="two-col-split">
+<div>
+<h3>In brief</h3>
+<p>TRAVO is a specialty risk advisory practice serving the New Jersey and New York metropolitan construction market. We help sureties, construction lenders, litigation counsel, institutional owners, public agencies, and contractors make better capital decisions under uncertainty — by applying rigorous Monte Carlo–based risk methodology at the moments where uncertainty most directly affects financial outcomes: underwriting, trend deterioration, pre-claim positioning, contingency, and procurement.</p>
+<p>TRAVO combines graduate-level academic credentials, senior operator experience as co-founder of Sarooj Construction Company in Oman — an affiliated firm operating at $1.3B+ portfolio scale across multiple capital project sectors — and an active research program that produces published regional benchmarks. The firm is independent, methodology-driven, and standards-setting by design.</p>
+</div>
+<div>
+<h3>The executive view</h3>
+<p>TRAVO (Total Risk Analysis and Value Optimization) is built to become the regional standard for quantitative construction risk analysis in the New Jersey and New York metropolitan market — a position the firm treats as earned, not asserted. We provide independent, methodologically rigorous risk and contingency analysis to sureties, construction lenders, construction-litigation counsel, institutional owners, public agencies and municipalities, and mid-sized contractors.</p>
+<p>Our practice is built around a single discipline — Monte Carlo–based probabilistic analysis of construction cost and schedule outcomes — applied to the decisions where uncertainty has the largest financial impact. These decisions, increasingly described in the executive vocabulary as <em>preconstruction excellence</em>, are where rigorous quantitative analysis produces the largest measurable improvements in project net present value.</p>
+<p>TRAVO’s methodology is grounded in AACE Recommended Practices, peer-reviewed academic research, and an active research program building the region’s leading published benchmark on construction outcome distributions. The principal’s operator credibility derives from his role building Sarooj Construction Company into one of Oman’s leading contractors — the proving ground where TRAVO’s methodology was tested in the field. TRAVO is independent by design — neither a subsidiary nor commercial affiliate of Sarooj — and independent of contractors, owners, and technology vendors. The principal personally signs every report. The discipline of the practice — narrow scope, rigorous methodology, published research, and selective engagement — is the foundation on which TRAVO’s standards-setting position is being earned in the regional market.</p>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="a-values" class="section section-dark on-dark">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">02</span>Core Values</p>
+<h2 id="a-values">Operating principles, not marketing language.</h2>
+<p class="lede">Six values define how engagements are accepted, executed, and declined.</p>
+</div>
+<ul aria-label="Core values" class="story-list">
+<li><div>
+<h3>Methodological rigor over methodological theater</h3>
+<p>The construction risk industry is full of firms that produce visually impressive risk registers and color-coded heat maps without underlying probabilistic analysis. TRAVO will not. Every quantitative output — every P50, every P80, every contingency recommendation — is derivable from documented methodology, traceable inputs, and validated assumptions. The rigor is the product.</p>
+</div></li>
+<li><div>
+<h3>Independence is non-negotiable</h3>
+<p>TRAVO does not take engagements from contractors and owners on the same project. TRAVO does not enter referral arrangements that compromise objectivity. TRAVO does not soften analysis to maintain client relationships. Independence is what allows institutional owners and public agencies to rely on the work. Once compromised, it cannot be recovered.</p>
+</div></li>
+<li><div>
+<h3>The principal’s name goes on every report</h3>
+<p>Every TRAVO deliverable carries the principal’s name and credentials. Every report is reviewed and signed off personally. Professional analysts under NDA execute the underlying client work; supervised graduate researchers work only on anonymized research and never on client-confidential material. This is the quality-control mechanism that distinguishes a credentialed specialty practice from a body shop.</p>
+</div></li>
+<li><div>
+<h3>Publication is operational, not optional</h3>
+<p>TRAVO publishes — peer-reviewed research, industry-press articles, an annual regional benchmark, and insights from past projects — on a defined cadence regardless of how busy engagement work becomes. Publication is the mechanism by which the firm’s standards-setting position is built and maintained.</p>
+</div></li>
+<li><div>
+<h3>Evidence before positioning</h3>
+<p>The firm does not print claims it cannot yet support. Market validation precedes collateral; completed engagements precede case-study language; the benchmark exists before it is referenced in a sales conversation. This value governs the sequencing of the practice — including the reserved tagline the firm will adopt only when the market’s behavior supports it.</p>
+</div></li>
+<li><div>
+<h3>Engagements should compound</h3>
+<p>TRAVO is selective in its work. Engagements should strengthen the firm’s knowledge, research, methodology, or future value — an anonymized publishable case study, data that strengthens the regional benchmark, or methodology refinement that improves the next engagement. Asset-building work is what produces a durable, standards-setting practice.</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section aria-labelledby="a-governance" class="section" id="governance">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">03</span>Governance, Liability &amp; Capacity</p>
+<h2 id="a-governance">Governance is not back-office. For this practice, it is the product&rsquo;s spine.</h2>
+<p class="lede">A firm whose reports are relied on by sureties, lenders, boards, and public decision-makers must answer the governance questions before it is asked. TRAVO publishes its framework so buyers, their counsel, and their credit committees can evaluate it directly.</p>
+</div>
+<ul aria-label="Governance framework" class="story-list">
+<li><div>
+<h3>Professional liability and reliance</h3>
+<p>TRAVO maintains professional-liability (errors-and-omissions) insurance with limits sized to the reliance placed on its work — targeted at $2–5&nbsp;million per claim for capital-at-risk engagements — and issues reliance letters on standard written terms that state scope, limitations, and the parties entitled to rely. Certificates of insurance are provided on request. Reports state their limitations explicitly; TRAVO does not issue open-ended opinions.</p>
+</div></li>
+<li><div>
+<h3>Conflict checks and engagement acceptance</h3>
+<p>Every engagement passes a written conflict check and acceptance protocol before proposal. TRAVO does not take engagements from contractors and owners on the same project in any combination of roles, does not enter referral arrangements that compromise objectivity, and does not soften analysis to maintain client relationships. Where the firm serves capital providers and project parties whose interests may intersect across engagements, the overlap is disclosed and resolved in writing at acceptance.</p>
+</div></li>
+<li><div>
+<h3>Role sequencing on disputes</h3>
+<p>Where TRAVO has performed project-stage analysis, its role in any subsequent pre-claim or dispute matter is decided and bounded at acceptance, with prior work product and potential fact-witness exposure disclosed to counsel at the outset.</p>
+</div></li>
+<li><div>
+<h3>Quality assurance and authorship</h3>
+<p>Every deliverable receives two-person review, and the principal personally reviews and signs every analytical product. Client work is executed by the principal and professional analysts under NDA; supervised graduate researchers work only on anonymized research and never on client-confidential material. Every quantitative output is derivable from documented methodology, traceable inputs, and validated assumptions.</p>
+</div></li>
+<li><div>
+<h3>Data security and retention</h3>
+<p>Client materials — including lender-confidential and draw-file data — are held under access-controlled storage with defined retention and destruction schedules, stated in each engagement letter. Contributed research data is anonymized before it enters any dataset and is never attributed to a named project or client.</p>
+</div></li>
+<li><div>
+<h3>Licensure and professional structure</h3>
+<p>TRAVO&rsquo;s advisory deliverables are structured as quantitative decision-analysis and management-consulting work product. Where an engagement requires opinions constituting the practice of engineering under New York or New Jersey law, that work is performed under, and in association with, appropriately licensed professional engineers and a firm holding the required certificate of authorization. The boundary is stated in every proposal.</p>
+</div></li>
+<li><div>
+<h3>University governance</h3>
+<p>The principal&rsquo;s external practice is conducted under Stevens Institute of Technology&rsquo;s outside-activity and conflict-of-interest policies, disclosed in writing and renewed annually. The research-only role of graduate researchers, described above, is part of that disclosed arrangement.</p>
+</div></li>
+<li><div>
+<h3>Capacity and delivery calendar</h3>
+<p>A specialty practice built on principal sign-off must be honest about capacity. TRAVO caps concurrent analytical engagements, states delivery commitments against the academic calendar, and maintains a vetted bench of senior independent specialists — scheduling, cost, geotechnical, and financial — engaged under the same confidentiality and review standards. Buyers are told at proposal who will do the work and when.</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section aria-labelledby="a-principal" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">03</span>The Principal</p>
+<h2 id="a-principal">Dr. Karim S. Karam</h2>
+<p class="lede">TRAVO is founded and led by Dr. Karim S. Karam, who brings together three capabilities the regional construction-advisory market rarely combines: graduate-level risk methodology, operator credibility at scale, and an active academic platform.</p>
+</div>
+<div class="two-col-split">
+<div>
+<h3>Academic formation</h3>
+<p>Dr. Karam studied Civil and Environmental Engineering at Imperial College of Science, Technology and Medicine in London, where he worked under Professor John Burland — among the engineers behind the stabilization of the Leaning Tower of Pisa — before earning his Master’s and Ph.D. at MIT. His doctoral research, supervised by Professors Herbert Einstein and Daniele Veneziano, applied decision analysis and the quantification of risk to geotechnical engineering — specifically tunnels and landslides, problems defined by what cannot be seen.</p>
+<p>Central to his approach is the <strong>observational method</strong>, which in construction translates to an information-gathering phase in which plans are updated as uncertainty resolves.</p>
+<h3 class="mt-block">Operating experience at scale</h3>
+<p>He returned to Oman as part of the founding family of Travo SARL — and later Sarooj Construction Company (<a href="http://www.sarooj.com" rel="external noopener">www.sarooj.com</a>) — where he helped build and grow the business through its 2005–2006 expansion. By applying systematic risk assessment to the projects Sarooj bid and delivered, the firm became one of Oman’s leading contractors — today a portfolio exceeding <span class="mono">$1.3 billion</span> and more than <span class="mono">4,000</span> professionals across infrastructure sectors including transportation, marine construction, energy, and utilities, serving clients both local and international.</p>
+<p>On several projects, Dr. Karam built stochastic multi-attribute decision models to select the construction strategy that optimized cost, time, safety, and environmental performance — quantitative risk methodology applied in the field. He went on to co-found Synergy Petroleum International, whose Nimr produced-water treatment system — among the largest of its kind in the world — earned a United Nations Award of Excellence in Climate Action in <span class="mono">2015</span>.</p>
+<h3 class="mt-block">Academic platform &amp; philosophy</h3>
+<p>Today Dr. Karam is Teaching Associate Professor of Civil, Environmental and Ocean Engineering at Stevens Institute of Technology in New Jersey, where he develops risk and decision-analysis methods with graduate students and applies them on capital projects.</p>
+<p>His specialty is risk assessment, and the conviction is consistent across academic and operating experience: the only reliable path to sustainable outcomes is proactive risk management — identifying threats early in planning, monitoring them throughout construction, and handing over assets prepared for long-term performance. That philosophy fuses field-tested practicality with world-class technical capability, anchored in the values he formed building real things — integrity, quality, safety, and respect for people — and translated into TRAVO’s operating principles: methodological rigor, independence, accountable authorship, sustained publication, and disciplined engagement selection. Risk assessment is the discipline; better decisions under uncertainty are the result — thereby optimizing value.</p>
+<p class="mt-block"><a class="btn btn-ghost" href="founders-letter.html">Read the Founder’s Letter</a></p>
+</div>
+<div>
+
+<div class="card reveal mt-block">
+<p class="card-label">TRAVO &amp; Sarooj — independence</p>
+<p>TRAVO is an independent advisory practice; Sarooj is the proving ground where the methodology was tested in the field, not TRAVO’s parent or commercial affiliate. That base of real-world delivery is what separates risk analysis that is academically sound from risk analysis that has survived contact with a live project. Because that record was built abroad and at an affiliated firm, TRAVO treats it as something to be demonstrated rather than asserted: the documented prior case study, the published methodology, and the outcomes of early NJ/NY engagements are the verification a regional buyer is entitled to expect.</p>
+</div>
+<dl aria-label="Principal — institutions" class="meta-list mt-block">
+<dt>Undergraduate</dt><dd>Imperial College London — Civil &amp; Environmental Engineering</dd>
+<dt>Master’s / Ph.D.</dt><dd>MIT — risk assessment applied to geotechnical engineering</dd>
+<dt>Doctoral advisors</dt><dd>Profs. Herbert Einstein &amp; Daniele Veneziano</dd>
+<dt>Current role</dt><dd>Teaching Associate Professor, Stevens Institute of Technology</dd>
+</dl>
+</div>
+</div>
+<div class="mt-block">
+<h3>Institutional context</h3>
+<p class="col">General context on institutions named above, from their official sites and clearly separate from TRAVO-specific claims (no endorsement or affiliation with TRAVO is implied): <a href="https://www.imperial.ac.uk" rel="external noopener">Imperial College London</a> is a science-focused university in London; <a href="https://www.mit.edu" rel="external noopener">MIT</a> is a research university in Cambridge, Massachusetts; <a href="https://www.stevens.edu" rel="external noopener">Stevens Institute of Technology</a> is a technological research university in Hoboken, New Jersey; <a href="http://www.sarooj.com" rel="external noopener">Sarooj Construction Company</a> is an Omani contractor.</p>
+</div>
+<p class="mt-block">
+<a class="btn btn-primary" href="contact.html">Discuss a Project</a>
+</p>
+</div>
+</section>
+</div>
+<div class="page" data-page="engagements" hidden="">
+<section aria-labelledby="e-hero" class="section page-hero">
+<div class="wrap">
+<p class="kicker"><span class="section-num">06</span>Engagements</p>
+<h1 id="e-hero">Analysis that attaches to a decision.</h1>
+<p class="lede col">TRAVO engagements inform the specific decisions where uncertainty is financially consequential: underwriting and monitoring, trend reassessment when projects begin to drift, pre-claim positioning, contingency derivation, schedule baselines, and procurement. Every engagement is scoped around the decision it informs — and every report is reviewed and signed personally by the principal.</p>
+<hr aria-hidden="true" class="hero-rule"/>
+</div>
+</section>
+<section aria-labelledby="e-shape" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">01</span>The Shape of an Engagement</p>
+<h2 id="e-shape">Defined decision. Documented method. Signed result.</h2>
+</div>
+<ul aria-label="Engagement structure" class="story-list">
+<li><div>
+<h3>A decision to inform</h3>
+<p>Underwriting or monitoring a bonded or financed project, reassessing a drifting project, forecasting cost or schedule at completion, preparing for a potential claim, setting a contingency, leveling bids, comparing strategic alternatives, commissioning an independent review of a major project proposal, capturing lessons learned, benchmarking a portfolio, or implementing a methodology.</p>
+</div></li>
+<li><div>
+<h3>A documented methodology</h3>
+<p>Monte Carlo–based simulation, sensitivity and tornado analysis, structured scenario methods — grounded in AACE Recommended Practices, with traceable inputs and documented assumptions. See <a href="methodology.html">Methodology</a>.</p>
+</div></li>
+<li><div>
+<h3>A quantified result</h3>
+<p>P10/P50/P80 distributions, a derived contingency, a risk-adjusted ranking, or a structured comparison of alternatives — expressed so the capital implication of the decision is explicit.</p>
+</div></li>
+<li><div>
+<h3>Principal sign-off</h3>
+<p>Every TRAVO deliverable carries the principal’s name and credentials. Client work is executed by the principal and professional analysts under NDA; graduate researchers work only on anonymized research, never on client-confidential material.</p>
+</div></li>
+</ul>
+</div>
+</section>
+<section aria-labelledby="e-rep" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">02</span>Representative Engagement</p>
+<h2 id="e-rep">Case-study framework.</h2>
+<p class="lede">Each published TRAVO case study is anonymized and reported against the same framework, so readers can see the decision, the method, and the outcome side by side.</p>
+</div>
+<div aria-labelledby="rep-title" class="card reveal">
+<p class="card-label">Anonymized case study</p>
+<h3 id="rep-title">Representative engagement</h3>
+<dl class="meta-list">
+<dt>Project type</dt><dd>[To be confirmed]</dd>
+<dt>Project value</dt><dd>[To be confirmed]</dd>
+<dt>Client type</dt><dd>[To be confirmed]</dd>
+<dt>Decision informed</dt><dd>[To be confirmed]</dd>
+<dt>Methodology applied</dt><dd>[To be confirmed]</dd>
+<dt>P50 output</dt><dd>[To be confirmed]</dd>
+<dt>P80 output</dt><dd>[To be confirmed]</dd>
+<dt>Outcome at completion</dt><dd>[To be confirmed]</dd>
+</dl>
+</div>
+<div class="notice">
+<span class="notice-label">Placeholder notice</span>
+<p>“Representative engagement to be added before external use.” No client names, project names, values, percentiles, outcomes, or testimonials appear on this page until an anonymized case study from the principal’s prior quantitative risk analysis engagements has been approved for publication.</p>
+</div>
+<p class="mt-block">
+<a class="btn btn-primary" href="contact.html">Discuss a Project</a>
+<a class="btn btn-ghost" href="services.html">Browse the Service Catalog</a>
+</p>
+</div>
+</section> 
+<section aria-labelledby="e-worked" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">03</span>A Worked Risk</p>
+<h2 id="e-worked">One risk, followed from identification to residual.</h2>
+<p class="lede">Beneath the register sits the record of each individual risk: a documented record carrying it from identification through quantification, mitigation, and the residual level the owner consciously accepts — and a profile of that risk across the dimensions on which risks actually differ.</p>
+</div>
+
+<div class="mt-block col">
+
+<div>
+<h3>Why the profile matters</h3>
+<p>A headline score ranks risks. It does not tell an owner what kind of problem they have. Two risks scoring 4.6 may demand entirely different responses — one a procurement decision, the other a safety intervention.</p>
+<p>Profiling each risk across cost, schedule, quality, safety, environmental, stakeholder, and regulatory dimensions is what allows mitigation spend to be directed at the dimension that is actually driving the exposure.</p>
+<p class="mt-block">
+<a class="btn btn-ghost" href="methodology.html">The Methodology</a>
+<a class="btn btn-ghost" href="services.html#a1">Quantitative Risk Analysis</a>
+</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="page" data-page="contact" hidden="">
+<section aria-labelledby="c-hero" class="section page-hero">
+<div class="wrap">
+<p class="kicker"><span class="section-num">09</span>Contact</p>
+<h1 id="c-hero">Discuss a project.</h1>
+<p class="lede col">TRAVO engagements begin at a decision. If your project is at one of the decision points below — or approaching one — describe it using the form, and the principal will respond directly.</p>
+<hr aria-hidden="true" class="hero-rule"/>
+</div>
+</section>
+<section aria-labelledby="c-triggers" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">01</span>Engagement Triggers</p>
+<h2 id="c-triggers">Fourteen reasons sureties, lenders, counsel, owners, agencies, municipalities, and contractors call TRAVO.</h2>
+</div>
+<ul aria-label="Engagement triggers" class="story-list">
+<li>
+<div>
+<h3>Underwriting or closing a construction loan</h3>
+<p><a href="services.html#b1">Construction loan monitoring &amp; draw review →</a></p>
+</div>
+</li>
+<li>
+<div>
+<h3>Forming a probabilistic underwriting view</h3>
+<p><a href="services.html#b2">Underwriting risk opinion →</a></p>
+</div>
+</li>
+<li>
+<div>
+<h3>Monitoring contractor financial health</h3>
+<p><a href="services.html#b3">Contractor financial-health &amp; default-risk monitoring →</a></p>
+</div>
+</li>
+<li>
+<div>
+<h3>Reassessing a project beginning to drift</h3>
+<p><a href="services.html#c2">Trend risk analysis &amp; cost-at-completion forecasting →</a></p>
+</div>
+</li>
+<li>
+<div>
+<h3>Needing an answer in ten days</h3>
+<p><a href="services.html#c2">Urgent triage — 10-business-day reassessment →</a></p>
+</div>
+</li>
+<li>
+<div>
+<h3>Preparing for a potential claim or dispute</h3>
+<p><a href="services.html#c3">Pre-claim &amp; dispute-readiness review →</a></p>
+</div>
+</li>
+<li>
+<div>
+<h3>Sustaining risk discipline through execution</h3>
+<p><a href="services.html#c1">Risk register management retainer →</a></p>
+</div>
+</li>
+<li>
+<div>
+<h3>Reviewing a contractor risk submission</h3>
+<p><a href="services.html#a2">Independent risk peer review →</a></p>
+</div>
+</li>
+<li>
+<div>
+<h3>Setting a project contingency</h3>
+<p><a href="services.html#a1">Quantitative risk analysis &amp; contingency derivation →</a></p>
+</div>
+</li>
+<li>
+<div>
+<h3>Leveling bids</h3>
+<p><a href="services.html#a3">Risk-adjusted bid leveling &amp; procurement support →</a></p>
+</div>
+</li>
+<li>
+<div>
+<h3>Comparing strategic alternatives</h3>
+<p><a href="services.html#a4">Strategic alternatives &amp; scenario analysis →</a></p>
+</div>
+</li>
+<li>
+<div>
+<h3>Reviewing a major project proposal independently</h3>
+<p><a href="services.html#d3">Independent third-party review →</a></p>
+</div>
+</li>
+<li>
+<div>
+<h3>Capturing lessons learned or benchmarking a portfolio</h3>
+<p><a href="services.html#d1">Lessons-learned &amp; portfolio benchmarking →</a></p>
+</div>
+</li>
+<li>
+<div>
+<h3>Implementing a risk methodology</h3>
+<p><a href="services.html#e1">Methodology implementation &amp; training →</a></p>
+</div>
+</li>
+</ul>
+</div>
+</section>
+<section aria-labelledby="c-form-title" class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker"><span class="section-num">02</span>Inquiry</p>
+<h2 id="c-form-title">Professional inquiry form.</h2>
+</div>
+<form aria-describedby="form-note" id="inquiry-form" novalidate="">
+<p class="muted" id="form-note">Fields marked <span aria-hidden="true" class="req">*</span><span class="visually-hidden">asterisk</span> are required. This form validates in the browser; see the delivery note below.</p>
+<div class="form-grid">
+<div class="form-field">
+<label for="f-name">Full name <span aria-hidden="true" class="req">*</span></label>
+<input aria-describedby="error-f-name" aria-invalid="false" autocomplete="name" id="f-name" name="name" required="" type="text"/>
+<span aria-live="polite" class="field-error" id="error-f-name"></span>
+</div>
+<div class="form-field">
+<label for="f-organization">Organization <span aria-hidden="true" class="req">*</span></label>
+<input aria-describedby="error-f-organization" aria-invalid="false" autocomplete="organization" id="f-organization" name="organization" required="" type="text"/>
+<span aria-live="polite" class="field-error" id="error-f-organization"></span>
+</div>
+<div class="form-field">
+<label for="f-email">Email <span aria-hidden="true" class="req">*</span></label>
+<input aria-describedby="error-f-email" aria-invalid="false" autocomplete="email" id="f-email" name="email" required="" type="email"/>
+<span aria-live="polite" class="field-error" id="error-f-email"></span>
+</div>
+<div class="form-field">
+<label for="f-phone">Phone</label>
+<input aria-describedby="error-f-phone" aria-invalid="false" autocomplete="tel" id="f-phone" name="phone" type="tel"/>
+<span aria-live="polite" class="field-error" id="error-f-phone"></span>
+</div>
+<div class="form-field">
+<label for="f-client-type">Client type <span aria-hidden="true" class="req">*</span></label>
+<select aria-describedby="error-f-client-type" aria-invalid="false" id="f-client-type" name="client-type" required="">
+<option value="">Select…</option><option value="Surety">Surety</option><option value="Construction lender">Construction lender</option><option value="Construction-litigation counsel">Construction-litigation counsel</option><option value="Municipality / state agency">Municipality / state agency</option><option value="Institutional owner">Institutional owner</option><option value="Public agency">Public agency</option><option value="General contractor">General contractor</option><option value="Other">Other</option>
+</select>
+<span aria-live="polite" class="field-error" id="error-f-client-type"></span>
+</div>
+<div class="form-field">
+<label for="f-project-location">Project location <span aria-hidden="true" class="req">*</span></label>
+<span class="hint" id="hint-f-project-location">City / county — NJ primary, NY metropolitan secondary</span>
+<input aria-describedby="hint-f-project-location error-f-project-location" aria-invalid="false" id="f-project-location" name="project-location" required="" type="text"/>
+<span aria-live="polite" class="field-error" id="error-f-project-location"></span>
+</div>
+<div class="form-field">
+<label for="f-project-value">Project value range <span aria-hidden="true" class="req">*</span></label>
+<select aria-describedby="error-f-project-value" aria-invalid="false" id="f-project-value" name="project-value" required="">
+<option value="">Select…</option><option value="Under $20M">Under $20M</option><option value="$20M – $50M">$20M – $50M</option><option value="$50M – $100M">$50M – $100M</option><option value="$100M – $150M">$100M – $150M</option><option value="Over $150M">Over $150M</option><option value="Portfolio / program">Portfolio / program</option><option value="Not applicable">Not applicable</option>
+</select>
+<span aria-live="polite" class="field-error" id="error-f-project-value"></span>
+</div>
+<div class="form-field">
+<label for="f-project-stage">Project stage <span aria-hidden="true" class="req">*</span></label>
+<select aria-describedby="error-f-project-stage" aria-invalid="false" id="f-project-stage" name="project-stage" required="">
+<option value="">Select…</option><option value="Concept / planning">Concept / planning</option><option value="Design">Design</option><option value="Procurement / bidding">Procurement / bidding</option><option value="Construction — on plan">Construction — on plan</option><option value="Construction — trending negatively">Construction — trending negatively</option><option value="Pre-claim / dispute emerging">Pre-claim / dispute emerging</option><option value="Complete / post-project">Complete / post-project</option><option value="Portfolio-level">Portfolio-level</option>
+</select>
+<span aria-live="polite" class="field-error" id="error-f-project-stage"></span>
+</div>
+<div class="form-field full">
+<label for="f-analysis-type">Type of analysis required <span aria-hidden="true" class="req">*</span></label>
+<select aria-describedby="error-f-analysis-type" aria-invalid="false" id="f-analysis-type" name="analysis-type" required="">
+<option value="">Select…</option><option value="Quantitative risk analysis &amp; contingency derivation (A1)">Quantitative risk analysis &amp; contingency derivation (A1)</option><option value="Independent risk peer review (A2)">Independent risk peer review (A2)</option><option value="Risk-adjusted bid leveling / procurement support (A3)">Risk-adjusted bid leveling / procurement support (A3)</option><option value="Strategic alternatives &amp; scenario analysis (A4)">Strategic alternatives &amp; scenario analysis (A4)</option><option value="Construction loan monitoring &amp; draw review (B1)">Construction loan monitoring &amp; draw review (B1)</option><option value="Underwriting risk opinion (B2)">Underwriting risk opinion (B2)</option><option value="Contractor financial-health / default-risk monitoring (B3)">Contractor financial-health / default-risk monitoring (B3)</option><option value="Risk register management retainer (C1)">Risk register management retainer (C1)</option><option value="Trend risk analysis / cost-at-completion forecasting (C2)">Trend risk analysis / cost-at-completion forecasting (C2)</option><option value="Urgent triage — 10-day reassessment (C2)">Urgent triage — 10-day reassessment (C2)</option><option value="Pre-claim &amp; dispute-readiness review (C3)">Pre-claim &amp; dispute-readiness review (C3)</option><option value="Lessons-learned risk capture (D1)">Lessons-learned risk capture (D1)</option><option value="Portfolio risk benchmarking (D2)">Portfolio risk benchmarking (D2)</option><option value="Independent third-party review (D3)">Independent third-party review (D3)</option><option value="Methodology implementation &amp; training (E1)">Methodology implementation &amp; training (E1)</option><option value="Not sure yet — describe below">Not sure yet — describe below</option>
+</select>
+<span aria-live="polite" class="field-error" id="error-f-analysis-type"></span>
+</div>
+<div class="form-field full">
+<label for="f-message">Message <span aria-hidden="true" class="req">*</span></label>
+<span class="hint" id="hint-f-message">Describe the decision your project is facing and its timing.</span>
+<textarea aria-describedby="hint-f-message error-f-message" aria-invalid="false" id="f-message" name="message" required=""></textarea>
+<span aria-live="polite" class="field-error" id="error-f-message"></span>
+</div>
+<div class="form-field full">
+<div class="consent">
+<input aria-describedby="error-f-consent" aria-invalid="false" id="f-consent" name="consent" required="" type="checkbox"/>
+<label for="f-consent">I consent to TRAVO storing the information above for the purpose of responding to this inquiry. <span aria-hidden="true" class="req">*</span></label>
+</div>
+<span aria-live="polite" class="field-error" id="error-f-consent"></span>
+</div>
+<div class="form-field full">
+<button class="btn btn-primary" type="submit">Submit Inquiry</button>
+</div>
+</div>
+<p class="form-status" id="form-status" role="status" tabindex="-1"></p>
+</form>
+<!-- ================================================================
+             IMPLEMENTATION NOTE — FORM PROCESSING NOT CONNECTED
+             This form performs front-end validation only. It does not send
+             data anywhere. Connect a backend (fetch() POST to your endpoint,
+             a hosted form service, or a mail handler) in assets/js/main.js
+             where marked "BACKEND CONNECTION REQUIRED", and update the
+             success message accordingly. See README.md.
+             ================================================================ -->
+<div class="notice notice-neutral">
+<span class="notice-label">Delivery note</span>
+<p>This build includes front-end validation only — form processing is not yet connected, and submissions are not transmitted. Direct contact details: email and phone <strong>[to be confirmed]</strong>. See README.md (“Connecting the contact form”) to wire a backend before launch.</p>
+</div>
+</div>
+</section>
+</div>
+<div class="page" data-page="founders-letter" hidden="">
+<section aria-labelledby="l-hero" class="section page-hero">
+<div class="wrap">
+<p class="kicker"><span class="section-num">08</span>Founder’s Letter</p>
+<h1 id="l-hero">From the principal.</h1>
+</div>
+</section>
+<section aria-label="Founder's letter text" class="section">
+<div class="wrap">
+<article class="letter">
+<hr aria-hidden="true" class="drop-rule"/>
+<p>I grew up in this industry—literally. My father’s idea of a weekend was climbing into his un-air-conditioned Toyota Land Cruiser and driving out to job sites. On those trips I learned construction from the ground up: the craft, the problem-solving, and—most of all—the relationships that hold a project together. That early education shaped everything that followed.</p>
+<p>I studied civil and environmental engineering at Imperial College London, where I worked under Professor John Burland—one of the engineers behind the effort to stabilize the Leaning Tower of Pisa. I then earned my master’s and PhD at MIT, specializing in risk assessment applied to geotechnical engineering. My doctoral work, supervised by Professors Herbert Einstein and Daniele Veneziano, focused on landslide and tunnel risk—decisions made underground, where the ground cannot be seen and uncertainty is the defining condition.</p>
+<p>There, I learned to make decisions by quantifying risk rather than relying on intuition—a structured, systematic discipline. Central to it is the observational approach: treating construction itself as an information-gathering phase, updating the plan as new data arrives. That is what real project management looks like, and it has shaped how I have practiced ever since.</p>
+<p>I returned to Oman to help build our family’s construction business, Sarooj. What I brought back from MIT wasn’t only a disciplined approach to engineering decisions—it was a discipline of inquiry and rigor. We grew Sarooj by applying systematic risk assessment to the projects we bid and delivered, and it worked: today Sarooj is one of Oman’s leading contractors, with a portfolio of more than $1.3 billion across roads, marine, energy, and civil works. On our design-and-build projects, we treated risk management as the foundation of systems built to adapt to a changing future. TRAVO isn’t an arm of Sarooj—it’s independent by design. But everything I learned building at that scale is what makes the analysis real, not just rigorous.</p>
+<p>My specialty is risk assessment, and my conviction is simple: the only reliable path to sustainable outcomes is proactive risk management—identifying and mitigating threats early in planning, monitoring them throughout construction, and handing over assets prepared for long-term performance. My leadership philosophy fuses field-tested practicality with world-class technical capability, anchored in values I learned building real things: integrity, quality, safety, and respect for people.</p>
+<p>Today, as Teaching Associate Professor at Stevens Institute of Technology in New Jersey, I work on both sides of the line between the classroom and the field—building new methods with my students and applying them on real projects. TRAVO is the formal expression of that work: rigorous, independent risk analysis for the sureties, lenders, counsel, owners, agencies, and contractors making consequential capital decisions across our region. If you are underwriting a bond or a loan, watching a project begin to drift, preparing for a claim before it fully materializes, setting a contingency, leveling a bid, or weighing a strategic alternative, I would welcome the conversation.</p>
+<p>Thank you for your trust. I look forward to helping you make better decisions under uncertainty—and to building infrastructure that stands the test of time, and of change.</p>
+<p class="signoff">— Dr. Karim S. Karam
+            <span class="role">Principal, TRAVO · Teaching Associate Professor, Stevens Institute of Technology</span>
+</p>
+</article>
+<div class="letter mt-block">
+<p style="font-family: var(--sans); font-size: var(--fs-body);">
+<a class="btn btn-primary" href="contact.html">Discuss a Project</a>
+<a class="btn btn-ghost" href="about.html">About TRAVO &amp; the Principal</a>
+</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<footer class="site-footer">
+<div class="wrap footer-top">
+<div>
+<a class="wordmark" href="index.html">TRAVO<span class="tick">.</span></a>
+<p class="footer-tag">Total Risk Analysis and Value Optimization</p>
+<p class="footer-region">Quantified Risk. Disciplined Decisions. New Jersey primary · New York metropolitan secondary.</p>
+<p class="footer-independence">Independent by design — of contractors, owners, and technology vendors. The principal personally signs every report.</p>
+</div>
+<nav aria-label="Footer — pages">
+<h4>Practice</h4>
+<ul>
+<li><a href="services.html">Services</a></li>
+<li><a href="methodology.html">Methodology</a></li>
+<li><a href="engagements.html">Engagements</a></li>
+<li><a href="contact.html">Discuss a Project</a></li>
+</ul>
+</nav>
+<nav aria-label="Footer — research">
+<h4>Research</h4>
+<ul>
+<li><a href="insights.html">Insights</a></li>
+<li><a href="risk-index.html">NJ/NY Risk Index</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="founders-letter.html">Founder’s Letter</a></li>
+</ul>
+</nav>
+<div>
+<h4>Contact</h4>
+<p class="footer-contact">
+<span>Email: [to be confirmed]</span>
+<span>Phone: [to be confirmed]</span>
+<span>New Jersey · New York metropolitan region</span>
+</p>
+</div>
+</div>
+<div class="wrap footer-bottom">
+<span>© [YEAR — placeholder] TRAVO. All rights reserved.</span>
+<span>
+<a href="#">Privacy [placeholder]</a>  · 
+        <a href="#">Terms [placeholder]</a>
+</span>
+</div>
+</footer>
+<script>
+/* ==========================================================================
+   TRAVO — main.js
+   Lightweight, dependency-free behavior:
+   1. Accessible mobile navigation
+   2. Reveal-on-scroll (respects prefers-reduced-motion)
+   3. Contact form front-end validation
+   NOTE: The contact form performs client-side validation only. No backend
+   is included. Connect form processing where marked in contact.html and
+   in README.md before claiming submissions are delivered.
+   ========================================================================== */
+
+(function () {
+  "use strict";
+
+  /* ---------- 1. Mobile navigation ---------- */
+  var toggle = document.querySelector(".nav-toggle");
+  var nav = document.getElementById("site-nav");
+
+  if (toggle && nav) {
+    toggle.addEventListener("click", function () {
+      var open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!open));
+      nav.classList.toggle("is-open", !open);
+    });
+
+    // Close with Escape and return focus to the toggle.
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && nav.classList.contains("is-open")) {
+        nav.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.focus();
+      }
+    });
+
+    // Close when clicking outside the header.
+    document.addEventListener("click", function (e) {
+      if (
+        nav.classList.contains("is-open") &&
+        !nav.contains(e.target) &&
+        !toggle.contains(e.target)
+      ) {
+        nav.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
+  /* ---------- 2. Reveal on scroll ---------- */
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var revealEls = document.querySelectorAll(".reveal");
+
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    revealEls.forEach(function (el) { el.classList.add("is-visible"); });
+  } else {
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.05 }
+    );
+    revealEls.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------- 3. Contact form validation ---------- */
+  var form = document.getElementById("inquiry-form");
+  if (!form) return;
+
+  var statusEl = document.getElementById("form-status");
+
+  var validators = {
+    name: function (v) { return v.trim().length >= 2 || "Enter your full name."; },
+    organization: function (v) { return v.trim().length >= 2 || "Enter your organization."; },
+    email: function (v) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) || "Enter a valid email address.";
+    },
+    phone: function (v) {
+      if (v.trim() === "") return true; // optional
+      return /^[+()\-.\s\d]{7,20}$/.test(v.trim()) || "Enter a valid phone number.";
+    },
+    "client-type": function (v) { return v !== "" || "Select a client type."; },
+    "project-location": function (v) { return v.trim().length >= 2 || "Enter the project location."; },
+    "project-value": function (v) { return v !== "" || "Select a project value range."; },
+    "project-stage": function (v) { return v !== "" || "Select the project stage."; },
+    "analysis-type": function (v) { return v !== "" || "Select the type of analysis required."; },
+    message: function (v) {
+      return v.trim().length >= 20 || "Describe the decision your project is facing (at least 20 characters).";
+    },
+    consent: function (v, field) {
+      return field.checked || "Confirm consent so we can respond to your inquiry.";
+    }
+  };
+
+  function validateField(field) {
+    var name = field.name;
+    var validator = validators[name];
+    if (!validator) return true;
+
+    var result = validator(field.value, field);
+    var errorEl = document.getElementById("error-" + field.id);
+
+    if (result === true) {
+      field.setAttribute("aria-invalid", "false");
+      if (errorEl) errorEl.textContent = "";
+      return true;
+    }
+    field.setAttribute("aria-invalid", "true");
+    if (errorEl) errorEl.textContent = result;
+    return false;
+  }
+
+  form.querySelectorAll("input, select, textarea").forEach(function (field) {
+    field.addEventListener("blur", function () { validateField(field); });
+    field.addEventListener("input", function () {
+      if (field.getAttribute("aria-invalid") === "true") validateField(field);
+    });
+  });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    var firstInvalid = null;
+    form.querySelectorAll("input, select, textarea").forEach(function (field) {
+      var ok = validateField(field);
+      if (!ok && !firstInvalid) firstInvalid = field;
+    });
+
+    if (firstInvalid) {
+      statusEl.textContent = "Some fields need attention. Review the highlighted items above.";
+      statusEl.className = "form-status is-error";
+      firstInvalid.focus();
+      return;
+    }
+
+    /* -------------------------------------------------------------------
+       BACKEND CONNECTION REQUIRED.
+       Validation has passed, but this static site includes no server-side
+       form processor. Replace the block below with a real submission —
+       e.g. fetch() POST to your form endpoint, a hosted form service, or a
+       mail handler — before telling users their message has been sent.
+       See README.md → "Connecting the contact form".
+       ------------------------------------------------------------------- */
+    statusEl.className = "form-status is-ok";
+    statusEl.textContent =
+      "Your inquiry passed validation. Form delivery is not yet connected on this build — " +
+      "please reach TRAVO through the contact details listed on this page while processing is configured.";
+    statusEl.focus();
+  });
+})();
+
+/* Animated sample visualizations — play once when scrolled into view */
+(function () {
+  var vizzes = document.querySelectorAll('.tv');
+  if (!vizzes.length) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) {
+    vizzes.forEach(function (el) { el.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.25 });
+  vizzes.forEach(function (el) { io.observe(el); });
+})();
+
+/* Figures inside <details> accordions: reveal when the accordion is opened */
+(function () {
+  document.querySelectorAll('details.service').forEach(function (d) {
+    d.addEventListener('toggle', function () {
+      if (d.open) d.querySelectorAll('.tv').forEach(function (v) { v.classList.add('in'); });
+    });
+  });
+})();
+
+</script>
+<script>
+(function(){
+  var KEYS=['home','services','methodology','research','insights','risk-index','about','engagements','contact','founders-letter'];
+  function keyFromHref(href){if(!href)return null;var base=href.split('#')[0];if(base==='')return null;if(base==='index.html')return 'home';var k=base.replace('.html','');return KEYS.indexOf(k)>=0?k:null;}
+  var pagesEls=document.querySelectorAll('.page');var navLinks=document.querySelectorAll('#site-nav a');
+  function show(key,anchor){
+    pagesEls.forEach(function(p){p.hidden=(p.getAttribute('data-page')!==key);});
+    document.querySelectorAll('[data-page="'+key+'"] .reveal').forEach(function(el){el.classList.add('is-visible');});
+    navLinks.forEach(function(a){var ak=keyFromHref(a.getAttribute('href'));if(ak===key){a.setAttribute('aria-current','page');}else{a.removeAttribute('aria-current');}});
+    var nav=document.getElementById('site-nav');var tog=document.querySelector('.nav-toggle');
+    if(nav){nav.classList.remove('is-open');}if(tog){tog.setAttribute('aria-expanded','false');}
+    window.scrollTo(0,0);
+    if(anchor){var el=document.getElementById(anchor);if(el){el.scrollIntoView({block:'start'});if(el.tagName==='DETAILS'){el.open=true;}}}
+  }
+  document.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;var href=a.getAttribute('href');if(!href)return;if(href.indexOf('.html')>=0){var parts=href.split('#');var key=keyFromHref(parts[0]);if(key){e.preventDefault();show(key,parts[1]||null);}}},true);
+  document.querySelectorAll('[data-page="home"] .reveal').forEach(function(el){el.classList.add('is-visible');});
+})();
+</script>
+</body>
+</html>

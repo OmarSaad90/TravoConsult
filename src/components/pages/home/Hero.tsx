@@ -5,6 +5,7 @@ import { useCountUp } from '../../../hooks/useCountUp';
 
 /* ── Ticker ─────────────────────────────────────────── */
 const TICKER_ITEMS = [
+  'TOTAL RISK ANALYSIS AND VALUE OPTIMIZATION',
   'QUANTITATIVE CONSTRUCTION RISK ADVISORY',
   'MONTE CARLO SIMULATION',
   'P10 · P50 · P80',
@@ -28,8 +29,17 @@ function RiskGauge({ mounted }: { mounted: boolean }) {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
     if (!mounted) return;
-    const t = setInterval(() => setIdx(i => (i + 1) % GAUGE_LEVELS.length), 950);
-    return () => clearInterval(t);
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setIdx(GAUGE_LEVELS.length - 1);
+      return;
+    }
+
+    // Sweep once through the spectrum and settle fully lit — all five
+    // stops visible at rest, a decisive reveal instead of an endless loop.
+    const sequence = [0, 1, 2, 3, 4];
+    const timers = sequence.map((v, i) => setTimeout(() => setIdx(v), 300 + i * 450));
+    return () => timers.forEach(clearTimeout);
   }, [mounted]);
 
   return (
@@ -44,7 +54,7 @@ function RiskGauge({ mounted }: { mounted: boolean }) {
             transition: 'background-color 0.4s, box-shadow 0.4s',
           }}
         />
-        <span className="font-mono text-haze uppercase" style={{ fontSize: '8.5px', letterSpacing: '0.16em' }}>
+        <span className="font-mono font-semibold text-forest uppercase" style={{ fontSize: '9px', letterSpacing: '0.16em' }}>
           Risk Posture
         </span>
       </div>
@@ -54,7 +64,7 @@ function RiskGauge({ mounted }: { mounted: boolean }) {
             key={l.label}
             className="flex-1"
             style={{
-              backgroundColor: i <= idx ? l.color : 'rgba(255,255,255,0.05)',
+              backgroundColor: i <= idx ? l.color : 'rgba(30,30,46,0.06)',
               transition: 'background-color 0.45s ease',
               boxShadow: i === idx ? `0 0 12px ${l.color}55` : 'none',
             }}
@@ -68,7 +78,7 @@ function RiskGauge({ mounted }: { mounted: boolean }) {
               className="font-mono uppercase block"
               style={{
                 fontSize: '8px', letterSpacing: '0.07em',
-                color: i <= idx ? l.color : '#8A95B2',
+                color: i <= idx ? l.color : '#5F6884',
                 fontWeight: i === idx ? '600' : '400',
                 transition: 'color 0.4s, font-weight 0.4s',
               }}
@@ -151,17 +161,14 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative bg-navy overflow-hidden"
-      style={{ minHeight: '100svh' }}
+      className="relative bg-canvas overflow-hidden"
       aria-label="Introduction"
     >
-      {/* Grid texture */}
-      <div className="absolute inset-0 bg-grid-dark pointer-events-none" aria-hidden />
 
       {/* ── Ticker strip ───────────────────────────────── */}
       <div
-        className="relative border-b border-rule-d overflow-hidden"
-        style={{ height: '34px', zIndex: 2 }}
+        className="relative overflow-hidden"
+        style={{ height: '34px', zIndex: 2, borderBottom: '1px solid #D5D9E8' }}
         aria-hidden
       >
         <div
@@ -171,14 +178,14 @@ export function Hero() {
           {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
             <span key={i} className="flex items-center">
               <span
-                className="font-mono uppercase text-haze"
+                className="font-mono uppercase text-ink-3"
                 style={{ fontSize: '9.5px', letterSpacing: '0.18em', paddingLeft: '28px' }}
               >
                 {item}
               </span>
               <span
-                className="font-mono text-teal mx-3"
-                style={{ fontSize: '7px', opacity: 0.5 }}
+                className="font-mono text-forest mx-3"
+                style={{ fontSize: '7px', opacity: 0.6 }}
               >
                 ◆
               </span>
@@ -188,58 +195,70 @@ export function Hero() {
       </div>
 
       {/* ── Main content ───────────────────────────────── */}
-      <div
-        className="relative"
-        style={{ zIndex: 2, minHeight: 'calc(100svh - 34px - 56px)', display: 'flex', flexDirection: 'column' }}
-      >
-        {/* Two-column content area */}
-        <div className="flex-1 max-w-site mx-auto w-full px-6 md:px-12 lg:px-16 py-8 md:py-10 grid md:grid-cols-2 gap-8 lg:gap-14 items-center">
+      <div className="relative" style={{ zIndex: 2 }}>
+        <div className="max-w-site mx-auto w-full px-6 md:px-12 lg:px-16 pt-10 pb-6 md:pt-14 md:pb-8">
 
-          {/* Left — headline + body + CTAs */}
+          {/* Kicker */}
+          <div style={reveal(60)}>
+            <span className="font-mono text-[11.5px] font-semibold tracking-label uppercase text-forest">
+              Total Risk Analysis and Value Optimization
+            </span>
+          </div>
+
+          {/* Full-width, two-line headline — no longer boxed into a 50% column */}
+          <h1
+            className="mt-6 font-display font-extrabold tracking-display"
+            style={{ fontSize: 'clamp(3rem, 6.4vw, 5.4rem)', lineHeight: 0.94 }}
+          >
+            <span className="block" style={reveal(160)}>
+              <span className="text-ink">Quantified </span><span className="text-forest">Risk.</span>
+            </span>
+            <span className="block" style={reveal(240)}>
+              <span className="text-ink">Disciplined </span><span className="text-forest">Decisions.</span>
+            </span>
+          </h1>
+
+          {/* Two-column row below the headline: lede/body/CTAs (wider) | distribution panel (narrower, pushed right) */}
+          <div className="mt-9 grid lg:grid-cols-[1.5fr_1fr] gap-10 lg:gap-14 items-start">
+
+          {/* Left — body + CTAs */}
           <div>
-            <div style={reveal(60)}>
-              <span className="font-mono text-[10px] font-medium tracking-label uppercase text-teal">
-                Quantitative Construction Risk Advisory
-                <span className="mx-[10px]" style={{ opacity: 0.35 }}>·</span>
-                New Jersey &amp; New York Metro
-              </span>
-            </div>
-
-            <h1
-              className="mt-8 font-display font-extrabold tracking-display balance"
-              style={{ fontSize: 'clamp(2.6rem, 4.8vw, 4.4rem)', lineHeight: 0.95 }}
-            >
-              <span className="block text-snow" style={reveal(160)}>Most construction</span>
-              <span className="block text-snow" style={reveal(230)}>failures are</span>
-              <span className="block text-teal" style={reveal(310)}>quantifiable</span>
-              <span className="block text-snow" style={reveal(370)}>in advance.</span>
-            </h1>
-
-            <div style={reveal(470)} className="mt-8">
+            <div style={reveal(320)}>
               <p
-                className="font-sans text-slate leading-[1.78] pretty"
-                style={{ fontSize: '17px', maxWidth: '50ch' }}
+                className="font-sans italic text-ink-2 leading-[1.6] pretty"
+                style={{ fontSize: '18px', maxWidth: '52ch' }}
               >
-                A specialty advisory practice that quantifies cost, schedule, and
-                commercial risk at the decisions where uncertainty most directly
-                drives project outcomes, serving owners, public agencies,
-                contractors, sureties, and lenders delivering complex capital
-                projects across the region.
+                Independent quantitative risk analysis for the New Jersey and New
+                York construction market.
               </p>
             </div>
 
-            <div style={reveal(560)} className="mt-9 flex flex-wrap gap-3">
+            <div style={reveal(380)} className="mt-5">
+              <p
+                className="font-sans text-ink-2 leading-[1.78] pretty"
+                style={{ fontSize: '17px', maxWidth: '58ch' }}
+              >
+                TRAVO is a specialty quantitative risk advisory practice built
+                around a single discipline, quantitative project risk analysis,
+                applied to the decisions where uncertainty most directly affects
+                financial outcomes. Risk analysis is the method. Value
+                optimization is the result. The two are not separate offerings;
+                the second is what the first is for.
+              </p>
+            </div>
+
+            <div style={reveal(440)} className="mt-8 flex flex-wrap gap-3">
               <a
                 href="/contact"
-                className="font-mono text-[11px] tracking-label uppercase bg-teal text-navy px-7 py-[14px] hover:bg-teal-deep transition-colors duration-200"
+                className="font-mono text-[11px] tracking-label uppercase bg-forest text-canvas px-7 py-[14px] hover:bg-forest-2 transition-colors duration-200"
               >
-                Start a Conversation
+                Discuss a Project
               </a>
               <a
-                href="#services"
-                className="font-mono text-[11px] tracking-label uppercase text-teal border border-teal/50 px-7 py-[14px] hover:border-teal hover:bg-teal/[0.08] transition-all duration-200"
+                href="/services"
+                className="font-mono text-[11px] tracking-label uppercase text-forest border border-forest/50 px-7 py-[14px] hover:border-forest hover:bg-forest/[0.06] transition-all duration-200"
               >
-                View Service Catalog
+                View the Service Catalog
               </a>
             </div>
           </div>
@@ -252,18 +271,18 @@ export function Hero() {
             }}
           >
             <div
-              className="border border-rule-d"
               style={{
-                background: '#252538',
+                background: '#FFFFFF',
+                border: '1px solid #D5D9E8',
                 padding: '24px',
               }}
             >
               {/* Panel header */}
               <div className="flex items-center justify-between mb-5">
-                <span className="font-mono text-teal uppercase" style={{ fontSize: '9px', letterSpacing: '0.18em' }}>
+                <span className="font-mono font-semibold text-forest uppercase" style={{ fontSize: '9.5px', letterSpacing: '0.18em' }}>
                   Cost-at-Completion Forecast
                 </span>
-                <span className="font-mono text-haze uppercase" style={{ fontSize: '9px', letterSpacing: '0.14em' }}>
+                <span className="font-mono font-semibold text-ink-3 uppercase" style={{ fontSize: '9px', letterSpacing: '0.14em' }}>
                   Sample Output
                 </span>
               </div>
@@ -277,10 +296,10 @@ export function Hero() {
                 aria-label="Probability distribution of project cost outcomes"
               >
                 {/* Full fill */}
-                <path d={fillPath} fill="#71D2CF" opacity="0.06" />
+                <path d={fillPath} fill="#71D2CF" opacity="0.12" />
 
                 {/* Confidence band P10→P80 */}
-                <path d={bandPath} fill="#71D2CF" opacity="0.10" />
+                <path d={bandPath} fill="#71D2CF" opacity="0.20" />
 
                 {/* Curve — draws in on mount */}
                 <path
@@ -315,11 +334,11 @@ export function Hero() {
                 <line x1={p80.x} y1={p80.y} x2={p80.x} y2={PH} stroke="#FFB9BB" strokeWidth="0.75" strokeDasharray="3,4" opacity={mounted ? 0.9 : 0} style={{ transition: 'opacity 0.4s 1300ms' }} />
 
                 {/* Baseline */}
-                <line x1={0} y1={PH} x2={PW} y2={PH} stroke="#28283E" strokeWidth="1" />
+                <line x1={0} y1={PH} x2={PW} y2={PH} stroke="#D5D9E8" strokeWidth="1" />
               </svg>
 
               {/* Percentile value strip */}
-              <div className="grid grid-cols-3 gap-0 mt-4 border-t border-rule-d pt-4">
+              <div className="grid grid-cols-3 gap-0 mt-4 pt-4" style={{ borderTop: '1px solid #D5D9E8' }}>
                 <PercentileCell
                   label="P10"
                   value={v10}
@@ -349,22 +368,23 @@ export function Hero() {
               </div>
 
               {/* Panel footer */}
-              <div className="mt-4 pt-3 border-t border-rule-d">
-                <p className="font-mono text-haze" style={{ fontSize: '8px', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+              <div className="mt-4 pt-3" style={{ borderTop: '1px solid #D5D9E8' }}>
+                <p className="font-mono font-semibold text-forest" style={{ fontSize: '9px', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                   Monte Carlo · N=10,000 iterations · AACE 41R-08
                 </p>
               </div>
             </div>
 
             {/* Decorative corner accents */}
-            <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-teal/30 pointer-events-none" aria-hidden />
-            <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-teal/30 pointer-events-none" aria-hidden />
+            <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-forest/40 pointer-events-none" aria-hidden />
+            <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-forest/40 pointer-events-none" aria-hidden />
+          </div>
           </div>
         </div>
 
         {/* ── Risk gauge ──────────────────────────────── */}
         <div
-          className="pb-5"
+          className="pb-6"
           style={{ opacity: mounted ? 1 : 0, transition: 'opacity 0.5s 700ms' }}
           aria-hidden
         >
@@ -391,7 +411,7 @@ function PercentileCell({
         transition: `opacity 0.5s ${delay}ms, transform 0.5s ${delay}ms`,
       }}
     >
-      <div className="font-mono uppercase" style={{ fontSize: '9px', letterSpacing: '0.16em', color, marginBottom: '4px' }}>
+      <div className="font-mono font-semibold uppercase" style={{ fontSize: '9px', letterSpacing: '0.16em', color, marginBottom: '4px' }}>
         {label}
       </div>
       <div
@@ -400,7 +420,7 @@ function PercentileCell({
       >
         ${displayVal}M
       </div>
-      <div className="font-mono text-haze uppercase mt-1" style={{ fontSize: '8px', letterSpacing: '0.10em' }}>
+      <div className="font-mono font-semibold text-ink-3 uppercase mt-1" style={{ fontSize: '8.5px', letterSpacing: '0.10em' }}>
         {sublabel}
       </div>
     </div>

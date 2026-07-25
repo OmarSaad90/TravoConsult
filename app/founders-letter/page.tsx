@@ -1,20 +1,19 @@
 import type { Metadata } from 'next';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { ContactPage } from '@/components/pages/contact/ContactPage';
+import { FoundersLetterPage } from '@/components/pages/founders-letter/FoundersLetterPage';
 
 export const metadata: Metadata = {
-  title: 'Contact | Travo Risk Advisory',
-  description:
-    'Start a conversation with Travo Risk Advisory. Tell us about your project and the decision in front of you.',
+  title: "Founder's Letter | Travo Risk Advisory",
+  description: 'A letter from Dr. Karim S. Karam, Principal of Travo Risk Advisory.',
 };
 
-export default function ContactRoute() {
+export default function FoundersLetterRoute() {
   return (
     <div className="min-h-screen bg-canvas text-ink">
       <Header />
       <main>
-        <ContactPage />
+        <FoundersLetterPage />
       </main>
       <Footer />
     </div>

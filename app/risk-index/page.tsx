@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function RiskIndexRoute() {
   return (
-    <div className="min-h-screen bg-navy text-snow">
+    <div className="min-h-screen bg-canvas text-ink">
       <Header />
       <main>
         <RiskIndexPage />

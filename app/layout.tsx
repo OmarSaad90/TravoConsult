@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Barlow_Condensed, Barlow, JetBrains_Mono } from 'next/font/google';
+import { SmoothScroll } from '@/components/layout/SmoothScroll';
 import '@/index.css';
 
 const barlowCondensed = Barlow_Condensed({
@@ -37,7 +38,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       lang="en"
       className={`${barlowCondensed.variable} ${barlow.variable} ${jetbrainsMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <SmoothScroll />
+        {children}
+      </body>
     </html>
   );
 }

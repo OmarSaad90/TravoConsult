@@ -64,20 +64,6 @@ export default {
         'grid-light': 'repeating-linear-gradient(90deg, rgba(12,18,34,0.06) 0 1px, transparent 1px 96px)',
       },
 
-      keyframes: {
-        barGrow: {
-          '0%':   { transform: 'scaleX(0)', transformOrigin: 'left' },
-          '100%': { transform: 'scaleX(1)', transformOrigin: 'left' },
-        },
-        fadeUp: {
-          '0%':   { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-      },
-      animation: {
-        'bar-grow': 'barGrow 1.1s cubic-bezier(0.16,1,0.3,1) forwards',
-        'fade-up':  'fadeUp 0.7s cubic-bezier(0.2,0.7,0.2,1) forwards',
-      },
     },
   },
   plugins: [],

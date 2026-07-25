@@ -17,9 +17,29 @@
     font-size: 16px;
   }
 
+  /* Lenis smooth scroll — while active it drives scrolling itself, so native
+     smooth-behavior is turned off to avoid the two fighting each other.
+     Skipped entirely for prefers-reduced-motion (see SmoothScroll.tsx), so
+     the scroll-behavior: smooth above remains the fallback for those users. */
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  .lenis.lenis-scrolling iframe {
+    pointer-events: none;
+  }
+
   body {
-    background-color: #1E1E2E;
-    color: #E6EAF4;
+    background-color: #F5F7FB;
+    color: #1E1E2E;
     font-family: var(--font-sans), system-ui, sans-serif;
     font-weight: 400;
     line-height: 1.62;
@@ -35,8 +55,15 @@
   }
 
   :focus-visible {
-    outline: 2px solid #71D2CF;
+    outline: 2px solid #2C5251;
     outline-offset: 3px;
+  }
+
+  /* Dark sections (bg-navy) need the light-section forest outline swapped
+     for teal — forest reads at ~1.9:1 on navy, below the 3:1 UI-component
+     contrast minimum, while teal clears it comfortably on both surfaces. */
+  .bg-navy :focus-visible {
+    outline-color: #71D2CF;
   }
 
   ::selection {
@@ -78,11 +105,6 @@
     transform: translateY(0);
   }
 
-  /* WhatWeDo bento grid — fixed row height only on desktop */
-  @media (min-width: 1024px) {
-    .bento-grid { grid-auto-rows: 280px; }
-  }
-
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .rv,
@@ -94,6 +116,10 @@
       transform: none !important;
       transition: none !important;
     }
+
+    [style*="grid-template-rows"] {
+      transition: none !important;
+    }
   }
 
   .balance { text-wrap: balance; }
@@ -102,11 +128,6 @@
   @keyframes marquee {
     from { transform: translateX(0); }
     to   { transform: translateX(-50%); }
-  }
-
-  @keyframes sq-pulse {
-    0%, 100% { opacity: 1; }
-    50%      { opacity: 0.6; }
   }
 
   /* Methodology hero — post-settle looping animations */
@@ -129,18 +150,6 @@
   @keyframes insightsDotPulse {
     0%, 100% { opacity: 1;    transform: scale(1);   }
     50%       { opacity: 0.2; transform: scale(0.45); }
-  }
-
-  /* Insights page — spectrum bar scan sweep */
-  @keyframes spectrumScan {
-    from { transform: translateX(-100%); }
-    to   { transform: translateX(350%); }
-  }
-
-  /* Insights page — VOL. I in-development pulse */
-  @keyframes volPulse {
-    0%, 100% { opacity: 0.30; }
-    50%       { opacity: 0.12; }
   }
 
   @keyframes confirmIn {

@@ -6,6 +6,12 @@ export function useCountUp(target: number, duration = 1800, start = false) {
 
   useEffect(() => {
     if (!start) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setValue(target);
+      return;
+    }
+
     const startTime = performance.now();
 
     function tick(now: number) {

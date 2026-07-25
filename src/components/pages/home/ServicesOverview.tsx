@@ -1,251 +1,130 @@
 'use client';
 
-import { useState } from 'react';
 import { useInView } from '../../../hooks/useInView';
 
-
-type Service = {
-  code: string;
+type Category = {
+  id: 'A' | 'B' | 'C' | 'D' | 'E';
   name: string;
   desc: string;
-  timeline: string;
-  fee: string;
 };
 
-type Category = {
-  id: 'A' | 'B' | 'C';
-  name: string;
-  intro: string;
-  accentColor: string;
-  services: Service[];
-};
-
-const CATALOG: Category[] = [
+const CATEGORIES: Category[] = [
   {
     id: 'A',
-    name: 'Pre-Project Risk & Contingency',
-    intro: 'Risk and contingency analysis during planning and procurement, before construction begins; the front-end discipline where the work has the highest leverage on financial outcomes. This is Travo\'s primary entry point with new clients.',
-    accentColor: '#71D2CF',
-    services: [
-      {
-        code: 'A1',
-        name: 'Quantitative Risk Analysis & Contingency Derivation',
-        desc: 'Independent Monte Carlo P10/P50/P80 on cost and schedule, with defensible contingency derived from documented risk drivers.',
-        timeline: '5–7 weeks',
-        fee: '$60K–$120K',
-      },
-      {
-        code: 'A2',
-        name: 'Structured Risk Register Development',
-        desc: 'Workshop-driven risk identification and characterization, structured for quantitative analysis and ongoing project management.',
-        timeline: '3–5 weeks',
-        fee: '$25K–$60K',
-      },
-      {
-        code: 'A3',
-        name: 'Risk-Adjusted Bid Leveling & Procurement Support',
-        desc: 'A fixed-price bid is the floor of project cost, not the ceiling. We show owners the difference before commitments are locked in.',
-        timeline: '3–5 weeks',
-        fee: '$35K–$80K',
-      },
-      {
-        code: 'A4',
-        name: 'Independent Risk Peer Review',
-        desc: "Owner-side review of a contractor's risk register and contingency. Short engagement, disproportionate value to the owner.",
-        timeline: '2–3 weeks',
-        fee: '$20K–$50K',
-      },
-      {
-        code: 'A5',
-        name: 'Strategic Alternatives & Scenario Analysis',
-        desc: 'Structured analysis of capital decisions that involve a choice among substantively different paths: build versus retrofit, alternative technologies, delivery models, or phasing strategies. Where A1 quantifies variation within a chosen plan, A5 quantifies the relative attractiveness of the alternatives themselves.',
-        timeline: '4–8 weeks',
-        fee: '$50K–$130K',
-      },
-    ],
+    name: 'Owner-Side Preconstruction Analysis',
+    desc: 'Quantitative risk analysis and contingency derivation, independent risk peer review, risk-adjusted bid leveling, and strategic alternatives analysis: the front-end decisions where analysis has the highest leverage on financial outcomes.',
   },
   {
     id: 'B',
-    name: 'During-Project Risk Management',
-    intro: 'Risk discipline through construction execution; retainers, trend forecasting, and dispute-readiness review that carry procurement-stage analysis through to project completion. The firm\'s primary source of recurring engagement.',
-    accentColor: '#FFB9BB',
-    services: [
-      {
-        code: 'B1',
-        name: 'Risk Register Management Retainer',
-        desc: 'Monthly retainer to maintain the live register, update probability distributions as conditions change, and chair the risk review cadence.',
-        timeline: '12–36 months',
-        fee: '$8K–$25K / mo',
-      },
-      {
-        code: 'B2',
-        name: 'Trend Risk Analysis & Cost-at-Completion Forecasting',
-        desc: 'Independent reassessment when a project starts trending negatively. Quantifies exposure and identifies the decision options that remain.',
-        timeline: '3–5 weeks',
-        fee: '$30K–$90K',
-      },
-      {
-        code: 'B3',
-        name: 'Pre-Claim & Dispute-Readiness Risk Review',
-        desc: 'Documentation strategy and risk-allocation map, structured before a claim becomes a dispute and while positions are still negotiable.',
-        timeline: '4–6 weeks',
-        fee: '$40K–$100K',
-      },
-    ],
+    name: 'Capital at Risk: Lender, Surety & Underwriting',
+    desc: "The firm's early go-to-market lead and recurring commercial core: construction loan monitoring and draw review, underwriting risk opinions on complex collateral, and continuous contractor financial-health monitoring for sureties and subcontractor-default programs. Panel-ready deliverables, reliance letters, published indicative fees.",
   },
   {
     id: 'C',
-    name: 'Post-Project & Portfolio Services',
-    intro: "Structured learning and regional benchmarking that compound into institutional value across an owner's capital program.",
-    accentColor: '#FF5B5E',
-    services: [
-      {
-        code: 'C1',
-        name: 'Lessons-Learned Risk Capture',
-        desc: 'Structured post-mortem on which risks materialized, which were mitigated effectively, and what the register should carry forward.',
-        timeline: '4–6 weeks',
-        fee: '$25K–$60K',
-      },
-      {
-        code: 'C2',
-        name: 'Portfolio Risk Benchmarking',
-        desc: "Annual comparison of your portfolio against the firm's regional dataset, with quarterly refreshes and sector-segmented outcomes data.",
-        timeline: 'Annual',
-        fee: '$25K–$60K / yr',
-      },
-      {
-        code: 'C3',
-        name: 'Methodology Implementation & Training',
-        desc: "Build your team's own quantitative risk methodology capability. Clients who build it stay clients for higher-order independent review work.",
-        timeline: '8–16 weeks',
-        fee: '$75K–$200K',
-      },
-    ],
+    name: 'During-Project Risk Management',
+    desc: 'Risk discipline during execution: risk register management retainers with defined tiers, trend risk analysis and cost-at-completion forecasting, including a 10-day urgent triage, and pre-claim, dispute-readiness review.',
+  },
+  {
+    id: 'D',
+    name: 'Post-Project, Portfolio & Public-Interest',
+    desc: 'Lessons-learned risk capture, portfolio risk benchmarking against the regional dataset, and independent third-party review of large public and private project proposals for the decision-makers who must approve or fund them.',
+  },
+  {
+    id: 'E',
+    name: 'Training & Capability Building',
+    desc: "Structured transfer of TRAVO's methodology into client organizations: implementation and training for owners and contractors building internal quantitative risk capability, with the same rigor the firm applies on its own engagements.",
   },
 ];
 
 export function ServicesOverview() {
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.04 });
-  const [activeId, setActiveId] = useState<'A' | 'B' | 'C'>('A');
-  const active = CATALOG.find((c) => c.id === activeId)!;
 
   return (
     <section
       id="services"
       ref={ref}
-      className="bg-navy text-snow py-[72px] md:py-[96px]"
+      className="bg-canvas text-ink pt-[44px] md:pt-[52px] pb-[52px] md:pb-[72px]"
+      style={{ borderTop: '1px solid #D5D9E8' }}
       aria-labelledby="svc-heading"
     >
       <div className="max-w-site mx-auto px-6 md:px-12 lg:px-16">
 
+        {/* Kicker */}
+        <div style={fade(inView, 0)}>
+          <span className="font-mono text-forest uppercase font-semibold" style={{ fontSize: '11.5px', letterSpacing: '0.14em' }}>
+            Services
+          </span>
+        </div>
+
         {/* Header */}
-        <div style={fade(inView, 0)} className="mb-10">
+        <div style={fade(inView, 40)} className="mt-4 mb-10">
           <h2
             id="svc-heading"
             className="font-display font-extrabold leading-[0.97] tracking-display"
             style={{ fontSize: 'clamp(2rem, 3.8vw, 3.4rem)' }}
           >
-            <span className="text-snow">Eleven services. Three categories.</span>
+            <span className="text-ink">Fourteen named services across</span>
             <br />
-            <span className="text-teal">One discipline.</span>
+            <span className="text-forest">five categories.</span>
           </h2>
-          <p className="mt-4 font-sans text-slate leading-[1.72] pretty" style={{ fontSize: '16px', maxWidth: '66ch' }}>
-            Every offering carries a defined deliverable, methodology, scope, and
-            fee structure. The catalog is intentionally bounded.
+          <p className="mt-4 font-sans text-ink-2 leading-[1.72] pretty" style={{ fontSize: '16px', maxWidth: '72ch' }}>
+            The catalog is deliberately bounded and productized: each offering
+            is a recognizable, repeatable service with a defined deliverable,
+            methodology, and scope. The firm enters the market in phases:
+            independent reviews for sureties, lenders, and counsel, and trend
+            and pre-claim work on drifting projects, lead; owner-side
+            preconstruction studies scale on the strength of those references.
+            Recurring capital-at-risk services carry published indicative
+            fees; analytical engagements are scoped per decision.
           </p>
         </div>
 
-        {/* Tab selectors */}
-        <div
-          style={fade(inView, 60)}
-          className="flex border-b border-rule-d mb-0"
-          role="tablist"
-          aria-label="Service categories"
-        >
-          {CATALOG.map((cat) => (
-            <button
-              key={cat.id}
-              role="tab"
-              aria-selected={activeId === cat.id}
-              onClick={() => setActiveId(cat.id)}
-              className="relative flex items-center gap-3 px-6 py-4 font-mono text-[10px] uppercase tracking-label transition-colors duration-200 cursor-pointer border-0 bg-transparent"
-              style={{
-                color: activeId === cat.id ? cat.accentColor : '#8A95B2',
-              }}
-            >
-              <span
-                className="font-display font-extrabold tracking-display leading-none"
-                style={{ fontSize: 'clamp(1.4rem, 2vw, 1.8rem)' }}
-              >
-                {cat.id}
-              </span>
-              <span className="hidden sm:block">{cat.name}</span>
-              {activeId === cat.id && (
-                <span
-                  className="absolute bottom-0 left-0 right-0 h-[2px]"
-                  style={{ backgroundColor: cat.accentColor }}
-                />
-              )}
-            </button>
-          ))}
-        </div>
-
-        {/* Active category content */}
-        <div key={activeId} style={fade(inView, 100)}>
-          <p
-            className="font-sans text-slate leading-[1.68] py-6 border-b border-rule-d"
-            style={{ fontSize: '15px', maxWidth: '72ch' }}
-          >
-            {active.intro}
-          </p>
-
-          {/* Service grid — 2 per row */}
-          <div className="grid sm:grid-cols-2 gap-[1px] bg-rule-d">
-            {active.services.map((svc, si) => (
-              <div
-                key={svc.code}
-                style={fade(inView, 120 + si * 40)}
-                className="bg-navy p-6 flex flex-col gap-0 hover:bg-navy-1 transition-colors duration-200 cursor-default"
+        {/* Category cards — A leads as a featured double-width cell, not a uniform grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ backgroundColor: '#D5D9E8' }} role="list" aria-label="Service categories">
+          {CATEGORIES.map((cat, i) => {
+            const featured = cat.id === 'A';
+            return (
+              <a
+                key={cat.id}
+                href={`/services#cat-${cat.id.toLowerCase()}`}
+                role="listitem"
+                style={fade(inView, 100 + i * 60)}
+                className={`group bg-canvas flex flex-col hover:bg-canvas-1 transition-colors duration-200 ${
+                  featured ? 'sm:col-span-2 p-8' : 'p-6'
+                }`}
               >
                 <span
-                  className="font-display font-extrabold leading-none tracking-display block mb-3"
-                  style={{ fontSize: 'clamp(1.3rem, 1.8vw, 1.6rem)', color: active.accentColor }}
+                  className="font-display font-extrabold leading-none tracking-display block mb-3 text-forest"
+                  style={{ fontSize: featured ? 'clamp(2.4rem, 3.4vw, 3.2rem)' : 'clamp(1.6rem, 2.2vw, 2rem)' }}
                 >
-                  {svc.code}
+                  {cat.id}
                 </span>
 
-                <h4
-                  className="font-display font-bold text-snow leading-snug tracking-tight"
-                  style={{ fontSize: 'clamp(0.9rem, 1.3vw, 1.05rem)' }}
+                <h3
+                  className="font-display font-bold text-ink leading-snug tracking-tight"
+                  style={{ fontSize: featured ? 'clamp(1.2rem, 1.9vw, 1.5rem)' : 'clamp(0.95rem, 1.4vw, 1.1rem)' }}
                 >
-                  {svc.name}
-                </h4>
+                  {cat.name}
+                </h3>
                 <p
-                  className="mt-2 font-sans text-slate leading-[1.6] pretty flex-1"
-                  style={{ fontSize: '13.5px' }}
+                  className={`mt-2 font-sans text-ink-2 leading-[1.6] pretty flex-1 ${featured ? 'max-w-[52ch]' : ''}`}
+                  style={{ fontSize: featured ? '14.5px' : '13.5px' }}
                 >
-                  {svc.desc}
+                  {cat.desc}
                 </p>
-                <div className="mt-4 pt-3 border-t border-rule-d flex flex-wrap gap-x-8 gap-y-1">
-                  <Datum label="Timeline" value={svc.timeline} />
-                  <Datum label="Fee" value={svc.fee} />
-                </div>
-              </div>
-            ))}
-          </div>
+                <span
+                  className="mt-5 font-mono uppercase text-forest group-hover:text-forest-2 transition-colors duration-200"
+                  style={{ fontSize: '10px', letterSpacing: '0.12em' }}
+                >
+                  Category {cat.id} services →
+                </span>
+              </a>
+            );
+          })}
         </div>
 
       </div>
     </section>
-  );
-}
-
-function Datum({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <span className="font-mono text-[9px] uppercase tracking-label text-haze block">{label}</span>
-      <span className="font-mono text-[11.5px] text-slate mt-[2px] block">{value}</span>
-    </div>
   );
 }
 

@@ -31,7 +31,9 @@ function fade(active: boolean, delay: number): CSSProperties {
 }
 
 // ── Risk fingerprint / spider chart ──────────────────────────────────────────
-// 7-dimension risk profile for an illustrative NJ/NY construction project.
+// 7-dimension illustrative risk profile. Retained from the former dedicated
+// Risk Index section as the page's one visual accent — the full Index dataset
+// and category detail now live on /research and /risk-index.
 const SPIDER_DIMS = [
   { label: 'SCHEDULE',    v: 75 },
   { label: 'COST',        v: 58 },
@@ -69,12 +71,12 @@ function RiskFingerprint({ active }: { active: boolean }) {
 
   return (
     <svg viewBox="0 0 240 218" width="100%" aria-hidden fill="none"
-      style={{ display: 'block', maxWidth: '300px' }}>
+      style={{ display: 'block', maxWidth: '280px' }}>
 
       {/* Grid polygons */}
       {grids.map((pts, gi) => (
         <polygon key={gi} points={pts} fill="none"
-          stroke={P.ruleD} strokeWidth={gi === 3 ? 0.8 : 0.5} />
+          stroke={P.ruleL} strokeWidth={gi === 3 ? 0.8 : 0.5} />
       ))}
 
       {/* Axis spokes */}
@@ -84,13 +86,13 @@ function RiskFingerprint({ active }: { active: boolean }) {
           <line key={i} x1={CX} y1={CY}
             x2={(CX + R * Math.cos(a)).toFixed(1)}
             y2={(CY + R * Math.sin(a)).toFixed(1)}
-            stroke={P.ruleD} strokeWidth="0.5" />
+            stroke={P.ruleL} strokeWidth="0.5" />
         );
       })}
 
       {/* Risk polygon — scales up from centroid on scroll */}
       <polygon points={polyStr}
-        fill="rgba(113,210,207,0.13)" stroke={P.teal}
+        fill="rgba(62,166,163,0.13)" stroke={P.tealDp}
         strokeWidth="1.3" strokeLinejoin="round"
         style={{
           transformBox: 'fill-box',
@@ -102,7 +104,7 @@ function RiskFingerprint({ active }: { active: boolean }) {
       {/* Data point markers */}
       {outerPts.map((p, i) => (
         <circle key={i} cx={p.x.toFixed(1)} cy={p.y.toFixed(1)} r="2.5"
-          fill={P.teal}
+          fill={P.tealDp}
           opacity={active ? 0.9 : 0}
           style={{ transition: `opacity 0.35s ${520 + i * 55}ms` }} />
       ))}
@@ -114,9 +116,9 @@ function RiskFingerprint({ active }: { active: boolean }) {
         return (
           <text key={i} x={p.x.toFixed(1)} y={p.y.toFixed(1)}
             textAnchor={anchor} dy={baselineOffset}
-            fill={P.haze} fontSize="5" fontFamily="JetBrains Mono, monospace"
-            letterSpacing="0.8"
-            opacity={active ? 0.72 : 0}
+            fill={P.forest} fontSize="7.5" fontWeight={600} fontFamily="JetBrains Mono, monospace"
+            letterSpacing="0.6"
+            opacity={active ? 1 : 0}
             style={{ transition: `opacity 0.45s ${720 + i * 40}ms` }}>
             {SPIDER_DIMS[i].label}
           </text>
@@ -126,94 +128,26 @@ function RiskFingerprint({ active }: { active: boolean }) {
   );
 }
 
-// ── Cost-overrun distribution histogram ───────────────────────────────────────
-// Plausible NJ/NY regional outcome shape — representative, not published data.
-const HIST_DATA = [
-  { label: '<−10',  h: 0.07, color: P.forest  },
-  { label: '−10·0', h: 0.14, color: P.tealDp  },
-  { label: '0·10',  h: 0.25, color: P.teal    },
-  { label: '10·20', h: 0.22, color: P.sky      },
-  { label: '20·30', h: 0.17, color: P.blush    },
-  { label: '30·50', h: 0.10, color: P.coral    },
-  { label: '>50',   h: 0.05, color: P.coral    },
-] as const;
-
-function OverrunHistogram({ active }: { active: boolean }) {
-  const W = 300, INNER_H = 118, PAD_B = 22, TOTAL_H = INNER_H + PAD_B;
-  const GAP = 3;
-  const barW = (W - GAP * (HIST_DATA.length - 1)) / HIST_DATA.length;
-
+// ── Archive-status notice ─────────────────────────────────────────────────────
+function Notice({
+  tone, label, children,
+}: { tone: 'light' | 'dark'; label: string; children: string }) {
+  const isDark = tone === 'dark';
   return (
-    <svg viewBox={`0 0 ${W} ${TOTAL_H}`} width="100%" aria-hidden fill="none"
-      style={{ display: 'block', maxWidth: '340px' }}>
-      {/* Grid lines */}
-      {[0.25, 0.5, 0.75, 1].map(pct => (
-        <line key={pct}
-          x1={0} y1={INNER_H * (1 - pct)} x2={W} y2={INNER_H * (1 - pct)}
-          stroke={P.ruleD} strokeWidth="0.6" />
-      ))}
-      {/* Bars */}
-      {HIST_DATA.map((bar, i) => {
-        const x = i * (barW + GAP);
-        return (
-          <g key={i}>
-            <rect x={x} y={0} width={barW} height={INNER_H}
-              fill={bar.color} opacity={0.9}
-              style={{
-                transformBox: 'fill-box',
-                transformOrigin: 'bottom',
-                transform: `scaleY(${active ? bar.h : 0.01})`,
-                transition: `transform 1.05s cubic-bezier(0.16,1,0.3,1) ${60 + i * 95}ms`,
-              }} />
-            <text x={x + barW / 2} y={TOTAL_H - 5}
-              textAnchor="middle" fill={P.haze}
-              fontSize="5.2" fontFamily="JetBrains Mono, monospace">
-              {bar.label}
-            </text>
-          </g>
-        );
-      })}
-      {/* Baseline */}
-      <line x1={0} y1={INNER_H} x2={W} y2={INNER_H} stroke={P.ruleD} strokeWidth="1" />
-      {/* Y labels */}
-      <text x={2} y={INNER_H * 0 + 9} fill={P.haze} fontSize="5" fontFamily="JetBrains Mono, monospace">HIGH</text>
-      <text x={2} y={INNER_H * 0.5 + 3} fill={P.haze} fontSize="5" fontFamily="JetBrains Mono, monospace">MED</text>
-    </svg>
-  );
-}
-
-// ── Risk spectrum bar ─────────────────────────────────────────────────────────
-const SPECTRUM = [
-  { color: P.forest,  label: 'MANAGED'  },
-  { color: P.tealDp,  label: 'BASELINE' },
-  { color: P.teal,    label: 'MONITOR'  },
-  { color: P.blush,   label: 'ELEVATED' },
-  { color: P.coral,   label: 'CRITICAL' },
-] as const;
-
-function SpectrumBar({ active }: { active: boolean }) {
-  return (
-    <div aria-hidden className="relative flex h-[8px] gap-[2px] overflow-hidden">
-      {SPECTRUM.map((s, i) => (
-        <div key={s.label}
-          style={{
-            flex: 1,
-            backgroundColor: s.color,
-            opacity: active ? 0.95 : 0,
-            transition: `opacity 0.55s cubic-bezier(0.16,1,0.3,1) ${i * 80}ms`,
-          }} />
-      ))}
-      {/* Light sweep — loops after initial reveal, signals risk direction */}
-      {active && (
-        <div style={{
-          position: 'absolute',
-          top: 0, bottom: 0,
-          width: '25%',
-          background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.22) 50%, transparent 100%)',
-          animation: 'spectrumScan 4s linear 1.8s infinite',
-          pointerEvents: 'none',
-        }} />
-      )}
+    <div
+      style={{
+        border: `1px solid ${isDark ? P.ruleD : P.ruleL}`,
+        padding: '18px 22px',
+      }}
+    >
+      <p className="font-mono uppercase"
+        style={{ fontSize: '9px', letterSpacing: '0.16em', color: isDark ? P.teal : P.forest, marginBottom: '8px' }}>
+        {label}
+      </p>
+      <p className="font-sans"
+        style={{ fontSize: '14px', lineHeight: 1.65, color: isDark ? P.slate : P.ink3, maxWidth: '68ch' }}>
+        {children}
+      </p>
     </div>
   );
 }
@@ -223,27 +157,28 @@ function HeroSection() {
   const { ref, inView } = useInView<HTMLElement>({ threshold: 0.05 });
 
   const STREAMS = [
-    { id: 'S·01', color: P.teal,  name: 'Peer-Reviewed Research', sub: 'ASCE JCEM · Annual' },
-    { id: 'S·02', color: P.sky,   name: 'Industry Writing',       sub: 'Bylined · Regional reach' },
-    { id: 'S·03', color: P.coral, name: 'NJ/NY Risk Index',       sub: 'Inaugural Edition In Development' },
+    { id: 'S·01', color: P.teal,  name: 'Peer-Reviewed Academic Publication', sub: 'First Submission · Year 2' },
+    { id: 'S·02', color: P.sky,   name: 'Industry-Press Publication',         sub: '2-4 Articles Per Year' },
+    { id: 'S·03', color: P.blush, name: 'Insights and Commentary',            sub: 'Continuous · As Warranted' },
+    { id: 'S·04', color: P.coral, name: 'NJ/NY Construction Risk Index',      sub: 'Forthcoming · Year 3' },
   ] as const;
 
   return (
     <section ref={ref} aria-labelledby="insights-h1"
-      className="relative bg-navy text-snow overflow-hidden"
-      style={{ paddingTop: '72px', paddingBottom: '48px' }}>
-      <div className="absolute inset-0 bg-grid-dark pointer-events-none" aria-hidden />
+      className="relative bg-canvas text-ink overflow-hidden"
+      style={{ paddingTop: '52px', paddingBottom: '36px' }}>
+      <div className="absolute inset-0 bg-grid-light pointer-events-none" aria-hidden />
 
       <div className="relative max-w-site mx-auto px-6 md:px-12 lg:px-16">
 
         {/* Masthead bar */}
         <div style={{ ...fade(inView, 0), display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
-          className="border-t border-b border-rule-d py-3 mb-14">
-          <span className="font-mono uppercase text-haze" style={{ fontSize: '9px', letterSpacing: '0.16em' }}>
+          className="mb-14">
+          <span className="font-mono uppercase font-semibold text-forest" style={{ fontSize: '9.5px', letterSpacing: '0.16em' }}>
             Research &amp; Publishing
           </span>
-          <span className="font-mono uppercase text-haze" style={{ fontSize: '9px', letterSpacing: '0.16em' }}>
-            Travo · Three Streams · Continuous Output
+          <span className="font-mono uppercase font-semibold text-ink-3" style={{ fontSize: '9px', letterSpacing: '0.16em' }}>
+            Travo · Four Streams · Continuous Output
           </span>
         </div>
 
@@ -252,27 +187,29 @@ function HeroSection() {
           <h1 id="insights-h1"
             className="font-display font-extrabold tracking-display"
             style={{ fontSize: 'clamp(2.6rem, 5.6vw, 5.2rem)', lineHeight: 0.92 }}>
-            <span className="block text-snow" style={fade(inView, 60)}>
-              Publishing is a service line,
+            <span className="block text-ink" style={fade(inView, 60)}>
+              Publication is operational,
             </span>
-            <span className="block" style={{ ...fade(inView, 140), color: P.teal }}>
-              not a marketing function.
+            <span className="block" style={{ ...fade(inView, 140), color: P.forest }}>
+              not optional.
             </span>
           </h1>
 
-          <p className="mt-7 font-sans text-slate leading-[1.78] pretty"
-            style={{ ...fade(inView, 240), fontSize: '17px', maxWidth: '60ch' }}>
-            Three streams of research and publishing operate continuously at Travo.
-            Together they hold the firm to the standard it sells, and build the
-            regional evidence base that grounds every engagement.
+          <p className="mt-7 font-sans text-ink-2 leading-[1.78] pretty"
+            style={{ ...fade(inView, 240), fontSize: '17px', maxWidth: '62ch' }}>
+            TRAVO publishes on a defined cadence regardless of how busy engagement
+            work becomes. Publication is not marketing. It is the mechanism by which
+            the firm’s standards-setting position is built and maintained, and the
+            means by which its methodology remains defensible under formal scrutiny.
+            Four streams operate continuously.
           </p>
         </div>
 
         {/* Stream summary strip */}
-        <div className="mt-16 border-t border-rule-d" style={fade(inView, 320)}>
-          <div className="grid sm:grid-cols-3 divide-y divide-rule-d sm:divide-y-0 sm:divide-x sm:divide-rule-d">
+        <div className="mt-16 border-t border-rule-l" style={fade(inView, 320)}>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 divide-y divide-rule-l sm:divide-y-0 sm:divide-x sm:divide-rule-l">
             {STREAMS.map((s, i) => (
-              <div key={s.id} className="py-6" style={{ ...fade(inView, 360 + i * 70), paddingLeft: i > 0 ? '28px' : undefined }}>
+              <div key={s.id} className="py-6" style={{ ...fade(inView, 360 + i * 70), paddingLeft: i > 0 ? '24px' : undefined }}>
                 <div className="flex items-center gap-2 mb-2.5">
                   <span
                     style={{
@@ -283,17 +220,17 @@ function HeroSection() {
                         : 'none',
                     }}
                     aria-hidden />
-                  <span className="font-mono uppercase"
-                    style={{ fontSize: '9px', letterSpacing: '0.18em', color: s.color }}>
+                  <span className="font-mono uppercase text-forest"
+                    style={{ fontSize: '9px', letterSpacing: '0.18em' }}>
                     {s.id}
                   </span>
                 </div>
-                <p className="font-display font-bold text-snow"
-                  style={{ fontSize: '16px', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
+                <p className="font-display font-bold text-ink"
+                  style={{ fontSize: '15px', letterSpacing: '-0.01em', lineHeight: 1.22 }}>
                   {s.name}
                 </p>
-                <p className="font-mono uppercase text-haze mt-1"
-                  style={{ fontSize: '8px', letterSpacing: '0.12em' }}>
+                <p className="font-mono uppercase font-semibold text-forest mt-1"
+                  style={{ fontSize: '9px', letterSpacing: '0.12em' }}>
                   {s.sub}
                 </p>
               </div>
@@ -306,179 +243,202 @@ function HeroSection() {
   );
 }
 
-// ── § 2 — Stream 01 & 02 ──────────────────────────────────────────────────────
-function StreamsSection() {
+// ── § 2 — Four Streams ────────────────────────────────────────────────────────
+type StreamCard = {
+  n: string;
+  status: string;
+  statusColor: string;
+  title: string;
+  cadence: string;
+  refBlock?: { label: string; lines: readonly string[] };
+  subject?: string;
+  purpose: string;
+  link?: { label: string; href: string };
+};
+
+const STREAM_CARDS: readonly StreamCard[] = [
+  {
+    n: '01',
+    status: 'Planned publication',
+    statusColor: P.forest,
+    title: 'Peer-Reviewed Academic Publication',
+    cadence: 'First submission targeted by the end of the firm’s second year. One peer-reviewed article per year thereafter.',
+    refBlock: {
+      label: 'Target journals',
+      lines: [
+        'Journal of Construction Engineering and Management',
+        'ASCE Journal of Management in Engineering, or equivalent',
+      ],
+    },
+    subject: 'Topics drawn from anonymized engagement data and supervised graduate research.',
+    purpose: 'Defensibility of the firm’s methodology if challenged in formal proceedings, and reinforcement of the academic credentialing that anchors the practice.',
+  },
+  {
+    n: '02',
+    status: 'Planned publication',
+    statusColor: P.forest,
+    title: 'Industry-Press Publication',
+    cadence: 'Two to three articles per year in the first two years, aimed first at the surety, lending, and construction-law audience. Three to four per year thereafter.',
+    refBlock: {
+      label: 'Target outlets',
+      lines: [
+        'Engineering News-Record · Construction Executive',
+        'AACE Cost Engineering · ABA Construction Lawyer · or NJBIZ',
+      ],
+    },
+    subject: 'Topics drawn from current engagement themes and the regional benchmark dataset, always bylined with the principal’s full credentials.',
+    purpose: 'Market presence among buyers and referral sources.',
+  },
+  {
+    n: '03',
+    status: 'Publication program',
+    statusColor: P.forest,
+    title: 'Insights and Commentary',
+    cadence: 'A continuous stream of shorter-form, self-published commentary on TRAVO’s own channels, this website, professional networks, and a periodic newsletter, published as observations warrant rather than on a fixed schedule.',
+    subject: 'The principal’s operating experience, anonymized lessons from completed projects, observations arising from ongoing research, and commentary on industry developments affecting the New Jersey and New York capital projects market. This stream is also the home for the principal’s existing body of written work.',
+    purpose: 'A continuous published presence between formal publications, demonstrated active thinking for prospects and referral sources, and, over time, a searchable archive of expertise that compounds the firm’s authority. As with all TRAVO publishing, insights reinforce the firm’s risk-methodology focus rather than drifting into generic industry commentary.',
+  },
+  {
+    n: '04',
+    status: 'Forthcoming',
+    statusColor: P.forest,
+    title: 'The NJ/NY Construction Risk Index',
+    cadence: 'Annual benchmark report planned to begin in the firm’s third year, built from public records, partner-contributed data, and the firm’s own engagement base. A Pre-Index Baseline Briefing, built entirely from public records, publishes within the firm’s first year.',
+    purpose: 'The standards-setting artifact of the practice: the published regional benchmark against which TRAVO’s own analyses are continuously validated.',
+    link: { label: 'About the Risk Index', href: '/risk-index' },
+  },
+] as const;
+
+function FourStreamsSection() {
   const { ref, inView } = useInView<HTMLElement>({ threshold: 0.04 });
 
-  const S01_META = [
-    { label: 'Frequency',  value: 'At least one article per year' },
-    { label: 'Data basis', value: 'Anonymized engagement data + supervised graduate research' },
-    { label: 'Purpose',    value: 'Methodology defensibility in formal proceedings' },
-  ] as const;
-
-  const S02_META = [
-    { label: 'Medium',    value: 'Construction and construction-law press' },
-    { label: 'Frequency', value: 'Several articles per year' },
-    { label: 'Byline',    value: 'Principal full credentials, always named' },
-    { label: 'Audience',  value: 'Buyers and referral sources in the NJ/NY regional market' },
-  ] as const;
-
   return (
-    <section ref={ref} className="bg-canvas" style={{ paddingTop: '96px', paddingBottom: '96px' }}>
+    <section ref={ref} className="bg-canvas border-t border-rule-l" style={{ paddingTop: '48px', paddingBottom: '56px' }}>
       <div className="max-w-site mx-auto px-6 md:px-12 lg:px-16">
 
         {/* Section header row */}
-        <div style={{ ...fade(inView, 0), display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${P.ruleL}`, paddingBottom: '16px', marginBottom: '72px' }}>
-          <span className="font-mono uppercase" style={{ fontSize: '9px', letterSpacing: '0.16em', color: P.ink3 }}>
-            The Research Archive
+        <div style={{ ...fade(inView, 0), display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${P.ruleL}`, paddingBottom: '16px', marginBottom: '20px' }}>
+          <span className="font-mono uppercase font-semibold" style={{ fontSize: '11.5px', letterSpacing: '0.14em', color: P.forest }}>
+            The Publishing Program
           </span>
-          <span className="font-mono uppercase" style={{ fontSize: '9px', letterSpacing: '0.16em', color: P.ink3 }}>
-            Streams 01 · 02
+          <span className="font-mono uppercase font-semibold" style={{ fontSize: '10px', letterSpacing: '0.14em', color: P.ink3 }}>
+            Streams 01 · 02 · 03 · 04
           </span>
         </div>
 
-        {/* ── Stream 01 ─────────────────────────────────────────── */}
-        <div className="grid md:grid-cols-[180px_1fr] gap-8 md:gap-16 items-start"
-          style={fade(inView, 60)}>
+        <h2 className="font-display font-extrabold tracking-display balance"
+          style={{ ...fade(inView, 40), fontSize: 'clamp(2rem, 3.8vw, 3.4rem)', lineHeight: 0.97, color: P.ink2, maxWidth: '18ch', marginBottom: '52px' }}>
+          Four streams operate continuously.
+        </h2>
 
-          {/* Giant number as architectural element — forest at 25% is visible on canvas */}
-          <div className="relative hidden md:block select-none" aria-hidden>
-            <div className="font-display font-extrabold leading-none tracking-display"
-              style={{ fontSize: 'clamp(5rem, 10vw, 8rem)', color: P.forest, opacity: 0.25, lineHeight: 0.85 }}>
-              01
-            </div>
-            <span className="absolute top-0 left-0 font-mono uppercase"
-              style={{ fontSize: '9px', letterSpacing: '0.18em', color: P.forest, paddingTop: '4px' }}>
-              Stream 01
-            </span>
-          </div>
+        {/* Card grid */}
+        <div className="grid gap-px lg:grid-cols-2 bg-rule-l border border-rule-l"
+          style={fade(inView, 100)}>
+          {STREAM_CARDS.map((card) => (
+            <div key={card.n} className="flex flex-col bg-canvas" style={{ padding: '32px' }}>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="font-display font-extrabold" style={{ fontSize: '13px', color: P.ink3 }}>
+                  {card.n}
+                </span>
+                <span className="font-mono uppercase font-semibold" style={{ fontSize: '9.5px', letterSpacing: '0.16em', color: card.statusColor }}>
+                  {card.status}
+                </span>
+              </div>
 
-          {/* Content */}
-          <div>
-            {/* Mobile stream label */}
-            <span className="md:hidden font-mono uppercase"
-              style={{ fontSize: '9px', letterSpacing: '0.18em', color: P.forest, display: 'block', marginBottom: '10px' }}>
-              Stream 01
-            </span>
+              <h3 className="font-display font-extrabold tracking-display"
+                style={{ fontSize: 'clamp(1.3rem, 1.9vw, 1.6rem)', lineHeight: 1.05, color: P.ink2, marginBottom: '14px' }}>
+                {card.title}
+              </h3>
 
-            <h2 className="font-display font-extrabold tracking-display balance"
-              style={{ fontSize: 'clamp(1.9rem, 3.4vw, 3rem)', lineHeight: 0.96, color: P.ink2 }}>
-              Peer-Reviewed Research
-            </h2>
-
-            {/* Citation block */}
-            <div style={{ marginTop: '24px', border: `1px solid ${P.ruleL}`, padding: '18px 22px', backgroundColor: 'rgba(113,210,207,0.04)' }}>
-              <p className="font-mono uppercase"
-                style={{ fontSize: '8px', letterSpacing: '0.16em', color: P.forest, marginBottom: '10px' }}>
-                Target Journals
+              <p className="font-sans leading-[1.7]" style={{ fontSize: '14.5px', color: P.ink3, maxWidth: '52ch' }}>
+                {card.cadence}
               </p>
-              <p className="font-sans"
-                style={{ fontSize: '14.5px', color: P.ink2, lineHeight: 1.6 }}>
-                ASCE Journal of Construction Engineering and Management
-              </p>
-              <p className="font-sans"
-                style={{ fontSize: '14.5px', color: P.ink3, lineHeight: 1.6 }}>
-                Journal of Management in Engineering
-              </p>
-            </div>
 
-            <p className="font-sans leading-[1.78] pretty"
-              style={{ marginTop: '22px', fontSize: '16px', color: P.ink3, maxWidth: '62ch' }}>
-              At least one peer-reviewed article each year, drawn from anonymized
-              engagement data and supervised graduate research. Peer review is what
-              makes Travo's methodology defensible if it is ever challenged in formal
-              proceedings.
-            </p>
+              {card.refBlock && (
+                <div style={{ marginTop: '18px', border: `1px solid ${P.ruleL}`, padding: '14px 18px', backgroundColor: 'rgba(113,210,207,0.04)' }}>
+                  <p className="font-mono uppercase font-semibold" style={{ fontSize: '9.5px', letterSpacing: '0.16em', color: P.forest, marginBottom: '8px' }}>
+                    {card.refBlock.label}
+                  </p>
+                  {card.refBlock.lines.map(line => (
+                    <p key={line} className="font-sans" style={{ fontSize: '13.5px', color: P.ink3, lineHeight: 1.55 }}>
+                      {line}
+                    </p>
+                  ))}
+                </div>
+              )}
 
-            {/* Metadata */}
-            <div style={{ marginTop: '22px', borderTop: `1px solid ${P.ruleL}` }}>
-              {S01_META.map(({ label, value }) => (
-                <div key={label} style={{ display: 'flex', gap: '32px', padding: '11px 0', borderBottom: `1px solid ${P.ruleL}` }}>
-                  <span className="font-mono uppercase"
-                    style={{ fontSize: '9px', letterSpacing: '0.14em', color: P.forest, minWidth: '100px', flexShrink: 0 }}>
-                    {label}
+              <div style={{ marginTop: '18px', borderTop: `1px solid ${P.ruleL}` }}>
+                {card.subject && (
+                  <div style={{ padding: '11px 0', borderBottom: `1px solid ${P.ruleL}` }}>
+                    <span className="font-mono uppercase font-semibold block" style={{ fontSize: '9.5px', letterSpacing: '0.14em', color: P.forest, marginBottom: '4px' }}>
+                      Subject matter
+                    </span>
+                    <span className="font-sans" style={{ fontSize: '13.5px', color: P.ink3, lineHeight: 1.55 }}>
+                      {card.subject}
+                    </span>
+                  </div>
+                )}
+                <div style={{ padding: '11px 0' }}>
+                  <span className="font-mono uppercase font-semibold block" style={{ fontSize: '9.5px', letterSpacing: '0.14em', color: P.forest, marginBottom: '4px' }}>
+                    Purpose
                   </span>
-                  <span className="font-sans"
-                    style={{ fontSize: '14px', color: P.ink3 }}>
-                    {value}
+                  <span className="font-sans" style={{ fontSize: '13.5px', color: P.ink3, lineHeight: 1.55 }}>
+                    {card.purpose}
                   </span>
                 </div>
-              ))}
+              </div>
+
+              {card.link && (
+                <div style={{ marginTop: '18px' }}>
+                  <a href={card.link.href}
+                    className="font-mono uppercase inline-flex items-center gap-2"
+                    style={{ fontSize: '10.5px', letterSpacing: '0.14em', color: P.forest, textDecoration: 'none', borderBottom: `1px solid ${P.forest}`, paddingBottom: '3px' }}>
+                    {card.link.label}
+                    <svg width="14" height="9" viewBox="0 0 16 10" fill="none" aria-hidden>
+                      <path d="M0 5h14M10 1l4 4-4 4" stroke={P.forest} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </a>
+                </div>
+              )}
             </div>
-          </div>
+          ))}
         </div>
 
-        {/* ── Divider ───────────────────────────────────────────── */}
-        <div style={{ margin: '72px 0', borderTop: `1px solid ${P.ruleL}` }} />
+        {/* Archive status notice */}
+        <div style={{ ...fade(inView, 160), marginTop: '24px' }}>
+          <Notice tone="light" label="Archive status">
+            No articles are listed here yet. Publications will appear on this page as they are released; titles, dates, and links will be added only when work is actually published. Streams above are labeled planned or forthcoming accordingly.
+          </Notice>
+        </div>
 
-        {/* ── Stream 02 ─────────────────────────────────────────── */}
-        <div className="grid md:grid-cols-[1fr_180px] gap-8 md:gap-16 items-start"
-          style={fade(inView, 160)}>
-
-          {/* Content */}
+        {/* Sub-block: the research role */}
+        <div className="grid md:grid-cols-[1fr_auto] gap-10 md:gap-16 items-start"
+          style={{ ...fade(inView, 220), marginTop: '64px', paddingTop: '48px', borderTop: `1px solid ${P.ruleL}` }}>
           <div>
-            {/* Mobile stream label */}
-            <span className="md:hidden font-mono uppercase"
-              style={{ fontSize: '9px', letterSpacing: '0.18em', color: P.forest, display: 'block', marginBottom: '10px' }}>
-              Stream 02
-            </span>
-
-            <h2 className="font-display font-extrabold tracking-display balance"
-              style={{ fontSize: 'clamp(1.9rem, 3.4vw, 3rem)', lineHeight: 0.96, color: P.ink2 }}>
-              Industry Writing
-            </h2>
-
-            {/* Byline block */}
-            <div style={{ marginTop: '24px', border: `1px solid ${P.ruleL}`, padding: '18px 22px', backgroundColor: 'rgba(197,236,254,0.09)' }}>
-              <p className="font-mono uppercase"
-                style={{ fontSize: '8px', letterSpacing: '0.16em', color: P.ink3, marginBottom: '10px' }}>
-                Byline
-              </p>
-              <p className="font-sans"
-                style={{ fontSize: '14.5px', color: P.ink2, lineHeight: 1.6 }}>
-                Dr. Karim S. Karam · Travo Risk Advisory
-              </p>
-              <p className="font-sans"
-                style={{ fontSize: '14.5px', color: P.ink3, lineHeight: 1.6 }}>
-                Published in the construction and construction-law press
-              </p>
-            </div>
-
+            <h3 className="font-display font-extrabold tracking-display"
+              style={{ fontSize: 'clamp(1.4rem, 2.2vw, 1.9rem)', lineHeight: 1.05, color: P.ink2, marginBottom: '16px' }}>
+              The research role
+            </h3>
             <p className="font-sans leading-[1.78] pretty"
-              style={{ marginTop: '22px', fontSize: '16px', color: P.ink3, maxWidth: '62ch' }}>
-              Several articles each year in the construction and construction-law press,
-              drawn from current engagement themes and the regional dataset, and always
-              bylined with the principal's full credentials. The purpose is presence
-              among the buyers and referral sources who shape the regional market.
+              style={{ fontSize: '15.5px', color: P.ink3, maxWidth: '62ch' }}>
+              Research is a working part of the practice, not an adjacent activity.
+              Topics originate in anonymized engagement data and supervised graduate
+              research conducted through the principal’s academic platform at Stevens
+              Institute of Technology, and findings feed back into engagement
+              methodology. The objective is a body of published work, academic,
+              industry, and benchmark, that defines how quantitative construction risk
+              analysis is measured in the NJ/NY region.
             </p>
-
-            {/* Metadata */}
-            <div style={{ marginTop: '22px', borderTop: `1px solid ${P.ruleL}` }}>
-              {S02_META.map(({ label, value }) => (
-                <div key={label} style={{ display: 'flex', gap: '32px', padding: '11px 0', borderBottom: `1px solid ${P.ruleL}` }}>
-                  <span className="font-mono uppercase"
-                    style={{ fontSize: '9px', letterSpacing: '0.14em', color: P.ink3, minWidth: '100px', flexShrink: 0 }}>
-                    {label}
-                  </span>
-                  <span className="font-sans"
-                    style={{ fontSize: '14px', color: P.ink3 }}>
-                    {value}
-                  </span>
-                </div>
-              ))}
+            <div style={{ marginTop: '22px' }}>
+              <a href="/research"
+                className="font-mono uppercase inline-flex items-center gap-2"
+                style={{ fontSize: '11px', letterSpacing: '0.14em', color: P.forest, textDecoration: 'none', borderBottom: `1px solid ${P.forest}`, paddingBottom: '4px' }}>
+                Explore the research program
+                <svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden>
+                  <path d="M0 5h14M10 1l4 4-4 4" stroke={P.forest} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
             </div>
-          </div>
-
-          {/* Giant number — right column, forest at lower opacity creates visual depth difference from 01 */}
-          <div className="relative hidden md:block select-none" aria-hidden>
-            <div className="font-display font-extrabold leading-none tracking-display text-right"
-              style={{ fontSize: 'clamp(5rem, 10vw, 8rem)', color: P.forest, opacity: 0.14, lineHeight: 0.85 }}>
-              02
-            </div>
-            <span className="absolute top-0 right-0 font-mono uppercase text-right"
-              style={{ fontSize: '9px', letterSpacing: '0.18em', color: P.forest, paddingTop: '4px' }}>
-              Stream 02
-            </span>
           </div>
         </div>
 
@@ -487,165 +447,101 @@ function StreamsSection() {
   );
 }
 
-// ── § 3 — Risk Index Feature (Stream 03) ─────────────────────────────────────
-function RiskIndexSection() {
+// ── § 3 — Insights & Commentary ───────────────────────────────────────────────
+const THEME_CARDS = [
+  {
+    title: 'Why heat maps hide the answer',
+    body: 'What a qualitative five-by-five actually communicates, what it conceals, and what a probability distribution shows in its place.',
+  },
+  {
+    title: 'Contingency is a decision, not a habit',
+    body: 'Ten percent is a convention, not a derivation. What it costs an owner to hold capital against risk the analysis does not support, and to hold too little.',
+  },
+  {
+    title: 'Reading a claim before it is filed',
+    body: 'The leading indicators that precede most disputes, and the documentation posture that determines the outcome once one emerges.',
+  },
+] as const;
+
+function CommentarySection() {
   const { ref, inView } = useInView<HTMLElement>({ threshold: 0.06 });
 
-  const INDEX_META = [
-    { label: 'Publication',       value: 'Annual benchmark, with quarterly updates' },
-    { label: 'Segmentation',      value: 'Project type · Asset class · Delivery method' },
-    { label: 'Geographic scope',  value: 'New Jersey · New York Metropolitan Region' },
-    { label: 'Use case',          value: 'Owner benchmarking · Contractor calibration' },
-  ] as const;
-
   return (
-    <section ref={ref} aria-labelledby="risk-index-h2"
-      className="relative bg-navy text-snow overflow-hidden"
-      style={{ paddingTop: '0', paddingBottom: '0' }}>
-      <div className="absolute inset-0 bg-grid-dark pointer-events-none" aria-hidden />
-
-      {/* Full-width spectrum bar flush at top of section */}
-      <div style={fade(inView, 0)}>
-        <SpectrumBar active={inView} />
-      </div>
+    <section ref={ref} aria-labelledby="commentary-h2"
+      className="relative bg-canvas text-ink overflow-hidden border-t border-rule-l"
+      style={{ paddingTop: '44px', paddingBottom: '76px' }}>
 
       <div className="relative max-w-site mx-auto px-6 md:px-12 lg:px-16">
 
-        {/* Masthead bar */}
-        <div style={{ ...fade(inView, 120), display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '36px', paddingBottom: '16px', borderBottom: `1px solid ${P.ruleD}` }}>
-          <span className="font-mono uppercase" style={{ fontSize: '9px', letterSpacing: '0.16em', color: P.coral }}>
-            Stream 03
+        {/* Section header row */}
+        <div style={{ ...fade(inView, 0), display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${P.ruleL}`, paddingBottom: '16px', marginBottom: '52px' }}>
+          <span className="font-mono uppercase font-semibold" style={{ fontSize: '11.5px', letterSpacing: '0.14em', color: P.forest }}>
+            Insights &amp; Commentary
           </span>
-          <span className="font-mono uppercase" style={{ fontSize: '9px', letterSpacing: '0.16em', color: P.haze }}>
-            Inaugural Edition In Development
+          <span className="font-mono uppercase font-semibold text-ink-3" style={{ fontSize: '10px', letterSpacing: '0.14em' }}>
+            Stream 03
           </span>
         </div>
 
-        {/* Main content grid */}
-        <div className="grid md:grid-cols-[1fr_320px] gap-12 md:gap-20 items-start"
-          style={{ paddingTop: '56px', paddingBottom: '80px' }}>
-
-          {/* Left: heading + copy + meta */}
+        <div className="grid md:grid-cols-[1fr_280px] gap-12 md:gap-16 items-start">
           <div>
-            <h2 id="risk-index-h2"
+            <h2 id="commentary-h2"
               className="font-display font-extrabold tracking-display balance"
-              style={{ ...fade(inView, 180), fontSize: 'clamp(2.4rem, 4.8vw, 4.6rem)', lineHeight: 0.93 }}>
-              <span className="text-snow block">The NJ/NY</span>
-              <span className="block" style={{ color: P.coral }}>Construction Risk Index</span>
+              style={{ ...fade(inView, 60), fontSize: 'clamp(2rem, 3.8vw, 3.4rem)', lineHeight: 0.97, color: P.ink2, maxWidth: '18ch' }}>
+              Shorter-form writing, published as observations warrant.
             </h2>
 
             <p className="font-sans leading-[1.78] pretty"
-              style={{ ...fade(inView, 260), marginTop: '24px', fontSize: '17px', color: P.slate, maxWidth: '58ch' }}>
-              Travo's flagship research initiative: an annual benchmark on regional
-              construction outcomes: schedule slippage rates, cost-overrun distributions,
-              contingency adequacy, and claim-emergence patterns, segmented by project
-              type and asset class.
+              style={{ ...fade(inView, 140), marginTop: '24px', fontSize: '16px', color: P.ink3, maxWidth: '62ch' }}>
+              Between formal publications, TRAVO publishes commentary drawn from the
+              principal’s operating experience, anonymized lessons from completed
+              projects, observations arising from ongoing research, and developments
+              affecting the NJ/NY capital-projects market. Over time this becomes a
+              searchable archive of expertise. Commentary reinforces the firm’s
+              risk-methodology focus rather than drifting into generic industry
+              commentary.
             </p>
-
-            <p className="font-sans leading-[1.78] pretty"
-              style={{ ...fade(inView, 300), marginTop: '16px', fontSize: '17px', color: P.slate, maxWidth: '58ch' }}>
-              The Index gives owners and contractors an empirical reference calibrated
-              to the market they actually build in, rather than national averages.
-              Travo's ambition: to make this the most-cited regional benchmark for
-              construction risk in the New Jersey and New York market.
-            </p>
-
-            {/* Metadata grid */}
-            <div className="grid sm:grid-cols-2 gap-x-10 gap-y-5"
-              style={{ marginTop: '36px', paddingTop: '28px', borderTop: `1px solid ${P.ruleD}` }}>
-              {INDEX_META.map(({ label, value }, i) => (
-                <div key={label} style={fade(inView, 360 + i * 50)}>
-                  <p className="font-mono uppercase text-haze"
-                    style={{ fontSize: '9px', letterSpacing: '0.16em' }}>
-                    {label}
-                  </p>
-                  <p className="font-sans text-snow mt-1"
-                    style={{ fontSize: '14.5px', lineHeight: 1.4 }}>
-                    {value}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA */}
-            <div style={{ ...fade(inView, 520), marginTop: '36px' }}>
-              <a href="/contact"
-                className="font-mono uppercase inline-block"
-                style={{
-                  fontSize: '11px', letterSpacing: '0.16em',
-                  color: P.coral, border: `1px solid ${P.coral}`,
-                  padding: '14px 28px',
-                  transition: 'background-color 0.2s, color 0.2s',
-                }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLAnchorElement).style.backgroundColor = P.coral;
-                  (e.currentTarget as HTMLAnchorElement).style.color = P.navy;
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLAnchorElement).style.backgroundColor = 'transparent';
-                  (e.currentTarget as HTMLAnchorElement).style.color = P.coral;
-                }}>
-                Register Interest in the Index
-              </a>
-            </div>
           </div>
 
-          {/* Right: histogram visualization */}
-          <div style={{ ...fade(inView, 280), paddingTop: '8px' }}>
-            {/* Viz header */}
-            <div style={{ marginBottom: '14px' }}>
-              <p className="font-mono uppercase text-haze"
-                style={{ fontSize: '8px', letterSpacing: '0.14em', marginBottom: '4px' }}>
-                Cost overrun distribution · NJ/NY region
-              </p>
-              <p className="font-mono" style={{ fontSize: '7px', letterSpacing: '0.10em', color: P.haze, opacity: 0.6 }}>
-                Representative shape · Inaugural data in development
-              </p>
-            </div>
-
-            <OverrunHistogram active={inView} />
-
-            {/* Spectrum legend below chart */}
-            <div style={{ marginTop: '16px', display: 'flex', gap: '8px', alignItems: 'center' }}>
-              {SPECTRUM.map(s => (
-                <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <div style={{ width: 6, height: 6, backgroundColor: s.color, flexShrink: 0 }} aria-hidden />
-                  <span className="font-mono uppercase"
-                    style={{ fontSize: '6px', letterSpacing: '0.12em', color: P.haze }}>
-                    {s.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Second viz: risk fingerprint spider chart */}
-            <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: `1px solid ${P.ruleD}` }}>
-              <p className="font-mono uppercase text-haze"
-                style={{ fontSize: '8px', letterSpacing: '0.14em', marginBottom: '4px' }}>
-                Risk fingerprint · 7 dimensions
-              </p>
-              <p className="font-mono" style={{ fontSize: '7px', letterSpacing: '0.10em', color: P.haze, opacity: 0.6, marginBottom: '14px' }}>
-                Illustrative profile · Multi-dimensional assessment
-              </p>
-              <RiskFingerprint active={inView} />
-            </div>
-
-            {/* Large "VOL. I" annotation — pulses slowly to signal work in progress */}
-            <div style={{ ...fade(inView, 400), marginTop: '24px', paddingTop: '20px', borderTop: `1px solid ${P.ruleD}` }}>
-              <p className="font-display font-extrabold text-snow"
-                style={{
-                  fontSize: 'clamp(2.2rem, 4vw, 3.4rem)', lineHeight: 0.9, letterSpacing: '-0.025em',
-                  animation: inView ? 'volPulse 5s ease-in-out 1.4s infinite' : 'none',
-                }}
-                aria-hidden>
-                VOL. I
-              </p>
-              <p className="font-mono uppercase text-haze"
-                style={{ fontSize: '8px', letterSpacing: '0.14em', marginTop: '10px' }}>
-                NJ/NY Construction Risk Index
-              </p>
-            </div>
+          {/* Illustrative accent: risk fingerprint */}
+          <div style={{ ...fade(inView, 220), paddingTop: '4px' }}>
+            <p className="font-mono uppercase font-semibold text-forest"
+              style={{ fontSize: '9.5px', letterSpacing: '0.14em', marginBottom: '4px' }}>
+              Risk fingerprint · 7 dimensions
+            </p>
+            <p className="font-mono font-medium" style={{ fontSize: '8px', letterSpacing: '0.10em', color: P.ink3, marginBottom: '10px' }}>
+              Illustrative profile, not published data
+            </p>
+            <RiskFingerprint active={inView} />
           </div>
+        </div>
+
+        {/* Recurring-theme cards */}
+        <div className="grid sm:grid-cols-3 gap-[1px] bg-rule-l"
+          style={{ ...fade(inView, 240), marginTop: '56px' }}>
+          {THEME_CARDS.map(theme => (
+            <div key={theme.title} className="bg-canvas p-6 flex flex-col gap-3 hover:bg-canvas-1 transition-colors duration-200">
+              <span className="font-mono uppercase text-forest" style={{ fontSize: '8px', letterSpacing: '0.16em' }}>
+                Recurring theme
+              </span>
+              <h3 className="font-display font-extrabold tracking-display"
+                style={{ fontSize: 'clamp(1.05rem, 1.5vw, 1.25rem)', lineHeight: 1.15, color: P.ink2 }}>
+                {theme.title}
+              </h3>
+              <p className="font-sans leading-[1.6]" style={{ fontSize: '13.5px', color: P.ink3 }}>
+                {theme.body}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Archive status notice */}
+        <div style={{ ...fade(inView, 320), marginTop: '24px' }}>
+          <Notice tone="light" label="Archive status">
+            The themes above describe the subjects this stream will address. No
+            articles are listed yet. Titles, dates, and links will appear here as
+            pieces are published.
+          </Notice>
         </div>
 
       </div>
@@ -659,14 +555,14 @@ function WhySection() {
 
   return (
     <section ref={ref} className="bg-canvas-1"
-      style={{ paddingTop: '104px', paddingBottom: '104px' }}>
+      style={{ paddingTop: '64px', paddingBottom: '80px' }}>
       <div className="max-w-site mx-auto px-6 md:px-12 lg:px-16">
 
         <div className="grid md:grid-cols-[200px_1fr] gap-10 md:gap-20 items-start">
           {/* Left label */}
           <div style={fade(inView, 0)}>
-            <span className="font-mono uppercase"
-              style={{ fontSize: '9px', letterSpacing: '0.18em', color: P.ink3 }}>
+            <span className="font-mono uppercase font-semibold"
+              style={{ fontSize: '11.5px', letterSpacing: '0.14em', color: P.forest }}>
               Why It Matters
             </span>
           </div>
@@ -682,24 +578,21 @@ function WhySection() {
               <p className="font-sans leading-[1.78] pretty"
                 style={{ marginTop: '28px', fontSize: '17px', color: P.ink3, maxWidth: '60ch' }}>
                 National averages tell an owner in New Jersey very little about the
-                risk their next project actually carries. Travo's research program
+                risk their next project actually carries. Travo’s research program
                 exists to replace that gap with regional evidence, and to keep the
-                firm's own methodology accountable to data rather than habit.
+                firm’s own methodology accountable to data rather than habit.
               </p>
             </div>
 
             <div style={{ ...fade(inView, 260), marginTop: '32px' }}>
               <a href="/methodology"
-                className="font-mono uppercase group"
+                className="font-mono uppercase group hover:opacity-65 focus-visible:opacity-65 transition-opacity duration-200"
                 style={{
                   fontSize: '11px', letterSpacing: '0.14em', color: P.forest,
                   textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '10px',
                   borderBottom: `1px solid ${P.forest}`,
                   paddingBottom: '4px',
-                  transition: 'opacity 0.2s',
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.opacity = '0.65'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.opacity = '1'; }}>
+                }}>
                 See how research informs our methodology
                 <svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden>
                   <path d="M0 5h14M10 1l4 4-4 4" stroke={P.forest} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
@@ -719,8 +612,8 @@ export function InsightsPage() {
   return (
     <>
       <HeroSection />
-      <StreamsSection />
-      <RiskIndexSection />
+      <FourStreamsSection />
+      <CommentarySection />
       <WhySection />
     </>
   );
