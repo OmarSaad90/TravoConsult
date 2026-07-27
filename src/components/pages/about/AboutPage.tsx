@@ -207,17 +207,14 @@ export function AboutPage() {
               >
                 {(
                   [
-                    { text: 'Risk analysis is', accent: false },
-                    { text: 'the method. Value', accent: false },
-                    { text: 'optimization is the result.', accent: true },
+                    'Risk analysis is',
+                    'the method. Value',
+                    'optimization is the result.',
                   ] as const
-                ).map(({ text, accent }, i) => (
+                ).map((text, i) => (
                   <div key={i} style={{ overflow: 'hidden', display: 'block' }}>
                     <span className="block" style={slideUp(heroActive, 85 + i * 85)}>
-                      {accent
-                        ? <span className="text-forest">{text}</span>
-                        : <span className="text-ink">{text}</span>
-                      }
+                      <span className="text-ink">{text}</span>
                     </span>
                   </div>
                 ))}
@@ -264,7 +261,7 @@ export function AboutPage() {
               style={{ fontSize: 'clamp(2.2rem, 4vw, 3.6rem)', textWrap: 'balance' } as CSSProperties}
             >
               <span className="text-ink">A specialty quantitative</span><br />
-              <span className="text-forest">risk advisory.</span>
+              <span className="text-ink">risk advisory.</span>
             </h2>
           </div>
 
@@ -331,7 +328,7 @@ export function AboutPage() {
               style={{ fontSize: 'clamp(2rem, 3.6vw, 3.2rem)', textWrap: 'balance' } as CSSProperties}
             >
               <span className="text-snow">Operating principles,</span><br />
-              <span className="text-teal">not marketing language.</span>
+              <span className="text-snow">not marketing language.</span>
             </h2>
             <p className="mt-5 mx-auto font-sans text-slate leading-[1.72] pretty" style={{ fontSize: '16px' }}>
               Six values define how engagements are accepted, executed, and declined.
@@ -415,7 +412,7 @@ export function AboutPage() {
                 style={{ fontSize: 'clamp(2rem, 3.6vw, 3.2rem)', textWrap: 'balance' } as CSSProperties}
               >
                 <span className="text-ink">Governance is not back-office.</span><br />
-                <span className="text-forest">For this practice, it is the product’s spine.</span>
+                <span className="text-ink">For this practice, it is the product’s spine.</span>
               </h2>
             </div>
             <p className="font-sans text-ink-2 leading-[1.72] pretty" style={{ fontSize: '16px', marginTop: '34px' }}>

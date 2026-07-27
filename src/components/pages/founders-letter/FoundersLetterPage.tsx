@@ -60,8 +60,7 @@ function LetterHero() {
           className="font-display font-extrabold leading-[0.95] tracking-display mt-5"
           style={{ fontSize: 'clamp(2.6rem, 4.8vw, 4.4rem)', ...fade(inView, 130) }}
         >
-          <span className="text-ink">From the </span>
-          <span className="text-forest">principal.</span>
+          <span className="text-ink">From the principal.</span>
         </h1>
       </div>
     </section>
@@ -121,8 +120,7 @@ function LetterBody() {
               className="font-display font-extrabold leading-[0.97] tracking-display balance"
               style={{ fontSize: 'clamp(1.6rem, 2.8vw, 2.4rem)', maxWidth: '22ch' }}
             >
-              <span className="text-ink">Have a decision this letter</span>{' '}
-              <span className="text-forest">speaks to?</span>
+              <span className="text-ink">Have a decision this letter speaks to?</span>
             </h2>
             <div className="flex flex-col sm:flex-row gap-4 mt-7">
               <a

@@ -152,7 +152,7 @@ The palette is a continuous diagnostic spectrum — managing to critical — wit
 
 ### Hierarchy
 - **Display** (800, `clamp(2.6rem, 4.8vw, 4.4rem)`, line-height 0.95): Hero h1 only. Four distinct lines, individually stagger-revealed. This is the one moment in the page where the heading dominates the viewport.
-- **Headline** (800, `clamp(2rem, 3.8vw, 3.4rem)`, line-height 0.97): Section h2 headings throughout. Two-tone pattern: primary ink/snow line followed by accent-colored second line. `text-wrap: balance` applied.
+- **Headline** (800, `clamp(2rem, 3.8vw, 3.4rem)`, line-height 0.97): Section h2 headings throughout. Single solid color (ink on light sections, snow on dark) — no per-word or per-line accent color. `text-wrap: balance` applied.
 - **Large Headline** (800, `clamp(2.4rem, 4.8vw, 4.2rem)`, line-height 0.97): Used for CoreBelief and IndexTeaser — sections with longer headings that need more vertical impact.
 - **Title** (700, `clamp(1.5rem, 2.4vw, 2.1rem)`, line-height 1.0): Sub-section headings, card group titles, differentiator headings (WhyTravo cards).
 - **Card Heading** (700, `clamp(1rem, 1.5vw, 1.25rem)`, line-height 1.1): Service names, bento card headings. Still Barlow Condensed — the family does not switch to Barlow Regular for headings at any level.

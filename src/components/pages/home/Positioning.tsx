@@ -60,9 +60,7 @@ export function Positioning() {
               className="font-display font-extrabold leading-[0.97] tracking-display balance"
               style={{ fontSize: 'clamp(2.4rem, 4.8vw, 4.2rem)' }}
             >
-              <span className="text-ink">A specialty practice, </span>
-              <span className="text-forest">not</span>
-              <span className="text-ink"> a generalist consultancy.</span>
+              <span className="text-ink">A specialty practice, not a generalist consultancy.</span>
             </h2>
 
             <div className="mt-6 space-y-4 max-w-[64ch]">

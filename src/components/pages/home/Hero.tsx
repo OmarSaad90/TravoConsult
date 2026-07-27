@@ -210,11 +210,11 @@ export function Hero() {
             className="mt-6 font-display font-extrabold tracking-display"
             style={{ fontSize: 'clamp(3rem, 6.4vw, 5.4rem)', lineHeight: 0.94 }}
           >
-            <span className="block" style={reveal(160)}>
-              <span className="text-ink">Quantified </span><span className="text-forest">Risk.</span>
+            <span className="block text-ink" style={reveal(160)}>
+              Quantified Risk.
             </span>
-            <span className="block" style={reveal(240)}>
-              <span className="text-ink">Disciplined </span><span className="text-forest">Decisions.</span>
+            <span className="block text-ink" style={reveal(240)}>
+              Disciplined Decisions.
             </span>
           </h1>
 

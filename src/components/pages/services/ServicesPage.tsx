@@ -443,7 +443,7 @@ function ServicesHero() {
               style={{ fontSize: 'clamp(2.6rem, 4.8vw, 4.8rem)', lineHeight: 0.94 }}
             >
               <span className="block text-ink" style={reveal(140)}>One discipline.</span>
-              <span className="block text-forest" style={reveal(220)}>A deliberately</span>
+              <span className="block text-ink" style={reveal(220)}>A deliberately</span>
               <span className="block text-ink" style={reveal(300)}>bounded catalog.</span>
             </h1>
 

@@ -273,7 +273,7 @@ function ContactHero() {
         >
           <span className="text-ink">Discuss a</span>
           <br />
-          <span className="text-forest">project.</span>
+          <span className="text-ink">project.</span>
         </h1>
         <p
           className="mt-8 font-sans text-ink-2 leading-[1.78] pretty"

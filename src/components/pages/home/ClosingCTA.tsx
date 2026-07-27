@@ -32,7 +32,7 @@ export function ClosingCTA() {
           >
             <span className="text-ink">Defined decision points.</span>
             <br />
-            <span className="text-forest">A defined way in.</span>
+            <span className="text-ink">A defined way in.</span>
           </h2>
         </div>
 

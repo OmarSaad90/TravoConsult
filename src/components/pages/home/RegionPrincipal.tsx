@@ -33,8 +33,7 @@ export function RegionPrincipal() {
                 className="font-display font-extrabold leading-[0.97] tracking-display balance"
                 style={{ fontSize: 'clamp(2rem, 3.8vw, 3.4rem)' }}
               >
-                <span className="text-snow">Regionally focused.</span>{' '}
-                <span className="text-teal">Personally accountable.</span>
+                <span className="text-snow">Regionally focused. Personally accountable.</span>
               </h2>
             </div>
 

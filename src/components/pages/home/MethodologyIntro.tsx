@@ -78,7 +78,7 @@ export function MethodologyIntro() {
             >
               <span className="text-ink">Experience-based risk</span>
               <br />
-              <span className="text-forest">intelligence, quantified.</span>
+              <span className="text-ink">intelligence, quantified.</span>
             </h2>
 
             <div className="mt-6 space-y-4 max-w-[62ch]">

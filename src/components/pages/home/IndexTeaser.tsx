@@ -149,8 +149,7 @@ export function IndexTeaser() {
             className="font-display font-extrabold leading-[0.97] tracking-display balance"
             style={{ fontSize: 'clamp(2rem, 3.8vw, 3.4rem)' }}
           >
-            <span className="text-ink">Publication is</span>{' '}
-            <span className="text-forest">operational, not optional.</span>
+            <span className="text-ink">Publication is operational, not optional.</span>
           </h2>
           <p className="mt-5 font-sans text-ink-2 leading-[1.78] pretty" style={{ fontSize: '17px', maxWidth: '72ch' }}>
             TRAVO publishes: peer-reviewed research, industry-press articles,

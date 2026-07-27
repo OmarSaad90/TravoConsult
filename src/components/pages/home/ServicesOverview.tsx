@@ -65,7 +65,7 @@ export function ServicesOverview() {
           >
             <span className="text-ink">Fourteen named services across</span>
             <br />
-            <span className="text-forest">five categories.</span>
+            <span className="text-ink">five categories.</span>
           </h2>
           <p className="mt-4 font-sans text-ink-2 leading-[1.72] pretty" style={{ fontSize: '16px', maxWidth: '72ch' }}>
             The catalog is deliberately bounded and productized: each offering

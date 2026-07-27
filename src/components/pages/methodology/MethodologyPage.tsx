@@ -152,7 +152,7 @@ function MethodologyHero() {
                 className="font-display font-extrabold text-ink leading-[0.95] tracking-display balance"
                 style={{ fontSize: 'clamp(2.8rem, 5.2vw, 5.2rem)' }}
               >
-                The rigor is <span className="text-forest">the product.</span>
+                The rigor is the product.
               </h1>
             </div>
 
@@ -289,8 +289,7 @@ function TwoFormsSection() {
             className="font-display font-extrabold text-ink leading-[0.97] tracking-display balance"
             style={{ fontSize: 'clamp(1.9rem, 3.4vw, 3.1rem)', maxWidth: '34ch' }}
           >
-            Operational risk analysis{' '}
-            <span className="text-forest">and strategic alternatives analysis.</span>
+            Operational risk analysis and strategic alternatives analysis.
           </h2>
         </div>
 
@@ -418,8 +417,7 @@ function OperationalRiskSection() {
               className="font-display font-extrabold text-ink leading-[0.97] tracking-display balance"
               style={{ fontSize: 'clamp(1.9rem, 3.4vw, 3.1rem)', maxWidth: '30ch' }}
             >
-              Within a chosen plan: from{' '}
-              <span className="text-forest">single points to distributions.</span>
+              Within a chosen plan: from single points to distributions.
             </h2>
             <p className="font-sans text-ink-2 leading-[1.74] pretty mt-4" style={{ fontSize: '16px', maxWidth: '62ch' }}>
               Quantifying uncertainty within a chosen plan: how much could this project cost, how long could
@@ -497,8 +495,7 @@ function StrategicRiskSection() {
               className="font-display font-extrabold text-ink leading-[0.97] tracking-display balance"
               style={{ fontSize: 'clamp(1.9rem, 3.4vw, 3.1rem)', maxWidth: '32ch' }}
             >
-              Among different paths: comparing{' '}
-              <span className="text-forest">alternatives under uncertainty.</span>
+              Among different paths: comparing alternatives under uncertainty.
             </h2>
             <p className="font-sans text-ink-2 leading-[1.74] pretty mt-4" style={{ fontSize: '16px', maxWidth: '64ch' }}>
               Quantifying the comparative attractiveness among substantively different alternatives under
@@ -566,8 +563,7 @@ function RiskRegisterSection() {
             className="font-display font-extrabold text-ink leading-[0.97] tracking-display balance"
             style={{ fontSize: 'clamp(1.9rem, 3.4vw, 3.1rem)' }}
           >
-            The register: developed once,{' '}
-            <span className="text-forest">kept alive throughout.</span>
+            The register: developed once, kept alive throughout.
           </h2>
           <p className="font-sans text-ink-2 leading-[1.74] pretty mt-4 mx-auto" style={{ fontSize: '16px' }}>
             The risk register is the structured foundation beneath both forms of analysis: the documented
@@ -686,7 +682,7 @@ function ExperienceBasedSection() {
               className="font-display font-extrabold text-snow leading-[0.97] tracking-display balance"
               style={{ fontSize: 'clamp(2rem, 3.6vw, 3.3rem)', maxWidth: '20ch', marginBottom: '20px' }}
             >
-              The knowledge base <span className="text-teal">behind the model.</span>
+              The knowledge base behind the model.
             </h2>
             <div className="flex flex-col gap-4">
               <p className="font-sans text-slate leading-[1.78] pretty" style={{ fontSize: '15.5px' }}>
@@ -758,7 +754,7 @@ function StandardsSection() {
       <div className="max-w-site mx-auto px-6 md:px-12 lg:px-16">
         <div className="mb-12" style={fade(inView, 0)}>
           <h2 className="font-display font-extrabold text-ink leading-[0.97] tracking-display" style={{ fontSize: 'clamp(2rem, 3.6vw, 3.3rem)' }}>
-            Named standards. <span className="text-forest">Named software.</span>
+            Named standards. Named software.
           </h2>
         </div>
 

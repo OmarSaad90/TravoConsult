@@ -190,7 +190,7 @@ function HeroSection() {
             <span className="block text-ink" style={fade(inView, 60)}>
               Publication is operational,
             </span>
-            <span className="block" style={{ ...fade(inView, 140), color: P.forest }}>
+            <span className="block text-ink" style={fade(inView, 140)}>
               not optional.
             </span>
           </h1>

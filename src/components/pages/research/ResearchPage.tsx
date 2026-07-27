@@ -146,7 +146,7 @@ function HeroSection() {
             <span className="block text-ink" style={fade(inView, 70)}>
               Research is operational,
             </span>
-            <span className="block text-forest" style={fade(inView, 150)}>
+            <span className="block text-ink" style={fade(inView, 150)}>
               not ornamental.
             </span>
           </h1>

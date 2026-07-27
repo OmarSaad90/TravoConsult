@@ -62,7 +62,7 @@ function EngagementsHero() {
           <span className="block text-ink" style={fade(inView, 80)}>
             Analysis that attaches
           </span>
-          <span className="block text-forest" style={fade(inView, 160)}>
+          <span className="block text-ink" style={fade(inView, 160)}>
             to a decision.
           </span>
         </h1>

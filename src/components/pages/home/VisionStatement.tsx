@@ -32,7 +32,7 @@ export function VisionStatement() {
           >
             <span className="text-snow">A standards-setting position,</span>
             <br />
-            <span className="text-teal">not a generalist practice.</span>
+            <span className="text-snow">not a generalist practice.</span>
           </h2>
         </div>
 

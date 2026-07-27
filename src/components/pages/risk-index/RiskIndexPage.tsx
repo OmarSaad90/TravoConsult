@@ -193,7 +193,7 @@ function RiskIndexHero() {
             <h1 className="font-display font-extrabold leading-[0.93] tracking-display"
               style={{ fontSize: 'clamp(3.2rem, 6.5vw, 5.8rem)' }}>
               <span className="block text-ink" style={fade(mounted, 120)}>The NJ/NY</span>
-              <span className="block text-forest" style={fade(mounted, 220)}>Construction</span>
+              <span className="block text-ink" style={fade(mounted, 220)}>Construction</span>
               <span className="block text-ink" style={fade(mounted, 320)}>Risk Index.</span>
             </h1>
 
@@ -287,8 +287,7 @@ function WhatIndexMeasures() {
           </p>
           <h2 className="mt-4 font-display font-extrabold leading-[0.97] tracking-display balance"
             style={{ fontSize: 'clamp(2rem, 3.8vw, 3.4rem)' }}>
-            <span className="text-ink">Four benchmark categories,</span>{' '}
-            <span className="text-forest">segmented by project type and asset class.</span>
+            <span className="text-ink">Four benchmark categories, segmented by project type and asset class.</span>
           </h2>
         </div>
 
@@ -409,7 +408,7 @@ function RoleAndTiming() {
           <h2 className="mt-4 font-display font-extrabold text-snow leading-[0.97] tracking-display balance"
             style={{ fontSize: 'clamp(2rem, 3.8vw, 3.4rem)' }}>
             Dataset, benchmark,<br />
-            <span className="text-teal">and standard.</span>
+            and standard.
           </h2>
         </div>
 
@@ -477,7 +476,7 @@ function IndexClosingCTA() {
             <h2 className="font-display font-extrabold leading-[0.95] tracking-display balance text-ink"
               style={{ fontSize: 'clamp(2rem, 3.8vw, 3.4rem)' }}>
               Interested<br />
-              <span style={{ color: P.forest }}>in the Index?</span>
+              in the Index?
             </h2>
             <p className="mt-6 font-sans leading-[1.76] pretty"
               style={{ fontSize: '16px', color: P.ink2 }}>

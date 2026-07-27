@@ -52,8 +52,7 @@ export function CoreBelief() {
             className="font-display font-extrabold leading-[0.97] tracking-display balance"
             style={{ fontSize: 'clamp(2.4rem, 4.8vw, 4.2rem)' }}
           >
-            <span className="text-ink">Most construction project failures are </span>
-            <span className="text-forest">quantifiable in advance.</span>
+            <span className="text-ink">Most construction project failures are quantifiable in advance.</span>
           </h2>
         </div>
 
